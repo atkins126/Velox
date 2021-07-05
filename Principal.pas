@@ -176,7 +176,7 @@ end;
 
 procedure TFPrinc.MostrarDatos;
 begin
-  LPosIni.Text:=FormatFloat('0.00',Reg.PosInicial.X)+' , '+FormatFloat('0.00',Reg.PosInicial.Y);
+  LPosIni.Text:=FormatFloat('0.00',Reg.PosInicial.X)+','+FormatFloat('0.00',Reg.PosInicial.Y);
   LEste.Text:='Este (X): '+FormatFloat('0.00',Reg.PosActual.X);
   LNorte.Text:='Norte (Y): '+FormatFloat('0.00',Reg.PosActual.Y);
   LRumbo.Text:='Rumbo: '+Reg.Rumbo;
@@ -246,7 +246,7 @@ begin
     BInicio.TintColor:=TAlphaColorRec.Springgreen;
     //aquí se detiene el proceso:
     Reg.PosFinal:=Reg.PosActual;
-    LPosFin.Text:=FormatFloat('0.00',Reg.PosFinal.X)+' , '+
+    LPosFin.Text:=FormatFloat('0.00',Reg.PosFinal.X)+','+
                   FormatFloat('0.00',Reg.PosFinal.Y);
   end;
 end;

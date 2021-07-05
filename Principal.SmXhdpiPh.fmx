@@ -16,6 +16,7 @@ inherited FPrinc_SmXhdpiPh: TFPrinc_SmXhdpiPh
         Size.Width = 130.000000000000000000
         inherited LPosIni: TLabel
           Size.Width = 130.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
         end
       end
       inherited Layout5: TLayout
@@ -28,6 +29,7 @@ inherited FPrinc_SmXhdpiPh: TFPrinc_SmXhdpiPh
         Size.Width = 130.000000000000000000
         inherited LPosFin: TLabel
           Size.Width = 130.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
         end
       end
     end
@@ -52,18 +54,21 @@ inherited FPrinc_SmXhdpiPh: TFPrinc_SmXhdpiPh
           Size.Width = 125.000000000000000000
           inherited LNorte: TLabel
             Size.Width = 125.000000000000000000
+            TextSettings.Font.StyleExt = {00070000000000000004000000}
           end
         end
         inherited Layout10: TLayout
           Size.Width = 125.000000000000000000
           inherited LRumbo: TLabel
             Size.Width = 125.000000000000000000
+            TextSettings.Font.StyleExt = {00070000000000000004000000}
           end
         end
         inherited Layout11: TLayout
           Size.Width = 125.000000000000000000
           inherited LEste: TLabel
             Size.Width = 125.000000000000000000
+            TextSettings.Font.StyleExt = {00070000000000000004000000}
           end
         end
       end

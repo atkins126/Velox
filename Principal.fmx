@@ -49,9 +49,11 @@ object FPrinc: TFPrinc
         TabOrder = 3
         object LPosIni: TLabel
           Align = Client
+          StyledSettings = [Family, Size, FontColor]
           Size.Width = 390.000000000000000000
           Size.Height = 25.000000000000000000
           Size.PlatformDefault = False
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
           TextSettings.HorzAlign = Center
           TextSettings.WordWrap = False
           Text = '- - -'
@@ -85,9 +87,11 @@ object FPrinc: TFPrinc
         TabOrder = 1
         object LPosFin: TLabel
           Align = Client
+          StyledSettings = [Family, Size, FontColor]
           Size.Width = 390.000000000000000000
           Size.Height = 25.000000000000000000
           Size.PlatformDefault = False
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
           TextSettings.HorzAlign = Center
           TextSettings.WordWrap = False
           Text = '- - -'
@@ -182,7 +186,7 @@ object FPrinc: TFPrinc
           Size.Height = 90.000000000000000000
           Size.PlatformDefault = False
           TextSettings.HorzAlign = Center
-          Text = 'Posici'#243'n actual'
+          Text = 'Posici'#243'n actual:'
           TabOrder = 0
         end
       end
@@ -201,9 +205,11 @@ object FPrinc: TFPrinc
           TabOrder = 0
           object LNorte: TLabel
             Align = Client
+            StyledSettings = [Family, Size, FontColor]
             Size.Width = 390.000000000000000000
             Size.Height = 30.000000000000000000
             Size.PlatformDefault = False
+            TextSettings.Font.StyleExt = {00070000000000000004000000}
             TextSettings.HorzAlign = Center
             TextSettings.WordWrap = False
             Text = 'Norte (Y): - - -'
@@ -219,9 +225,11 @@ object FPrinc: TFPrinc
           TabOrder = 1
           object LRumbo: TLabel
             Align = Client
+            StyledSettings = [Family, Size, FontColor]
             Size.Width = 390.000000000000000000
             Size.Height = 30.000000000000000000
             Size.PlatformDefault = False
+            TextSettings.Font.StyleExt = {00070000000000000004000000}
             TextSettings.HorzAlign = Center
             TextSettings.WordWrap = False
             Text = 'Rumbo: - - -'
@@ -236,9 +244,11 @@ object FPrinc: TFPrinc
           TabOrder = 2
           object LEste: TLabel
             Align = Client
+            StyledSettings = [Family, Size, FontColor]
             Size.Width = 390.000000000000000000
             Size.Height = 30.000000000000000000
             Size.PlatformDefault = False
+            TextSettings.Font.StyleExt = {00070000000000000004000000}
             TextSettings.HorzAlign = Center
             TextSettings.WordWrap = False
             Text = 'Este (X): - - -'
