@@ -1,0 +1,374 @@
+object FPrinc: TFPrinc
+  Left = 0
+  Top = 0
+  Caption = 'Velox'
+  ClientHeight = 596
+  ClientWidth = 510
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 3
+  object LayTop: TLayout
+    Align = Top
+    Position.Y = 25.000000000000000000
+    Size.Width = 510.000000000000000000
+    Size.Height = 100.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object Layout1: TLayout
+      Align = Client
+      Size.Width = 390.000000000000000000
+      Size.Height = 100.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      object Layout3: TLayout
+        Align = Top
+        Size.Width = 390.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 4
+        object Label1: TLabel
+          Align = Client
+          Size.Width = 390.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.HorzAlign = Center
+          TextSettings.WordWrap = False
+          Text = 'Pos. inicial (E - N):'
+          TabOrder = 0
+        end
+      end
+      object Layout4: TLayout
+        Align = Top
+        Position.Y = 25.000000000000000000
+        Size.Width = 390.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        object LPosIni: TLabel
+          Align = Client
+          Size.Width = 390.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.HorzAlign = Center
+          TextSettings.WordWrap = False
+          Text = '- - -'
+          TabOrder = 0
+        end
+      end
+      object Layout5: TLayout
+        Align = Top
+        Position.Y = 50.000000000000000000
+        Size.Width = 390.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        object Label3: TLabel
+          Align = Client
+          Size.Width = 390.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.HorzAlign = Center
+          TextSettings.WordWrap = False
+          Text = 'Pos. final (E - N):'
+          TabOrder = 0
+        end
+      end
+      object Layout6: TLayout
+        Align = Top
+        Position.Y = 75.000000000000000000
+        Size.Width = 390.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        object LPosFin: TLabel
+          Align = Client
+          Size.Width = 390.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.HorzAlign = Center
+          TextSettings.WordWrap = False
+          Text = '- - -'
+          TabOrder = 0
+        end
+      end
+    end
+    object Layout2: TLayout
+      Align = Left
+      Size.Width = 120.000000000000000000
+      Size.Height = 100.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      object BInicio: TButton
+        Align = Client
+        StyledSettings = [Family, Style, FontColor]
+        Size.Width = 120.000000000000000000
+        Size.Height = 100.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'buttonstyle'
+        TabOrder = 0
+        Text = 'Inicio'
+        TextSettings.Font.Size = 30.000000000000000000
+        TintColor = claSpringgreen
+        OnClick = BInicioClick
+      end
+    end
+  end
+  object LayBot: TLayout
+    Align = Bottom
+    Position.Y = 523.000000000000000000
+    Size.Width = 510.000000000000000000
+    Size.Height = 73.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object SBSalir: TSpeedButton
+      Align = Right
+      Position.X = 462.000000000000000000
+      Position.Y = 12.000000000000000000
+      Size.Width = 48.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'escapetoolbutton'
+      Text = 'SBSalir'
+      OnClick = SBSalirClick
+    end
+    object SBAcerca: TSpeedButton
+      Align = Left
+      Position.Y = 12.000000000000000000
+      Size.Width = 48.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'infotoolbutton'
+      Text = 'SBAcerca'
+      OnClick = SBAcercaClick
+    end
+    object BLimpiar: TButton
+      Align = Center
+      Size.Width = 48.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'refreshtoolbutton'
+      TabOrder = 2
+      Text = 'Reset'
+      OnClick = BLimpiarClick
+    end
+  end
+  object VertScrollBox1: TVertScrollBox
+    Align = Client
+    Size.Width = 510.000000000000000000
+    Size.Height = 398.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Viewport.Width = 510.000000000000000000
+    Viewport.Height = 398.000000000000000000
+    object LayPosAct: TLayout
+      Align = Top
+      Position.Y = 25.000000000000000000
+      Size.Width = 510.000000000000000000
+      Size.Height = 90.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      object Layout7: TLayout
+        Align = Left
+        Size.Width = 120.000000000000000000
+        Size.Height = 90.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        object Label8: TLabel
+          Align = Client
+          Size.Width = 120.000000000000000000
+          Size.Height = 90.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.HorzAlign = Center
+          Text = 'Posici'#243'n actual'
+          TabOrder = 0
+        end
+      end
+      object Layout8: TLayout
+        Align = Client
+        Size.Width = 390.000000000000000000
+        Size.Height = 90.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        object Layout9: TLayout
+          Align = Top
+          Position.Y = 30.000000000000000000
+          Size.Width = 390.000000000000000000
+          Size.Height = 30.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          object LNorte: TLabel
+            Align = Client
+            Size.Width = 390.000000000000000000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.HorzAlign = Center
+            TextSettings.WordWrap = False
+            Text = 'Norte (Y): - - -'
+            TabOrder = 0
+          end
+        end
+        object Layout10: TLayout
+          Align = Top
+          Position.Y = 60.000000000000000000
+          Size.Width = 390.000000000000000000
+          Size.Height = 30.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          object LRumbo: TLabel
+            Align = Client
+            Size.Width = 390.000000000000000000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.HorzAlign = Center
+            TextSettings.WordWrap = False
+            Text = 'Rumbo: - - -'
+            TabOrder = 0
+          end
+        end
+        object Layout11: TLayout
+          Align = Top
+          Size.Width = 390.000000000000000000
+          Size.Height = 30.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+          object LEste: TLabel
+            Align = Client
+            Size.Width = 390.000000000000000000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.HorzAlign = Center
+            TextSettings.WordWrap = False
+            Text = 'Este (X): - - -'
+            TabOrder = 0
+          end
+        end
+      end
+    end
+    object LayDistRec: TLayout
+      Align = Top
+      Position.Y = 140.000000000000000000
+      Size.Width = 510.000000000000000000
+      Size.Height = 100.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      object Layout12: TLayout
+        Align = Top
+        Size.Width = 510.000000000000000000
+        Size.Height = 35.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        object Label9: TLabel
+          Align = Client
+          Size.Width = 510.000000000000000000
+          Size.Height = 35.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.HorzAlign = Center
+          Text = 'Distancia recorrida (km):'
+          TabOrder = 0
+        end
+      end
+      object Layout13: TLayout
+        Align = Client
+        Size.Width = 510.000000000000000000
+        Size.Height = 65.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        object LDistRec: TLabel
+          Align = Client
+          StyledSettings = [Family]
+          Size.Width = 510.000000000000000000
+          Size.Height = 65.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 55.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          TextSettings.HorzAlign = Center
+          TextSettings.WordWrap = False
+          Text = '0.00'
+          TabOrder = 0
+        end
+      end
+    end
+    object LayVel: TLayout
+      Align = Top
+      Position.Y = 265.000000000000000000
+      Size.Width = 510.000000000000000000
+      Size.Height = 100.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      object Layout14: TLayout
+        Align = Top
+        Size.Width = 510.000000000000000000
+        Size.Height = 35.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        object Label11: TLabel
+          Align = Client
+          Size.Width = 510.000000000000000000
+          Size.Height = 35.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.HorzAlign = Center
+          Text = 'Velocidad (km/h):'
+          TabOrder = 0
+        end
+      end
+      object Layout15: TLayout
+        Align = Client
+        Size.Width = 510.000000000000000000
+        Size.Height = 65.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        object LVelocidad: TLabel
+          Align = Client
+          StyledSettings = [Family]
+          Size.Width = 510.000000000000000000
+          Size.Height = 65.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 55.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          TextSettings.HorzAlign = Center
+          TextSettings.WordWrap = False
+          Text = '0.00'
+          TabOrder = 0
+        end
+      end
+    end
+    object LaySep01: TLayout
+      Align = Top
+      Size.Width = 510.000000000000000000
+      Size.Height = 25.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 5
+    end
+    object Layout16: TLayout
+      Align = Top
+      Position.Y = 115.000000000000000000
+      Size.Width = 510.000000000000000000
+      Size.Height = 25.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 4
+    end
+    object Layout17: TLayout
+      Align = Top
+      Position.Y = 240.000000000000000000
+      Size.Width = 510.000000000000000000
+      Size.Height = 25.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+    end
+  end
+  object Layout18: TLayout
+    Align = Top
+    Size.Width = 510.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+  end
+  object LctSensor: TLocationSensor
+    OnLocationChanged = LctSensorLocationChanged
+    Left = 64
+    Top = 8
+  end
+end

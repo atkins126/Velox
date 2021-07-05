@@ -1,0 +1,113 @@
+inherited FPrinc_LgXhdpiPh: TFPrinc_LgXhdpiPh
+  ClientHeight = 695
+  ClientWidth = 450
+  DesignerMasterStyle = 3
+  inherited LayTop: TLayout
+    Size.Width = 450.000000000000000000
+    inherited Layout1: TLayout
+      Size.Width = 300.000000000000000000
+      inherited Layout3: TLayout
+        Size.Width = 300.000000000000000000
+      end
+      inherited Layout4: TLayout
+        Size.Width = 300.000000000000000000
+        inherited LPosIni: TLabel
+          Size.Width = 300.000000000000000000
+        end
+      end
+      inherited Layout5: TLayout
+        Size.Width = 300.000000000000000000
+        inherited Label3: TLabel
+          Size.Width = 300.000000000000000000
+        end
+      end
+      inherited Layout6: TLayout
+        Size.Width = 300.000000000000000000
+        inherited LPosFin: TLabel
+          Size.Width = 300.000000000000000000
+        end
+      end
+    end
+  end
+  inherited LayBot: TLayout
+    Position.Y = 622.000000000000000000
+    Size.Width = 450.000000000000000000
+    inherited SBSalir: TSpeedButton
+      Position.X = 402.000000000000000000
+    end
+  end
+  inherited VertScrollBox1: TVertScrollBox
+    Size.Width = 450.000000000000000000
+    Size.Height = 497.000000000000000000
+    Viewport.Width = 450.000000000000000000
+    Viewport.Height = 497.000000000000000000
+    inherited LayPosAct: TLayout
+      Size.Width = 450.000000000000000000
+      inherited Layout8: TLayout
+        Size.Width = 305.000000000000000000
+        inherited Layout9: TLayout
+          Size.Width = 305.000000000000000000
+          inherited LNorte: TLabel
+            Size.Width = 305.000000000000000000
+          end
+        end
+        inherited Layout10: TLayout
+          Size.Width = 305.000000000000000000
+          inherited LRumbo: TLabel
+            Size.Width = 305.000000000000000000
+          end
+        end
+        inherited Layout11: TLayout
+          Size.Width = 305.000000000000000000
+          inherited LEste: TLabel
+            Size.Width = 305.000000000000000000
+          end
+        end
+      end
+    end
+    inherited LayDistRec: TLayout
+      Size.Width = 450.000000000000000000
+      inherited Layout12: TLayout
+        Size.Width = 450.000000000000000000
+        inherited Label9: TLabel
+          Size.Width = 450.000000000000000000
+        end
+      end
+      inherited Layout13: TLayout
+        Size.Width = 450.000000000000000000
+        inherited LDistRec: TLabel
+          Size.Width = 450.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+        end
+      end
+    end
+    inherited LayVel: TLayout
+      Size.Width = 450.000000000000000000
+      inherited Layout14: TLayout
+        Size.Width = 450.000000000000000000
+        inherited Label11: TLabel
+          Size.Width = 450.000000000000000000
+        end
+      end
+      inherited Layout15: TLayout
+        Size.Width = 450.000000000000000000
+        inherited LVelocidad: TLabel
+          Size.Width = 450.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+        end
+      end
+    end
+    inherited LaySep01: TLayout
+      Size.Width = 450.000000000000000000
+    end
+    inherited Layout16: TLayout
+      Size.Width = 450.000000000000000000
+    end
+    inherited Layout17: TLayout
+      Size.Width = 450.000000000000000000
+    end
+  end
+  inherited Layout18: TLayout
+    Size.Width = 450.000000000000000000
+  end
+end
