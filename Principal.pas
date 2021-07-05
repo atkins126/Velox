@@ -24,6 +24,7 @@ type
     Tiempo: single;
     TiempoAnterior,
     TiempoActual: TTime;
+    EstaIniciando: boolean;
   end;
   TFPrinc = class(TForm)
     LayTop: TLayout;
@@ -109,14 +110,9 @@ begin
   CoordPos.Y:=UTM.Y;
 end;
 
-function CalcularDistancia(X1,Y1,X2,Y2: single): single;
+function CalcularDistancia(X1,Y1,X2,Y2: double): double;
 begin
   Result:=Sqrt(Sqr(Abs(X1-X2))+Sqr(Abs(Y1-Y2)));
-end;
-
-function IntervaloTiempo(Tiempo1,Tiempo2: TTime): single;
-begin
-  Result:=SecondSpan(Tiempo1,Tiempo2);
 end;
 
 function Sentido(Este1,Norte1,Este2,Norte2: Double): string;
@@ -132,6 +128,16 @@ begin
   if (Norte1>Norte2) and (Este1<Este2) then Cad:='Sureste';
   if (Norte1>Norte2) and (Este1>Este2) then Cad:='Suroeste';
   Result:=Cad;
+end;
+
+function MetrosToKm(DistMetros: single): single;
+begin
+  Result:=DistMetros/1000;
+end;
+
+function SegundosToHoras(TmpSegs: single): single;
+begin
+  Result:=TmpSegs/3600;
 end;
 
 procedure TFPrinc.ValInicio;
@@ -165,27 +171,17 @@ begin
   Reg.DistRecorrida:=0;
   Reg.Velocidad:=0;
   Reg.Tiempo:=0;
+  Reg.EstaIniciando:=true;
 end;
 
 procedure TFPrinc.MostrarDatos;
 begin
   LPosIni.Text:=FormatFloat('0.00',Reg.PosInicial.X)+' , '+FormatFloat('0.00',Reg.PosInicial.Y);
-  //LPosFin.Text:=FormatFloat('0.00',Reg.PosFinal.X)+' , '+FormatFloat('00',Reg.PosFinal.Y);
   LEste.Text:='Este (X): '+FormatFloat('0.00',Reg.PosActual.X);
   LNorte.Text:='Norte (Y): '+FormatFloat('0.00',Reg.PosActual.Y);
   LRumbo.Text:='Rumbo: '+Reg.Rumbo;
   LDistRec.Text:=FormatFloat('#,##0.00',Reg.DistRecorrida);
   LVelocidad.Text:=FormatFloat('0.00',Reg.Velocidad);
-end;
-
-function MetrosToKm(DistMetros: single): single;
-begin
-  Result:=DistMetros/1000;
-end;
-
-function SegundosToHoras(TmpSegs: single): single;
-begin
-  Result:=TmpSegs/3600;
 end;
 
 /// Eventos de la app: ///
@@ -194,6 +190,7 @@ procedure TFPrinc.FormCreate(Sender: TObject);
 begin
   Separador:=FormatSettings.DecimalSeparator;
   FormatSettings.DecimalSeparator:='.';
+  ValInicio;
 end;
 
 procedure TFPrinc.FormDestroy(Sender: TObject);
@@ -210,8 +207,12 @@ begin
   //se obtienen las coordenadas (geográficas y UTM):
   CargarCoordenadas(OldLocation,Reg.PosAnterior);
   CargarCoordenadas(NewLocation,Reg.PosActual);
-  if (Reg.PosInicial.X=0) and (Reg.PosInicial.Y=0) then
-    Reg.PosInicial:=Reg.PosAnterior;
+  if Reg.EstaIniciando then
+  begin
+    Reg.PosInicial:=Reg.PosActual;
+    Reg.PosAnterior:=Reg.PosActual;
+    Reg.EstaIniciando:=false;
+  end;
   Reg.Rumbo:=Sentido(Reg.PosAnterior.X,Reg.PosAnterior.Y,
                      Reg.PosActual.X,Reg.PosActual.Y);
   //se obtiene la distancia inmediata de los dos últimos puntos:
@@ -257,7 +258,7 @@ end;
 
 procedure TFPrinc.SBAcercaClick(Sender: TObject);
 begin
-  ShowMessage('Velox'+#13#10+'v1.0'+#13#13#10+'Autor: Ing. Francisco J. Sáez S.'+
+  ShowMessage('Velox'+#13#10+'v1.0'+#13#10#13#10+'Autor: Ing. Francisco J. Sáez S.'+
               #13#13#10+'Calabozo, 3 de julio de 2021');
 end;
 
