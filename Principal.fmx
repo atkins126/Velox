@@ -10,371 +10,595 @@ object FPrinc: TFPrinc
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   DesignerMasterStyle = 3
-  object LayTop: TLayout
-    Align = Top
-    Position.Y = 25.000000000000000000
-    Size.Width = 510.000000000000000000
-    Size.Height = 100.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 0
-    object Layout1: TLayout
-      Align = Client
-      Size.Width = 390.000000000000000000
-      Size.Height = 100.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 0
-      object Layout3: TLayout
-        Align = Top
-        Size.Width = 390.000000000000000000
-        Size.Height = 25.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 4
-        object Label1: TLabel
-          Align = Client
-          Size.Width = 390.000000000000000000
-          Size.Height = 25.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.HorzAlign = Center
-          TextSettings.WordWrap = False
-          Text = 'Pos. inicial (E - N):'
-          TabOrder = 0
-        end
-      end
-      object Layout4: TLayout
-        Align = Top
-        Position.Y = 25.000000000000000000
-        Size.Width = 390.000000000000000000
-        Size.Height = 25.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 3
-        object LPosIni: TLabel
-          Align = Client
-          StyledSettings = [Family, Size, FontColor]
-          Size.Width = 390.000000000000000000
-          Size.Height = 25.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.StyleExt = {00070000000000000004000000}
-          TextSettings.HorzAlign = Center
-          TextSettings.WordWrap = False
-          Text = '- - -'
-          TabOrder = 0
-        end
-      end
-      object Layout5: TLayout
-        Align = Top
-        Position.Y = 50.000000000000000000
-        Size.Width = 390.000000000000000000
-        Size.Height = 25.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 2
-        object Label3: TLabel
-          Align = Client
-          Size.Width = 390.000000000000000000
-          Size.Height = 25.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.HorzAlign = Center
-          TextSettings.WordWrap = False
-          Text = 'Pos. final (E - N):'
-          TabOrder = 0
-        end
-      end
-      object Layout6: TLayout
-        Align = Top
-        Position.Y = 75.000000000000000000
-        Size.Width = 390.000000000000000000
-        Size.Height = 25.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 1
-        object LPosFin: TLabel
-          Align = Client
-          StyledSettings = [Family, Size, FontColor]
-          Size.Width = 390.000000000000000000
-          Size.Height = 25.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.StyleExt = {00070000000000000004000000}
-          TextSettings.HorzAlign = Center
-          TextSettings.WordWrap = False
-          Text = '- - -'
-          TabOrder = 0
-        end
-      end
-    end
-    object Layout2: TLayout
-      Align = Left
-      Size.Width = 120.000000000000000000
-      Size.Height = 100.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 1
-      object BInicio: TButton
-        Align = Client
-        StyledSettings = [Family, Style, FontColor]
-        Size.Width = 120.000000000000000000
-        Size.Height = 100.000000000000000000
-        Size.PlatformDefault = False
-        StyleLookup = 'buttonstyle'
-        TabOrder = 0
-        Text = 'Inicio'
-        TextSettings.Font.Size = 30.000000000000000000
-        TintColor = claSpringgreen
-        OnClick = BInicioClick
-      end
-    end
-  end
-  object LayBot: TLayout
-    Align = Bottom
-    Position.Y = 523.000000000000000000
-    Size.Width = 510.000000000000000000
-    Size.Height = 73.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 1
-    object SBSalir: TSpeedButton
-      Align = Right
-      Position.X = 462.000000000000000000
-      Position.Y = 12.000000000000000000
-      Size.Width = 48.000000000000000000
-      Size.Height = 48.000000000000000000
-      Size.PlatformDefault = False
-      StyleLookup = 'escapetoolbutton'
-      Text = 'SBSalir'
-      OnClick = SBSalirClick
-    end
-    object SBAcerca: TSpeedButton
-      Align = Left
-      Position.Y = 12.000000000000000000
-      Size.Width = 48.000000000000000000
-      Size.Height = 48.000000000000000000
-      Size.PlatformDefault = False
-      StyleLookup = 'infotoolbutton'
-      Text = 'SBAcerca'
-      OnClick = SBAcercaClick
-    end
-    object BLimpiar: TButton
-      Align = Center
-      Size.Width = 48.000000000000000000
-      Size.Height = 48.000000000000000000
-      Size.PlatformDefault = False
-      StyleLookup = 'refreshtoolbutton'
-      TabOrder = 2
-      Text = 'Reset'
-      OnClick = BLimpiarClick
-    end
-  end
-  object VertScrollBox1: TVertScrollBox
+  object LayPrinc: TLayout
     Align = Client
     Size.Width = 510.000000000000000000
-    Size.Height = 398.000000000000000000
+    Size.Height = 596.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 2
-    Viewport.Width = 510.000000000000000000
-    Viewport.Height = 398.000000000000000000
-    object LayPosAct: TLayout
-      Align = Top
-      Position.Y = 25.000000000000000000
+    TabOrder = 0
+    object LayBot: TLayout
+      Align = Bottom
+      Position.Y = 523.000000000000000000
       Size.Width = 510.000000000000000000
-      Size.Height = 90.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 0
-      object Layout7: TLayout
-        Align = Left
-        Size.Width = 120.000000000000000000
-        Size.Height = 90.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 0
-        object Label8: TLabel
-          Align = Client
-          Size.Width = 120.000000000000000000
-          Size.Height = 90.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.HorzAlign = Center
-          Text = 'Posici'#243'n actual:'
-          TabOrder = 0
-        end
-      end
-      object Layout8: TLayout
-        Align = Client
-        Size.Width = 390.000000000000000000
-        Size.Height = 90.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 1
-        object Layout9: TLayout
-          Align = Top
-          Position.Y = 30.000000000000000000
-          Size.Width = 390.000000000000000000
-          Size.Height = 30.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 0
-          object LNorte: TLabel
-            Align = Client
-            StyledSettings = [Family, Size, FontColor]
-            Size.Width = 390.000000000000000000
-            Size.Height = 30.000000000000000000
-            Size.PlatformDefault = False
-            TextSettings.Font.StyleExt = {00070000000000000004000000}
-            TextSettings.HorzAlign = Center
-            TextSettings.WordWrap = False
-            Text = 'Norte (Y): - - -'
-            TabOrder = 0
-          end
-        end
-        object Layout10: TLayout
-          Align = Top
-          Position.Y = 60.000000000000000000
-          Size.Width = 390.000000000000000000
-          Size.Height = 30.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 1
-          object LRumbo: TLabel
-            Align = Client
-            StyledSettings = [Family, Size, FontColor]
-            Size.Width = 390.000000000000000000
-            Size.Height = 30.000000000000000000
-            Size.PlatformDefault = False
-            TextSettings.Font.StyleExt = {00070000000000000004000000}
-            TextSettings.HorzAlign = Center
-            TextSettings.WordWrap = False
-            Text = 'Rumbo: - - -'
-            TabOrder = 0
-          end
-        end
-        object Layout11: TLayout
-          Align = Top
-          Size.Width = 390.000000000000000000
-          Size.Height = 30.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 2
-          object LEste: TLabel
-            Align = Client
-            StyledSettings = [Family, Size, FontColor]
-            Size.Width = 390.000000000000000000
-            Size.Height = 30.000000000000000000
-            Size.PlatformDefault = False
-            TextSettings.Font.StyleExt = {00070000000000000004000000}
-            TextSettings.HorzAlign = Center
-            TextSettings.WordWrap = False
-            Text = 'Este (X): - - -'
-            TabOrder = 0
-          end
-        end
-      end
-    end
-    object LayDistRec: TLayout
-      Align = Top
-      Position.Y = 140.000000000000000000
-      Size.Width = 510.000000000000000000
-      Size.Height = 100.000000000000000000
+      Size.Height = 73.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 1
-      object Layout12: TLayout
-        Align = Top
-        Size.Width = 510.000000000000000000
-        Size.Height = 35.000000000000000000
+      object SBSalir: TSpeedButton
+        Align = Right
+        Position.X = 462.000000000000000000
+        Position.Y = 12.000000000000000000
+        Size.Width = 48.000000000000000000
+        Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
-        TabOrder = 0
-        object Label9: TLabel
-          Align = Client
-          Size.Width = 510.000000000000000000
-          Size.Height = 35.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.HorzAlign = Center
-          Text = 'Distancia recorrida (km):'
-          TabOrder = 0
-        end
+        StyleLookup = 'escapetoolbutton'
+        Text = 'SBSalir'
+        OnClick = SBSalirClick
       end
-      object Layout13: TLayout
-        Align = Client
-        Size.Width = 510.000000000000000000
-        Size.Height = 65.000000000000000000
+      object SBAcerca: TSpeedButton
+        Align = Left
+        Position.Y = 12.000000000000000000
+        Size.Width = 48.000000000000000000
+        Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
-        TabOrder = 1
-        object LDistRec: TLabel
-          Align = Client
-          StyledSettings = [Family]
-          Size.Width = 510.000000000000000000
-          Size.Height = 65.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 55.000000000000000000
-          TextSettings.Font.StyleExt = {00070000000000000004000000}
-          TextSettings.HorzAlign = Center
-          TextSettings.WordWrap = False
-          Text = '0.00'
-          TabOrder = 0
-        end
+        StyleLookup = 'infotoolbutton'
+        Text = 'SBAcerca'
+        OnClick = SBAcercaClick
+      end
+      object BLimpiar: TButton
+        Align = Center
+        Size.Width = 48.000000000000000000
+        Size.Height = 48.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'refreshtoolbutton'
+        TabOrder = 2
+        Text = 'Reset'
+        OnClick = BLimpiarClick
       end
     end
-    object LayVel: TLayout
+    object Layout18: TLayout
       Align = Top
-      Position.Y = 265.000000000000000000
-      Size.Width = 510.000000000000000000
-      Size.Height = 100.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 2
-      object Layout14: TLayout
-        Align = Top
-        Size.Width = 510.000000000000000000
-        Size.Height = 35.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 0
-        object Label11: TLabel
-          Align = Client
-          Size.Width = 510.000000000000000000
-          Size.Height = 35.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.HorzAlign = Center
-          Text = 'Velocidad (km/h):'
-          TabOrder = 0
-        end
-      end
-      object Layout15: TLayout
-        Align = Client
-        Size.Width = 510.000000000000000000
-        Size.Height = 65.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 1
-        object LVelocidad: TLabel
-          Align = Client
-          StyledSettings = [Family]
-          Size.Width = 510.000000000000000000
-          Size.Height = 65.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 55.000000000000000000
-          TextSettings.Font.StyleExt = {00070000000000000004000000}
-          TextSettings.HorzAlign = Center
-          TextSettings.WordWrap = False
-          Text = '0.00'
-          TabOrder = 0
-        end
-      end
-    end
-    object LaySep01: TLayout
-      Align = Top
-      Size.Width = 510.000000000000000000
-      Size.Height = 25.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 5
-    end
-    object Layout16: TLayout
-      Align = Top
-      Position.Y = 115.000000000000000000
-      Size.Width = 510.000000000000000000
-      Size.Height = 25.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 4
-    end
-    object Layout17: TLayout
-      Align = Top
-      Position.Y = 240.000000000000000000
       Size.Width = 510.000000000000000000
       Size.Height = 25.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 3
     end
-  end
-  object Layout18: TLayout
-    Align = Top
-    Size.Width = 510.000000000000000000
-    Size.Height = 25.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 3
+    object LayTop: TLayout
+      Align = Top
+      Position.Y = 25.000000000000000000
+      Size.Width = 510.000000000000000000
+      Size.Height = 100.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      object Layout1: TLayout
+        Align = Client
+        Size.Width = 390.000000000000000000
+        Size.Height = 100.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        object Layout3: TLayout
+          Align = Top
+          Size.Width = 390.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 4
+          object Label1: TLabel
+            Align = Client
+            Size.Width = 390.000000000000000000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.HorzAlign = Center
+            TextSettings.WordWrap = False
+            Text = 'Pos. inicial (E - N):'
+            TabOrder = 0
+          end
+        end
+        object Layout4: TLayout
+          Align = Top
+          Position.Y = 25.000000000000000000
+          Size.Width = 390.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 3
+          object LPosIni: TLabel
+            Align = Client
+            StyledSettings = [Family, Size, FontColor]
+            Size.Width = 390.000000000000000000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.Font.StyleExt = {00070000000000000004000000}
+            TextSettings.HorzAlign = Center
+            TextSettings.WordWrap = False
+            Text = '- - -'
+            TabOrder = 0
+          end
+        end
+        object Layout5: TLayout
+          Align = Top
+          Position.Y = 50.000000000000000000
+          Size.Width = 390.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+          object Label3: TLabel
+            Align = Client
+            Size.Width = 390.000000000000000000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.HorzAlign = Center
+            TextSettings.WordWrap = False
+            Text = 'Pos. final (E - N):'
+            TabOrder = 0
+          end
+        end
+        object Layout6: TLayout
+          Align = Top
+          Position.Y = 75.000000000000000000
+          Size.Width = 390.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          object LPosFin: TLabel
+            Align = Client
+            StyledSettings = [Family, Size, FontColor]
+            Size.Width = 390.000000000000000000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.Font.StyleExt = {00070000000000000004000000}
+            TextSettings.HorzAlign = Center
+            TextSettings.WordWrap = False
+            Text = '- - -'
+            TabOrder = 0
+          end
+        end
+      end
+      object Layout2: TLayout
+        Align = Left
+        Size.Width = 120.000000000000000000
+        Size.Height = 100.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        object BInicio: TButton
+          Align = Client
+          StyledSettings = [Family, Style, FontColor]
+          Size.Width = 120.000000000000000000
+          Size.Height = 100.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'buttonstyle'
+          TabOrder = 0
+          Text = 'Inicio'
+          TextSettings.Font.Size = 30.000000000000000000
+          TintColor = claSpringgreen
+          OnClick = BInicioClick
+        end
+      end
+    end
+    object VertScrollBox1: TVertScrollBox
+      Align = Client
+      Size.Width = 510.000000000000000000
+      Size.Height = 398.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Viewport.Width = 510.000000000000000000
+      Viewport.Height = 398.000000000000000000
+      object Layout16: TLayout
+        Align = Top
+        Position.Y = 115.000000000000000000
+        Size.Width = 510.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 4
+      end
+      object Layout17: TLayout
+        Align = Top
+        Position.Y = 240.000000000000000000
+        Size.Width = 510.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+      end
+      object LayPosAct: TLayout
+        Align = Top
+        Position.Y = 25.000000000000000000
+        Size.Width = 510.000000000000000000
+        Size.Height = 90.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        object Layout7: TLayout
+          Align = Left
+          Size.Width = 100.000000000000000000
+          Size.Height = 90.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          object Label8: TLabel
+            Align = Client
+            Size.Width = 100.000000000000000000
+            Size.Height = 90.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.HorzAlign = Center
+            Text = 'Posici'#243'n actual:'
+            TabOrder = 0
+          end
+        end
+        object Layout8: TLayout
+          Align = Client
+          Size.Width = 410.000000000000000000
+          Size.Height = 90.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          object Layout9: TLayout
+            Align = Top
+            Position.Y = 30.000000000000000000
+            Size.Width = 410.000000000000000000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            object LNorte: TLabel
+              Align = Client
+              StyledSettings = [Family, Size, FontColor]
+              Size.Width = 410.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.StyleExt = {00070000000000000004000000}
+              TextSettings.HorzAlign = Center
+              TextSettings.WordWrap = False
+              Text = 'Norte (Y): - - -'
+              TabOrder = 0
+            end
+          end
+          object Layout10: TLayout
+            Align = Top
+            Position.Y = 60.000000000000000000
+            Size.Width = 410.000000000000000000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 1
+            object LRumbo: TLabel
+              Align = Client
+              StyledSettings = [Family, Size, FontColor]
+              Size.Width = 410.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.StyleExt = {00070000000000000004000000}
+              TextSettings.HorzAlign = Center
+              TextSettings.WordWrap = False
+              Text = 'Rumbo: - - -'
+              TabOrder = 0
+            end
+          end
+          object Layout11: TLayout
+            Align = Top
+            Size.Width = 410.000000000000000000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 2
+            object LEste: TLabel
+              Align = Client
+              StyledSettings = [Family, Size, FontColor]
+              Size.Width = 410.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.StyleExt = {00070000000000000004000000}
+              TextSettings.HorzAlign = Center
+              TextSettings.WordWrap = False
+              Text = 'Este (X): - - -'
+              TabOrder = 0
+            end
+          end
+        end
+      end
+      object LayDistRec: TLayout
+        Align = Top
+        Position.Y = 140.000000000000000000
+        Size.Width = 510.000000000000000000
+        Size.Height = 100.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        object Layout12: TLayout
+          Align = Top
+          Size.Width = 510.000000000000000000
+          Size.Height = 35.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          object Label9: TLabel
+            Align = Client
+            Size.Width = 510.000000000000000000
+            Size.Height = 35.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.HorzAlign = Center
+            Text = 'Distancia recorrida (km):'
+            TabOrder = 0
+          end
+        end
+        object Layout13: TLayout
+          Align = Client
+          Size.Width = 510.000000000000000000
+          Size.Height = 65.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          object LDistRec: TLabel
+            Align = Client
+            StyledSettings = [Family]
+            Size.Width = 510.000000000000000000
+            Size.Height = 65.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.Font.Size = 55.000000000000000000
+            TextSettings.Font.StyleExt = {00070000000000000004000000}
+            TextSettings.HorzAlign = Center
+            TextSettings.WordWrap = False
+            Text = '0.00'
+            TabOrder = 0
+          end
+        end
+      end
+      object LayVel: TLayout
+        Align = Top
+        Position.Y = 265.000000000000000000
+        Size.Width = 510.000000000000000000
+        Size.Height = 100.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        object Layout14: TLayout
+          Align = Top
+          Size.Width = 510.000000000000000000
+          Size.Height = 35.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          object Label11: TLabel
+            Align = Client
+            Size.Width = 510.000000000000000000
+            Size.Height = 35.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.HorzAlign = Center
+            Text = 'Velocidad (km/h):'
+            TabOrder = 0
+          end
+        end
+        object Layout15: TLayout
+          Align = Client
+          Size.Width = 510.000000000000000000
+          Size.Height = 65.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          object LVelocidad: TLabel
+            Align = Client
+            StyledSettings = [Family]
+            Size.Width = 510.000000000000000000
+            Size.Height = 65.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.Font.Size = 55.000000000000000000
+            TextSettings.Font.StyleExt = {00070000000000000004000000}
+            TextSettings.HorzAlign = Center
+            TextSettings.WordWrap = False
+            Text = '0.00'
+            TabOrder = 0
+          end
+        end
+      end
+      object LaySep01: TLayout
+        Align = Top
+        Size.Width = 510.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 5
+      end
+    end
+    object PnlAcerca: TPanel
+      Align = Center
+      Size.Width = 300.000000000000000000
+      Size.Height = 300.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'calloutpanelstyle'
+      Visible = False
+      TabOrder = 5
+      object Image1: TImage
+        MultiResBitmap = <
+          item
+            Width = 72
+            Height = 72
+            PNG = {
+              89504E470D0A1A0A0000000D494844520000004800000048080600000055EDB3
+              47000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              113749444154785EED9A097054D79540EFFBBF5B6A096D68434B6B6F84000901
+              62358365832138C64070B0911718DB71A632A9C44E2A85335E0627F15671168F
+              AB62A7B230711CBC61637610169605C2088C580C08B42209B4EF425B2FFFFFB9
+              F7F5EF56B7BA5B962C090F557DAA54FAFFF5EFFEEFDD77EF7DF7DEF7C08B172F
+              5EBC78F1E2C58B177730F5FF84939D9DADE9F70B8D12CD52842CCAC90A0899C0
+              58329315BC56221908934090FDF8C3B2D0AF80DCCB80352B02ABC24E5662E379
+              5916AA441F4B8B6F4F4F53414181853F3BC14CB88016AFF85EA424581683C2B2
+              5020F3F1853364598E150441541F191132800564A58E0950020A9C06A6148BB2
+              E6C4894F3F69561F9910264C40996BD786E8FA95EF298C3DCE644891418E18AD
+              503C81029604105A14012A99A2FCDD22FBEE2CCEDBD1A57E3CAE8CAB80366CD8
+              205E6D97129828FD14989C838388543F9A5050F8CDA008EF2992F84652A858B3
+              63C70E49FD68CC8C9B80E62F5F1786FAB11E3BBB4960ECDFD4668F4C0E09C6BF
+              1008090E86A0E020D0882288A2C03F932419248B045DDDDDD0D9D5051D9D9DF8
+              372205398A037A47B2B04FBE3CB2AB4D6D1B13E322A0ECD5ABC307CCE25BB20C
+              CB050142B0C9EDEF868785C18CB45430242743545424F8E974A0F3D581AFCE17
+              50A8C004EBD714195D34FE194D46181818807EFC6B6868828AAAAB5072A514DA
+              DADBF9736E50B00F9DF83379B2C47E341E421A9380B256AFF6D75834EB658BF4
+              1B411412D5663BE8732032221C921313216B4E260A671AFAE9B1CD89A22870E9
+              F215283EF7155CADAE86E69656F249EAA783604B3963CAB39246DE5FBC6F5F9F
+              DA3C6ABEB1D3CCCACAD26A7C837F811D794610589CDA6C87CC67E1BCB9B0E6BB
+              77C392C50B614A64A493707A7A7BA1BEA1116AAE5D87B28A0A5CA064FE1DE26A
+              4D0D5CB85482E6D50D03462368341AF0F1F1E19FD16F44464440C68CE9A88949
+              A8750237C5810123FFDC06BE294C51D86D1A5910A72CCF2E6A282E7695E208F8
+              46D3999DBD59D7AF6BFF9942C20121406DB6331D3565E5B23B2029210174683E
+              364C2613945556C2A5922B28845AE8EBEB430198C0681C8055772D87BB57DEC5
+              9F3B78380F0EE51DB19A9FAF0F4CF2F7E7BF3573461A4C4D49416169F9730499
+              20FDD6E123F970B9B44C6D1D0495EB069AEFCB3A63F0EB05056F0FA8CD2366D4
+              025AB4F2FBA132989F452FF1238109D6C00EA1999D3C390496DDBE1496DF71BB
+              5D5B8C2894A6A666387BFE0214169D841B376EF0F6A1AC5EF51D587DF74A7EBD
+              EFE061D87728975F0F2528280096DEB61816CC9D0B6161A15CBB0832BDBCFCCF
+              21FFE871EED4E9DE066A673FF6E74D1F8DF452E1FEFD1D6AF388B02E1B238729
+              CCFC24BEFB0947E1104909F1F0E086FBE08EA54BECC2E9E9E9852E34139A5DD2
+              084FC2E1384ED530D3D6DDDD03C74F9CE4A6496645A64AD03BEFC4C9C9B9FF3E
+              48C4BE38427D65327BC26C119EDCBA75EBA8C63CAA87E7AF5AB30EBDDF5368F6
+              816A132736261A36E53C0033A7A7F1199524093A3A3AB1D300A1A855A9530D68
+              6A3AF5E9B163484986CC8C74F0F7F703139A6875ED35FE4E7A773AF66153CEFD
+              10131DA53EAD224010A6303F3B5874E65EB565448CC849530018109BBA02F5F6
+              4FB8144F519B316E112163E60C78ECE11C8840C749B34871CBCEDD7BE1DC858B
+              E88B527110FE101D35859B595D4383FA4D57520D0614640ABF2E2BAF44C78DE9
+              971BC81FFDF0D1CD101818C0DF77BCE84BF8C7F6F7F87B13F47A3E1181010190
+              8E4EBCA5B58D8704767363E08B6BC1E23843EAA5BA8773AAA1A060D00E3D3022
+              0105C64D4D5018BC82CE6E0EDEDA0D202D752AAC5FB39AAF50D40912C0AE7D07
+              E0E4E933D0DED101E1A1A190101FC705191E1E06A78BCF82C5E23EC7A467BABA
+              6E4065553594A3705ADB5C431834155896BD14E6CE9EC5EF6995FBD7FB1F7233
+              AB459323DF131519C105441313131DCD27A6B56D306E42A106E308A2E21B5A8F
+              5E2FBFFCB5D1E78804A437A43DC564F961FC75AB47440226F9C30F363FC2CD8B
+              686E6D851D3B77F3408E84452ADFD0D804B72D9CCF553F2830900FA8BAB6963F
+              3F149AE952D49CD2F20AB7C221F4B13170CFAA15FCB7E81DB9799FF170C006C5
+              44CDCD2D909C940893B07FF45C7C5C2C7C79E61C98CD66F529F4A332D3A3EBEE
+              AAAB2C3DAAB679E46B05B478D59A3918D9BE8D519F3510410270861E79F0015C
+              7293F93DCDDC9B7FDD86815BCDA03A237DFDFD3C6D4835A4F06B7A8EA261129E
+              3BE8BB8EDF1F8ACE4F07A1182BD16A5975B51AC381233CCAB641DF6D41E19279
+              66A6CFB49A1B0A89E2A6D2B27230A94242CBD4A09096E85353F7D4559435F146
+              0F0C2BA0ACBB360433667909A3B1D96A1368B55A5C6617C1A205F3408B9AD18D
+              2BD3AEBD07DCC6204457B7558B8B4E9DC625F818CEE4372FE3F4F6F6A1865EE1
+              1A76A5BC1CEAEAEB5128EA870EDCB8D103BD1863252725601CE50B2198F751CC
+              75ED7A9D3DEAE64252203061E6B4BC6BA5A526DEE8866105149F3A75B9ACB09F
+              E08F05A94DDCA4D6DD7B0F4F32CDE84F8E1D3F01C7BE28F2A815465C65AA3025
+              A0CE91368D15D29246F42B6DE85786D33672D0FEA871E4037D310A0F0D9D8CCE
+              BF820BCF065394504916CED65796BA5F11108F02A2EC9C09F2D3E8D496A84D3C
+              B7DA78DF7A1EE213643235B8C4D20A42B3EB0E1A840533F3E1063311D084D5D5
+              37429C3E0622C2C3B9E30E983409CE9DFF0AEC3D612C8854302E25A3E07A6549
+              BFDAEA84C73848AB81548C79EE546F39A43DB3D267F06BEA002D67F7AC5A098F
+              3DF2102CC89ACB578E6F9B08A51FC215AB5F22F3FFF4B302BB766766CC84685C
+              D91C51185B2631CB34F5D6058F1A146348FD77F43D1454F1659DB487D2015B94
+              4AAB162DE3D41E1C1404530DC9101116060DA8FEBD6A747BB3B953AA871F9B2E
+              4386D20EF9620C6F232D4F4A4CE05505EA2B26D6BC1A60D3681C5C003AA6AABA
+              AAB242DE3004B702CACAFAA156F0EFF93B7E3D546DE2A9C48A65D93C5023737A
+              FFA39DDCB4023060B3D6757CF9324C015AE18922B725888940A74828900EF8B9
+              E9023C6E2E8368A50F52648CA78420A816ACE10065FBB37055F3C105C64FE787
+              3EB186F75D05D32796101D92FDE78606D78CDFAD8909539A66E2F7AC6B384292
+              27BF438E99A065944A12BBF71F847FBCF32E0AE4242F4B902A1F3DFE8563CC31
+              61905AC7CB3DF00373293C673A0B4BA546DEAEE027654230480E43A3621B059F
+              04AD6854B0A331D9C0AB1425B2294DBD75C2BD8024255BBDE490734B4A4CE44B
+              3CC5129518CB50224A02A1520345CFFF7CF70314CE09388F29C644A3C3E1AFB6
+              D4C256D319D868A98458B9970BAC17E3D80FB5C9F06B9FB95028DA33228CB47B
+              78844E13475A949418CF2DC101E62331A731DB70111015C240662BD45B4E7070
+              1024C461F089B4B777F068D77155EAC720F0CCB9F3F0C1C79FF06876A20854CC
+              304F6A81B7060AE159D49A997207FA08193A990F1C15A3E151DF6CF8A3361D2A
+              D0BC64ABEBE450F996FADC8E0934414B3F8DC9115C6757D0DE9D7A6BC7454062
+              44FC14344427574FB564524DA20B6DB7B9A5855FDF4CD25118FF692E81174DA7
+              61BA6C1D284DD1976204BCE1938E5A33076A5D6B7776A8CFD477223438848FC9
+              0905F4C6808041B553711190242B31D8EA54CED0E3F26EB3D96B75F5BC0836DE
+              A0DA42A8628460C5E430F7B4C4982107CDE8056331DC6BA98110FC9CE860BEB0
+              4D3B0D5E46C1E48A7AE86183554677908FA4BE138228D873481B0293032419D5
+              70082E02D280250E95D2AA2E2AB43AD9A0C0703C0942B3D98CABCF8EFE3CD8DF
+              7F08FF72E12D63212CC325FBBB966BF0978163F053D345D02BBD684E0AB4A160
+              3ED624C113BAA5F0576D1A34323F340F47917AC63151D6C70C8E8990197A768C
+              19D55B3B2E02C2A650909DAB858EEAD8348EE6E5071678C8520EFF61BE025118
+              E0D13035A849B3A53678DE78069E369D87645CB2A97D00C5F3851805BFF79905
+              7FF0C980EB6C12FF8DD1D0D2325825186A62820C7EA2850DB13B770262E08FAD
+              4EFA1A1030D899EEEE61CAA6A36496D40EAB2CD7F175AE6908E9852FFE11A435
+              BF43C1BCEA93099FA3158C54638642F1900DC731113293B58AA8B8A4022E6F5A
+              B872CD2F65C67E8392B37BF4FF79ED159EF01194576934AEF1E5935BFE8B27A6
+              2385A1501EC71886823BBA7687194597A789853F6BA743139AD248A1A0F5F5DF
+              BEACDE0D42C935552008F2494F6D79865F13B83059044579FEE4E13DAFAA4D1C
+              371AC4B4D8E82401DB8F12B6EDE1A1584659C6A05FF1E18BB17BE110DDB87C53
+              CA301AE110240877880EC1A156E3ECD4F99871ECEAAD1D97D12A205B509A4EB5
+              0B5BB247385E3BA2C1EC76349099B4321DF72D9EA0C0AF199F192DEE349CA078
+              C8C6D071F0312BB8620CC1C5C416AC5CFB14AF3F53C0AAF2DA8BBFE2457262CB
+              F3BF423F3468CB63211657A6E78C67618EEC5A62A5A16CD71AE04DED0CAE67E3
+              41080687AFFE7A2BBFA64C7FCB732FF06B82F6CE04C67E793277CF1B6A13C745
+              8350E57BB1474E92EC7270CCB67C6C3CA8C395E86FB85453624939948D012642
+              013AE3ED1AC3B8098770ECBBA3C32604453033C65CCA102E02422D6CC556A7EA
+              5747E7E0666444983DC11F17CE88E1B0D5270B5EC76878AF261E766892E1450C
+              FE68D5A260703C090F0F57AF003A5D8FD3F4A116B9E449AE0262421DFE73122F
+              6DA9D8A03AEF7842A644B9D3072898975030BFC718274F8CE5FE69BC494E1CEC
+              3B6D363A220B7043648A35D476C045405AADB90EF5DA29D8A1FD2E594D4E6331
+              02A50305B71A54BCB7EDB652ADAAAEDE79135300B99B59B87238E122A0387FFF
+              4681418D7ACBA18D375BA247496B647804BFBE95A08A229D6A23E8B4DAD04358
+              3288D5B1937D5DB6805C0444E7FB9800F9EA2D87ECD5A692B42F45FB5CB4ED6B
+              83AE697616CD9F673FE3F36D4002989D910E11E143D208ECDFB4A906983C7932
+              BFAFAEA9E5427244902D9FB93BDBE822208249967CC79A296DEDD2A6202F3861
+              446D3024F35D02C2DFCF0FE667CD81471F7E101EDAB8815F7F5B2C9897058F6D
+              7A08363FB811E6CECE043FEC1B416561DAE4A46299C964E6D5D0BEBEC1050B87
+              2A2992F0B97AEB845B01E943FC2FE347F86785645579F52A74AA4B632ABE6C4A
+              64042F196CDCB01EEE5FBF0EE2F4B13CE2BEEBCE6C7BEDE866424BF8F2ECDBAD
+              1388FDCBF9FE7A14D4037C3381CE0E501B41B568DADD750C1A3192284908F32D
+              55EF9CF018642CF8CEDA2D4C965FB11582C88C7236DC07B72F59CC3F278D22B3
+              22E747D0A184FAC64628FCA2886F24BADB073BB96D977A3536163EB64EBD1A84
+              72453AA13627338367EA741882E0FD6A688478B5229A7FB4103EFCF893C10407
+              675F61C2D3A70EEFFE9DDAE2845B0D226426E5A38DD90B283460DAADB09DCEA0
+              17DEE8B1EE52F6E0FFC39FE5C3B67F6EF7289C89868A787B0FE6C2B677DE85CF
+              8F1DE76701083A3011ABD6B3C845D0E12BA7DE09420D66F16ECD8BF02820C5E2
+              57864A934797D616E0DBC7172E592D8F6688123EAA45FFEFBFDEE30709684BF8
+              DB108E0DCAAFA8A0B7E7C021ECD3BB70EEC2057E9ED196A49EBF7869E8192505
+              14F930BA26B7E64578CC141BAA4A8C7186B47E743FD9685EF6A5898E97189213
+              F9A98A439F1E8103B99F42435393A34FF748DDDA8DEAD5D8D0EF7E5FBD720F09
+              8AFA79EEFC4568696B8548F4417488E2A35D7B780E6603FB4CE1CC2B4507F78E
+              5E40843E22A381E92C067440F3D426BE83D1842F3F557C06BEBA58E231BB77C7
+              CD12900D3A5A4C67944ACB2AA0A2B28A07874E13C9E03D3F63F7DF6A6A6A3CD6
+              6A3C9A185154F451BFC4D81FF127ED8770A8D64287A4AA6BC6B7363D91D08E06
+              AD5C4EA7DB64E81314E50F050505C31E0D1E51AACCAB8CA0FCF7D093ADB72C28
+              1C45505E3895BBE735B5C523C36A900D3313DF46333B80EA39727BFA7F0A1F03
+              83FD8AE8FB8EDA342CC3FA201B0D95577AF586B406145236AADCF8D63B6E320A
+              63554C60CF9C3AB8D31E080FC7880444D45596D6EA93675CC2657C0D2EFFB7A4
+              A9C920B733051E3995BBFB6B0F6FDA1875B96ED1CA359BD0695B8F98DD62A03F
+              A9283ABC67BB7AEBC58B172F5EBC78F1E2C58B970902E0FF001E863DB3BBAD03
+              CC0000000049454E44AE426082}
+          end>
+        Position.X = 114.000000000000000000
+        Position.Y = 109.000000000000000000
+        Size.Width = 72.000000000000000000
+        Size.Height = 72.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object Label2: TLabel
+        StyledSettings = [Family, FontColor]
+        Position.X = 65.000000000000000000
+        Position.Y = 21.000000000000000000
+        Size.Width = 170.000000000000000000
+        Size.Height = 58.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 50.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.HorzAlign = Center
+        Text = 'Velox'
+        TabOrder = 1
+      end
+      object Label4: TLabel
+        Position.X = 65.000000000000000000
+        Position.Y = 79.000000000000000000
+        Size.Width = 170.000000000000000000
+        Size.Height = 23.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.HorzAlign = Center
+        Text = 'v1.0'
+        TabOrder = 4
+      end
+      object Label5: TLabel
+        Position.X = 20.000000000000000000
+        Position.Y = 188.000000000000000000
+        Size.Width = 260.000000000000000000
+        Size.Height = 23.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.HorzAlign = Center
+        Text = 'Autor: Ing. Francisco S'#225'ez S.'
+        TabOrder = 3
+      end
+      object Label6: TLabel
+        StyledSettings = [Family, Style, FontColor]
+        Position.X = 20.000000000000000000
+        Position.Y = 220.000000000000000000
+        Size.Width = 260.000000000000000000
+        Size.Height = 23.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 16.000000000000000000
+        TextSettings.HorzAlign = Center
+        Text = 'Calabozo, 04 de julio de 2021'
+        TabOrder = 2
+      end
+      object SBAceptar: TSpeedButton
+        Position.X = 126.000000000000000000
+        Position.Y = 248.000000000000000000
+        Size.Width = 48.000000000000000000
+        Size.Height = 48.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'donetoolbutton'
+        OnClick = SBAceptarClick
+      end
+    end
   end
   object LctSensor: TLocationSensor
     OnLocationChanged = LctSensorLocationChanged

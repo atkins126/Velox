@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.StdCtrls,
   FMX.Controls.Presentation, FMX.Layouts, System.Sensors, UTM_WGS84,
-  System.Sensors.Components, System.DateUtils;
+  System.Sensors.Components, System.DateUtils, FMX.Objects;
 
 type
   TPosicion = record
@@ -27,48 +27,56 @@ type
     EstaIniciando: boolean;
   end;
   TFPrinc = class(TForm)
-    LayTop: TLayout;
+    LayPrinc: TLayout;
     LayBot: TLayout;
-    BInicio: TButton;
     SBSalir: TSpeedButton;
     SBAcerca: TSpeedButton;
     BLimpiar: TButton;
-    VertScrollBox1: TVertScrollBox;
-    LayPosAct: TLayout;
-    LayDistRec: TLayout;
-    LayVel: TLayout;
+    Layout18: TLayout;
+    LayTop: TLayout;
     Layout1: TLayout;
-    Layout2: TLayout;
     Layout3: TLayout;
-    Layout4: TLayout;
-    Layout5: TLayout;
-    Layout6: TLayout;
-    LaySep01: TLayout;
-    Layout7: TLayout;
-    Layout8: TLayout;
-    Layout9: TLayout;
-    Layout10: TLayout;
-    Layout11: TLayout;
-    Layout12: TLayout;
-    Layout13: TLayout;
-    Layout14: TLayout;
-    Layout15: TLayout;
     Label1: TLabel;
+    Layout4: TLayout;
     LPosIni: TLabel;
+    Layout5: TLayout;
     Label3: TLabel;
+    Layout6: TLayout;
     LPosFin: TLabel;
-    LEste: TLabel;
-    LNorte: TLabel;
-    LRumbo: TLabel;
-    Label8: TLabel;
-    Label9: TLabel;
-    LDistRec: TLabel;
-    Label11: TLabel;
-    LVelocidad: TLabel;
+    Layout2: TLayout;
+    BInicio: TButton;
+    LctSensor: TLocationSensor;
+    PnlAcerca: TPanel;
+    Image1: TImage;
+    Label2: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    SBAceptar: TSpeedButton;
+    VertScrollBox1: TVertScrollBox;
     Layout16: TLayout;
     Layout17: TLayout;
-    Layout18: TLayout;
-    LctSensor: TLocationSensor;
+    LayPosAct: TLayout;
+    Layout7: TLayout;
+    Label8: TLabel;
+    Layout8: TLayout;
+    Layout9: TLayout;
+    LNorte: TLabel;
+    Layout10: TLayout;
+    LRumbo: TLabel;
+    Layout11: TLayout;
+    LEste: TLabel;
+    LayDistRec: TLayout;
+    Layout12: TLayout;
+    Label9: TLabel;
+    Layout13: TLayout;
+    LDistRec: TLabel;
+    LayVel: TLayout;
+    Layout14: TLayout;
+    Label11: TLabel;
+    Layout15: TLayout;
+    LVelocidad: TLabel;
+    LaySep01: TLayout;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -77,10 +85,12 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure SBAcercaClick(Sender: TObject);
+    procedure SBAceptarClick(Sender: TObject);
   private
     { Private declarations }
     procedure ValInicio;
     procedure MostrarDatos;
+    procedure MostrarAcerca(Opc: boolean);
   public
     { Public declarations }
   end;
@@ -176,12 +186,23 @@ end;
 
 procedure TFPrinc.MostrarDatos;
 begin
-  LPosIni.Text:=FormatFloat('0.00',Reg.PosInicial.X)+','+FormatFloat('0.00',Reg.PosInicial.Y);
-  LEste.Text:='Este (X): '+FormatFloat('0.00',Reg.PosActual.X);
-  LNorte.Text:='Norte (Y): '+FormatFloat('0.00',Reg.PosActual.Y);
+  //LPosIni.Text:=FormatFloat('0.00',Reg.PosInicial.X)+','+FormatFloat('0.00',Reg.PosInicial.Y);
+  LPosIni.Text:=Round(Reg.PosInicial.X).ToString+','+Round(Reg.PosInicial.Y).ToString;
+  LEste.Text:='Este (X): '+Round(Reg.PosActual.X).ToString;
+  LNorte.Text:='Norte (Y): '+Round(Reg.PosActual.Y).ToString;
   LRumbo.Text:='Rumbo: '+Reg.Rumbo;
   LDistRec.Text:=FormatFloat('#,##0.00',Reg.DistRecorrida);
   LVelocidad.Text:=FormatFloat('0.00',Reg.Velocidad);
+end;
+
+procedure TFPrinc.MostrarAcerca(Opc: Boolean);
+begin
+  LayTop.Visible:=not Opc;
+  LayBot.Visible:=not Opc;
+  LayPosAct.Visible:=not Opc;
+  LayDistRec.Visible:=not Opc;
+  LayVel.Visible:=not Opc;
+  PnlAcerca.Visible:=Opc;
 end;
 
 /// Eventos de la app: ///
@@ -190,6 +211,7 @@ procedure TFPrinc.FormCreate(Sender: TObject);
 begin
   Separador:=FormatSettings.DecimalSeparator;
   FormatSettings.DecimalSeparator:='.';
+  PnlAcerca.Visible:=false;
   ValInicio;
 end;
 
@@ -246,8 +268,10 @@ begin
     BInicio.TintColor:=TAlphaColorRec.Springgreen;
     //aquí se detiene el proceso:
     Reg.PosFinal:=Reg.PosActual;
-    LPosFin.Text:=FormatFloat('0.00',Reg.PosFinal.X)+','+
-                  FormatFloat('0.00',Reg.PosFinal.Y);
+    {LPosFin.Text:=FormatFloat('0.00',Reg.PosFinal.X)+','+
+                  FormatFloat('0.00',Reg.PosFinal.Y); }
+    LPosFin.Text:=Round(Reg.PosFinal.X).ToString+','+
+                  Round(Reg.PosFinal.Y).ToString;
   end;
 end;
 
@@ -256,10 +280,14 @@ begin
   ValInicio;
 end;
 
+procedure TFPrinc.SBAceptarClick(Sender: TObject);
+begin
+  MostrarAcerca(false);
+end;
+
 procedure TFPrinc.SBAcercaClick(Sender: TObject);
 begin
-  ShowMessage('Velox'+#13#10+'v1.0'+#13#10#13#10+'Autor: Ing. Francisco J. Sáez S.'+
-              #13#13#10+'Calabozo, 3 de julio de 2021');
+  MostrarAcerca(true);
 end;
 
 procedure TFPrinc.SBSalirClick(Sender: TObject);
