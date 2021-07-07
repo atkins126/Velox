@@ -34,15 +34,6 @@ type
     BLimpiar: TButton;
     Layout18: TLayout;
     LayTop: TLayout;
-    Layout1: TLayout;
-    Layout3: TLayout;
-    Label1: TLabel;
-    Layout4: TLayout;
-    LPosIni: TLabel;
-    Layout5: TLayout;
-    Label3: TLabel;
-    Layout6: TLayout;
-    LPosFin: TLabel;
     Layout2: TLayout;
     BInicio: TButton;
     LctSensor: TLocationSensor;
@@ -77,6 +68,21 @@ type
     Layout15: TLayout;
     LVelocidad: TLabel;
     LaySep01: TLayout;
+    PnlResumen: TPanel;
+    Layout1: TLayout;
+    Layout3: TLayout;
+    Label1: TLabel;
+    Layout4: TLayout;
+    LPosIni: TLabel;
+    Layout5: TLayout;
+    Label3: TLabel;
+    Layout6: TLayout;
+    LPosFin: TLabel;
+    Layout19: TLayout;
+    Label7: TLabel;
+    Layout20: TLayout;
+    Button1: TButton;
+    SBAceptarRes: TSpeedButton;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -86,11 +92,15 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure SBAcercaClick(Sender: TObject);
     procedure SBAceptarClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure SBAceptarResClick(Sender: TObject);
   private
     { Private declarations }
     procedure ValInicio;
     procedure MostrarDatos;
+    procedure MostrarComponentes(Opc: boolean);
     procedure MostrarAcerca(Opc: boolean);
+    procedure MostrarResumen(Opc: boolean);
   public
     { Public declarations }
   end;
@@ -103,7 +113,6 @@ var
 implementation
 
 {$R *.fmx}
-{$R *.SmXhdpiPh.fmx ANDROID}
 
 /// Utilidades de la app: ///
 
@@ -195,14 +204,25 @@ begin
   LVelocidad.Text:=FormatFloat('0.00',Reg.Velocidad);
 end;
 
+procedure TFPrinc.MostrarComponentes(Opc: Boolean);
+begin
+  LayTop.Visible:=Opc;
+  LayBot.Visible:=Opc;
+  LayPosAct.Visible:=Opc;
+  LayDistRec.Visible:=Opc;
+  LayVel.Visible:=Opc;
+end;
+
 procedure TFPrinc.MostrarAcerca(Opc: Boolean);
 begin
-  LayTop.Visible:=not Opc;
-  LayBot.Visible:=not Opc;
-  LayPosAct.Visible:=not Opc;
-  LayDistRec.Visible:=not Opc;
-  LayVel.Visible:=not Opc;
+  MostrarComponentes(not Opc);
   PnlAcerca.Visible:=Opc;
+end;
+
+procedure TFPrinc.MostrarResumen(Opc: Boolean);
+begin
+  MostrarComponentes(not Opc);
+  PnlResumen.Visible:=Opc;
 end;
 
 /// Eventos de la app: ///
@@ -212,6 +232,7 @@ begin
   Separador:=FormatSettings.DecimalSeparator;
   FormatSettings.DecimalSeparator:='.';
   PnlAcerca.Visible:=false;
+  PnlResumen.Visible:=false;
   ValInicio;
 end;
 
@@ -280,9 +301,20 @@ begin
   ValInicio;
 end;
 
+procedure TFPrinc.Button1Click(Sender: TObject);
+begin
+  MostrarResumen(true);
+end;
+
 procedure TFPrinc.SBAceptarClick(Sender: TObject);
 begin
   MostrarAcerca(false);
+end;
+
+procedure TFPrinc.SBAceptarResClick(Sender: TObject);
+begin
+  MostrarResumen(false);
+
 end;
 
 procedure TFPrinc.SBAcercaClick(Sender: TObject);
