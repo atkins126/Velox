@@ -81,8 +81,12 @@ type
     Layout19: TLayout;
     Label7: TLabel;
     Layout20: TLayout;
-    Button1: TButton;
+    BResumen: TButton;
     SBAceptarRes: TSpeedButton;
+    Layout21: TLayout;
+    LTmpTransc: TLabel;
+    Layout22: TLayout;
+    Label12: TLabel;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -92,7 +96,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure SBAcercaClick(Sender: TObject);
     procedure SBAceptarClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
+    procedure BResumenClick(Sender: TObject);
     procedure SBAceptarResClick(Sender: TObject);
   private
     { Private declarations }
@@ -169,6 +173,7 @@ begin
   LRumbo.Text:='Rumbo: - - -';
   LDistRec.Text:='0.00';
   LVelocidad.Text:='0.00';
+  LTmpTransc.Text:='00:00:00';
   //se limpia el registro:
   Reg.PosInicial.X:=0;
   Reg.PosInicial.Y:=0;
@@ -195,7 +200,6 @@ end;
 
 procedure TFPrinc.MostrarDatos;
 begin
-  //LPosIni.Text:=FormatFloat('0.00',Reg.PosInicial.X)+','+FormatFloat('0.00',Reg.PosInicial.Y);
   LPosIni.Text:=Round(Reg.PosInicial.X).ToString+','+Round(Reg.PosInicial.Y).ToString;
   LEste.Text:='Este (X): '+Round(Reg.PosActual.X).ToString;
   LNorte.Text:='Norte (Y): '+Round(Reg.PosActual.Y).ToString;
@@ -264,6 +268,7 @@ begin
   Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
   //se obtiene el intervalo de tiempo de recorrido entre los 2 puntos:
   IntTiempo:=SecondSpan(Reg.TiempoAnterior,Reg.TiempoActual);
+  Reg.Tiempo:=Reg.Tiempo+IntTiempo;
   //se calcula la velocidad en km/h:
   Reg.Velocidad:=Distancia/SegundosToHoras(IntTiempo);
   //se muestran los datos:
@@ -274,7 +279,8 @@ end;
 procedure TFPrinc.BInicioClick(Sender: TObject);
 begin
   LctSensor.Active:=BInicio.Text='Inicio';
-  BLimpiar.Visible:=not LctSensor.Active;
+  BResumen.Visible:=not LctSensor.Active;
+  BLimpiar.Visible:=BResumen.Visible;
   if BInicio.Text='Inicio' then
   begin
     BInicio.Text:='Fin';
@@ -289,10 +295,9 @@ begin
     BInicio.TintColor:=TAlphaColorRec.Springgreen;
     //aquí se detiene el proceso:
     Reg.PosFinal:=Reg.PosActual;
-    {LPosFin.Text:=FormatFloat('0.00',Reg.PosFinal.X)+','+
-                  FormatFloat('0.00',Reg.PosFinal.Y); }
     LPosFin.Text:=Round(Reg.PosFinal.X).ToString+','+
                   Round(Reg.PosFinal.Y).ToString;
+    LTmpTransc.Text:=TimeToStr(FloatToDateTime(Reg.Tiempo));
   end;
 end;
 
@@ -301,7 +306,7 @@ begin
   ValInicio;
 end;
 
-procedure TFPrinc.Button1Click(Sender: TObject);
+procedure TFPrinc.BResumenClick(Sender: TObject);
 begin
   MostrarResumen(true);
 end;
@@ -314,7 +319,6 @@ end;
 procedure TFPrinc.SBAceptarResClick(Sender: TObject);
 begin
   MostrarResumen(false);
-
 end;
 
 procedure TFPrinc.SBAcercaClick(Sender: TObject);
