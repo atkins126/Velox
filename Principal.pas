@@ -22,6 +22,8 @@ type
     DistRecorrida,
     Velocidad,
     Tiempo: single;
+    TiempoInicio,
+    TiempoFin,
     TiempoAnterior,
     TiempoActual: TTime;
     EstaIniciando: boolean;
@@ -45,8 +47,8 @@ type
     Label6: TLabel;
     SBAceptar: TSpeedButton;
     VertScrollBox1: TVertScrollBox;
-    Layout16: TLayout;
-    Layout17: TLayout;
+    LaySep02: TLayout;
+    LaySep03: TLayout;
     LayPosAct: TLayout;
     Layout7: TLayout;
     Label8: TLabel;
@@ -87,6 +89,9 @@ type
     LTmpTransc: TLabel;
     Layout22: TLayout;
     Label12: TLabel;
+    RBAPie: TRadioButton;
+    RBVehiculo: TRadioButton;
+    StyleBook: TStyleBook;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -248,9 +253,12 @@ end;
 procedure TFPrinc.LctSensorLocationChanged(Sender: TObject; const OldLocation,
   NewLocation: TLocationCoord2D);
 var
-  Distancia,IntTiempo: single;
+  Distancia,IntTiempo,VelMaxima: single;
 begin
   Reg.TiempoActual:=Now;
+  //se usa este primitivo método para filtrar lecturas erróneas del GPS:
+  if RBAPie.IsChecked then VelMaxima:=35
+                      else VelMaxima:=220;
   //se obtienen las coordenadas (geográficas y UTM):
   CargarCoordenadas(OldLocation,Reg.PosAnterior);
   CargarCoordenadas(NewLocation,Reg.PosActual);
@@ -260,19 +268,21 @@ begin
     Reg.PosAnterior:=Reg.PosActual;
     Reg.EstaIniciando:=false;
   end;
+  //se obtiene el intervalo de tiempo de recorrido entre los 2 puntos:
+  IntTiempo:=SecondSpan(Reg.TiempoAnterior,Reg.TiempoActual);
+  Reg.Tiempo:=Reg.Tiempo+IntTiempo;
+  //se obtiene el rumbo:
   Reg.Rumbo:=Sentido(Reg.PosAnterior.X,Reg.PosAnterior.Y,
                      Reg.PosActual.X,Reg.PosActual.Y);
   //se obtiene la distancia inmediata de los dos últimos puntos:
   Distancia:=MetrosToKm(CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
                                           Reg.PosActual.X,Reg.PosActual.Y));
   Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
-  //se obtiene el intervalo de tiempo de recorrido entre los 2 puntos:
-  IntTiempo:=SecondSpan(Reg.TiempoAnterior,Reg.TiempoActual);
-  Reg.Tiempo:=Reg.Tiempo+IntTiempo;
   //se calcula la velocidad en km/h:
   Reg.Velocidad:=Distancia/SegundosToHoras(IntTiempo);
   //se muestran los datos:
-  MostrarDatos;
+  if Reg.Velocidad<=VelMaxima then MostrarDatos
+  else Reg.DistRecorrida:=Abs(Reg.DistRecorrida-Distancia);
   Reg.TiempoAnterior:=Reg.TiempoActual;
 end;
 
@@ -285,6 +295,7 @@ begin
   begin
     BInicio.Text:='Fin';
     BInicio.TintColor:=TAlphaColorRec.Red;
+    Reg.TiempoInicio:=Now;
     //aquí arranca el proceso:
     Reg.TiempoAnterior:=Now;
     Reg.DistRecorrida:=0;
@@ -293,6 +304,8 @@ begin
   begin
     BInicio.Text:='Inicio';
     BInicio.TintColor:=TAlphaColorRec.Springgreen;
+    Reg.TiempoFin:=Now;
+    Reg.Tiempo:=Reg.TiempoFin-Reg.TiempoInicio;
     //aquí se detiene el proceso:
     Reg.PosFinal:=Reg.PosActual;
     LPosFin.Text:=Round(Reg.PosFinal.X).ToString+','+
@@ -332,3 +345,36 @@ begin
 end;
 
 end.
+
+{
+procedure TFPrinc.LctSensorLocationChanged(Sender: TObject; const OldLocation,
+  NewLocation: TLocationCoord2D);
+var
+  Distancia,IntTiempo: single;
+begin
+  Reg.TiempoActual:=Now;
+  //se obtienen las coordenadas (geográficas y UTM):
+  CargarCoordenadas(OldLocation,Reg.PosAnterior);
+  CargarCoordenadas(NewLocation,Reg.PosActual);
+  if Reg.EstaIniciando then
+  begin
+    Reg.PosInicial:=Reg.PosActual;
+    Reg.PosAnterior:=Reg.PosActual;
+    Reg.EstaIniciando:=false;
+  end;
+  Reg.Rumbo:=Sentido(Reg.PosAnterior.X,Reg.PosAnterior.Y,
+                     Reg.PosActual.X,Reg.PosActual.Y);
+  //se obtiene la distancia inmediata de los dos últimos puntos:
+  Distancia:=MetrosToKm(CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
+                                          Reg.PosActual.X,Reg.PosActual.Y));
+  Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
+  //se obtiene el intervalo de tiempo de recorrido entre los 2 puntos:
+  IntTiempo:=SecondSpan(Reg.TiempoAnterior,Reg.TiempoActual);
+  Reg.Tiempo:=Reg.Tiempo+IntTiempo;
+  //se calcula la velocidad en km/h:
+  Reg.Velocidad:=Distancia/SegundosToHoras(IntTiempo);
+  //se muestran los datos:
+  MostrarDatos;
+  Reg.TiempoAnterior:=Reg.TiempoActual;
+end;
+}
