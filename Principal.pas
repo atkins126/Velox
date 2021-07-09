@@ -34,7 +34,6 @@ type
     SBSalir: TSpeedButton;
     SBAcerca: TSpeedButton;
     BLimpiar: TButton;
-    Layout18: TLayout;
     LayTop: TLayout;
     Layout2: TLayout;
     BInicio: TButton;
@@ -46,7 +45,7 @@ type
     Label5: TLabel;
     Label6: TLabel;
     SBAceptar: TSpeedButton;
-    VertScrollBox1: TVertScrollBox;
+    VertScrollBox: TVertScrollBox;
     LaySep02: TLayout;
     LaySep03: TLayout;
     LayPosAct: TLayout;
@@ -92,6 +91,8 @@ type
     RBAPie: TRadioButton;
     RBVehiculo: TRadioButton;
     StyleBook: TStyleBook;
+    Layout18: TLayout;
+    Layout16: TLayout;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -103,11 +104,11 @@ type
     procedure SBAceptarClick(Sender: TObject);
     procedure BResumenClick(Sender: TObject);
     procedure SBAceptarResClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     procedure ValInicio;
     procedure MostrarDatos;
-    procedure MostrarComponentes(Opc: boolean);
     procedure MostrarAcerca(Opc: boolean);
     procedure MostrarResumen(Opc: boolean);
   public
@@ -213,25 +214,18 @@ begin
   LVelocidad.Text:=FormatFloat('0.00',Reg.Velocidad);
 end;
 
-procedure TFPrinc.MostrarComponentes(Opc: Boolean);
-begin
-  LayTop.Visible:=Opc;
-  LayBot.Visible:=Opc;
-  LayPosAct.Visible:=Opc;
-  LayDistRec.Visible:=Opc;
-  LayVel.Visible:=Opc;
-end;
-
 procedure TFPrinc.MostrarAcerca(Opc: Boolean);
 begin
-  MostrarComponentes(not Opc);
+  VertScrollBox.Visible:=not Opc;
   PnlAcerca.Visible:=Opc;
+  BResumen.Visible:=not Opc;
 end;
 
 procedure TFPrinc.MostrarResumen(Opc: Boolean);
 begin
-  MostrarComponentes(not Opc);
+  VertScrollBox.Visible:=not Opc;
   PnlResumen.Visible:=Opc;
+  SBAcerca.Visible:=not Opc;
 end;
 
 /// Eventos de la app: ///
@@ -240,14 +234,18 @@ procedure TFPrinc.FormCreate(Sender: TObject);
 begin
   Separador:=FormatSettings.DecimalSeparator;
   FormatSettings.DecimalSeparator:='.';
-  PnlAcerca.Visible:=false;
-  PnlResumen.Visible:=false;
   ValInicio;
 end;
 
 procedure TFPrinc.FormDestroy(Sender: TObject);
 begin
   FormatSettings.DecimalSeparator:=Separador;
+end;
+
+procedure TFPrinc.FormShow(Sender: TObject);
+begin
+  //PnlAcerca.Visible:=false;
+  //PnlResumen.Visible:=false;
 end;
 
 procedure TFPrinc.LctSensorLocationChanged(Sender: TObject; const OldLocation,
@@ -319,9 +317,9 @@ begin
   ValInicio;
 end;
 
-procedure TFPrinc.BResumenClick(Sender: TObject);
+procedure TFPrinc.SBAcercaClick(Sender: TObject);
 begin
-  MostrarResumen(true);
+  MostrarAcerca(true);
 end;
 
 procedure TFPrinc.SBAceptarClick(Sender: TObject);
@@ -329,14 +327,14 @@ begin
   MostrarAcerca(false);
 end;
 
+procedure TFPrinc.BResumenClick(Sender: TObject);
+begin
+  MostrarResumen(true);
+end;
+
 procedure TFPrinc.SBAceptarResClick(Sender: TObject);
 begin
   MostrarResumen(false);
-end;
-
-procedure TFPrinc.SBAcercaClick(Sender: TObject);
-begin
-  MostrarAcerca(true);
 end;
 
 procedure TFPrinc.SBSalirClick(Sender: TObject);
