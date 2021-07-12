@@ -93,6 +93,8 @@ type
     StyleBook: TStyleBook;
     Layout18: TLayout;
     Layout16: TLayout;
+    Layout17: TLayout;
+    Layout23: TLayout;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -244,8 +246,8 @@ end;
 
 procedure TFPrinc.FormShow(Sender: TObject);
 begin
-  //PnlAcerca.Visible:=false;
-  //PnlResumen.Visible:=false;
+  PnlAcerca.Visible:=false;
+  PnlResumen.Visible:=false;
 end;
 
 procedure TFPrinc.LctSensorLocationChanged(Sender: TObject; const OldLocation,
