@@ -677,6 +677,7 @@ object FPrinc: TFPrinc
         Size.Width = 300.000000000000000000
         Size.Height = 313.000000000000000000
         Size.PlatformDefault = False
+        Visible = False
         TabOrder = 0
         object Layout3: TLayout
           Align = Top
@@ -705,11 +706,12 @@ object FPrinc: TFPrinc
           TabOrder = 6
           object LPosIni: TLabel
             Align = Client
-            StyledSettings = [Family, Size, FontColor]
+            StyledSettings = [Size]
             Size.Width = 300.000000000000000000
             Size.Height = 25.000000000000000000
             Size.PlatformDefault = False
             TextSettings.Font.StyleExt = {00070000000000000004000000}
+            TextSettings.FontColor = claYellow
             TextSettings.HorzAlign = Center
             TextSettings.WordWrap = False
             Text = '- - -'
@@ -743,11 +745,12 @@ object FPrinc: TFPrinc
           TabOrder = 3
           object LPosFin: TLabel
             Align = Client
-            StyledSettings = [Family, Size, FontColor]
+            StyledSettings = [Size]
             Size.Width = 300.000000000000000000
             Size.Height = 25.000000000000000000
             Size.PlatformDefault = False
             TextSettings.Font.StyleExt = {00070000000000000004000000}
+            TextSettings.FontColor = claYellow
             TextSettings.HorzAlign = Center
             TextSettings.WordWrap = False
             Text = '- - -'
@@ -784,11 +787,12 @@ object FPrinc: TFPrinc
           TabOrder = 2
           object LTmpTransc: TLabel
             Align = Client
-            StyledSettings = [Family, Size, FontColor]
+            StyledSettings = [Size]
             Size.Width = 300.000000000000000000
             Size.Height = 25.000000000000000000
             Size.PlatformDefault = False
             TextSettings.Font.StyleExt = {00070000000000000004000000}
+            TextSettings.FontColor = claYellow
             TextSettings.HorzAlign = Center
             TextSettings.WordWrap = False
             Text = '- - -'
