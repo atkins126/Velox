@@ -5,8 +5,8 @@ interface
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.StdCtrls,
-  FMX.Controls.Presentation, FMX.Layouts, System.Sensors, UTM_WGS84,
-  System.Sensors.Components, System.DateUtils, FMX.Objects;
+  FMX.Controls.Presentation, FMX.Layouts, FMX.Objects, System.Sensors, UTM_WGS84,
+  System.Sensors.Components, System.DateUtils, System.Math;
 
 type
   TPosicion = record
@@ -95,6 +95,7 @@ type
     Layout16: TLayout;
     Layout17: TLayout;
     Layout23: TLayout;
+    Crcl: TCircle;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -170,6 +171,27 @@ function SegundosToHoras(TmpSegs: single): single;
 begin
   Result:=TmpSegs/3600;
 end;
+
+function Grados(Norte1,Norte2,DistH: double): double;
+begin
+  if DistH>0 then Result:=RadToDeg(ArcCos(Abs(Norte1-Norte2)/DistH))
+             else Result:=0;
+end;
+
+//Grados(Y1,Y2,CalcularDistancia(X1,Y1,X2,Y2);
+
+{function DecAGrados(Valor: Double): double;
+var
+  sGrad,sMin,sSeg: string;
+  xMin,xSeg: Double;
+begin
+  xMin:=Frac(Valor)*60;
+  xSeg:=Frac(xMin)*60;
+  sGrad:=FloatToStr(Trunc(Valor));
+  sMin:=FloatToStr(Trunc(xMin));
+  sSeg:=FloatToStr(Trunc(xSeg));
+  Result:=sGrad+'° '+sMin+''' '+sSeg+'"';
+end;}
 
 procedure TFPrinc.ValInicio;
 begin
@@ -274,6 +296,9 @@ begin
   //se obtiene el rumbo:
   Reg.Rumbo:=Sentido(Reg.PosAnterior.X,Reg.PosAnterior.Y,
                      Reg.PosActual.X,Reg.PosActual.Y);
+  Crcl.RotationAngle:=90-Grados(Reg.PosAnterior.Y,Reg.PosActual.Y,
+                          CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
+                                            Reg.PosActual.X,Reg.PosActual.Y));
   //se obtiene la distancia inmediata de los dos últimos puntos:
   Distancia:=MetrosToKm(CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
                                           Reg.PosActual.X,Reg.PosActual.Y));
