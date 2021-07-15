@@ -96,6 +96,14 @@ type
     Layout17: TLayout;
     Layout23: TLayout;
     Crcl: TCircle;
+    Layout24: TLayout;
+    LTotDistRec: TLabel;
+    Layout25: TLayout;
+    Label13: TLabel;
+    Layout26: TLayout;
+    Label10: TLabel;
+    Layout27: TLayout;
+    LVelProm: TLabel;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -204,6 +212,8 @@ begin
   LDistRec.Text:='0.00';
   LVelocidad.Text:='0.00';
   LTmpTransc.Text:='00:00:00';
+  LTotDistRec.Text:='- - -';
+  LVelProm.Text:='- - -';
   //se limpia el registro:
   Reg.PosInicial.X:=0;
   Reg.PosInicial.Y:=0;
@@ -230,7 +240,6 @@ end;
 
 procedure TFPrinc.MostrarDatos;
 begin
-  LPosIni.Text:=Round(Reg.PosInicial.X).ToString+','+Round(Reg.PosInicial.Y).ToString;
   LEste.Text:='Este (X): '+Round(Reg.PosActual.X).ToString;
   LNorte.Text:='Norte (Y): '+Round(Reg.PosActual.Y).ToString;
   LRumbo.Text:='Rumbo: '+Reg.Rumbo;
@@ -270,6 +279,8 @@ procedure TFPrinc.FormShow(Sender: TObject);
 begin
   PnlAcerca.Visible:=false;
   PnlResumen.Visible:=false;
+  {LayPrinc.Scale.X:=;
+  LayPrinc.Scale.Y:=;}
 end;
 
 procedure TFPrinc.LctSensorLocationChanged(Sender: TObject; const OldLocation,
@@ -278,7 +289,7 @@ var
   Distancia,IntTiempo,VelMaxima: single;
 begin
   Reg.TiempoActual:=Now;
-  //se usa este primitivo método para filtrar lecturas erróneas del GPS:
+  //se usa este primitivo método para filtrar posibles lecturas erróneas del GPS:
   if RBAPie.IsChecked then VelMaxima:=35
                       else VelMaxima:=220;
   //se obtienen las coordenadas (geográficas y UTM):
@@ -333,9 +344,14 @@ begin
     Reg.Tiempo:=Reg.TiempoFin-Reg.TiempoInicio;
     //aquí se detiene el proceso:
     Reg.PosFinal:=Reg.PosActual;
-    LPosFin.Text:=Round(Reg.PosFinal.X).ToString+','+
+    LPosIni.Text:=Round(Reg.PosInicial.X).ToString+' - '+
+                  Round(Reg.PosInicial.Y).ToString;
+    LPosFin.Text:=Round(Reg.PosFinal.X).ToString+' - '+
                   Round(Reg.PosFinal.Y).ToString;
+    LTotDistRec.Text:=FormatFloat('0.00',Reg.DistRecorrida)+' km';
     LTmpTransc.Text:=TimeToStr(FloatToDateTime(Reg.Tiempo));
+    LVelProm.Text:=FormatFloat('0.00',Reg.DistRecorrida/SegundosToHoras(Reg.Tiempo))+
+                   ' km/h';
   end;
 end;
 
