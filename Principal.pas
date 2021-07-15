@@ -104,6 +104,10 @@ type
     Label10: TLabel;
     Layout27: TLayout;
     LVelProm: TLabel;
+    Layout28: TLayout;
+    Label14: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -186,29 +190,14 @@ begin
              else Result:=0;
 end;
 
-//Grados(Y1,Y2,CalcularDistancia(X1,Y1,X2,Y2);
-
-{function DecAGrados(Valor: Double): double;
-var
-  sGrad,sMin,sSeg: string;
-  xMin,xSeg: Double;
-begin
-  xMin:=Frac(Valor)*60;
-  xSeg:=Frac(xMin)*60;
-  sGrad:=FloatToStr(Trunc(Valor));
-  sMin:=FloatToStr(Trunc(xMin));
-  sSeg:=FloatToStr(Trunc(xSeg));
-  Result:=sGrad+'° '+sMin+''' '+sSeg+'"';
-end;}
-
 procedure TFPrinc.ValInicio;
 begin
   BInicio.Text:='Inicio';
   LPosIni.Text:='- - -';
   LPosFin.Text:='- - -';
-  LEste.Text:='Este (X): - - -';
-  LNorte.Text:='Norte (Y): - - -';
-  LRumbo.Text:='Rumbo: - - -';
+  LEste.Text:='- - -';
+  LNorte.Text:='- - -';
+  LRumbo.Text:='- - -';
   LDistRec.Text:='0.00';
   LVelocidad.Text:='0.00';
   LTmpTransc.Text:='00:00:00';
@@ -240,9 +229,9 @@ end;
 
 procedure TFPrinc.MostrarDatos;
 begin
-  LEste.Text:='Este (X): '+Round(Reg.PosActual.X).ToString;
-  LNorte.Text:='Norte (Y): '+Round(Reg.PosActual.Y).ToString;
-  LRumbo.Text:='Rumbo: '+Reg.Rumbo;
+  LEste.Text:=Round(Reg.PosActual.X).ToString;
+  LNorte.Text:=Round(Reg.PosActual.Y).ToString;
+  LRumbo.Text:=Reg.Rumbo;
   LDistRec.Text:=FormatFloat('#,##0.00',Reg.DistRecorrida);
   LVelocidad.Text:=FormatFloat('0.00',Reg.Velocidad);
 end;
@@ -252,13 +241,16 @@ begin
   VertScrollBox.Visible:=not Opc;
   PnlAcerca.Visible:=Opc;
   BResumen.Visible:=not Opc;
+  LayTop.Enabled:=not Opc;
+  LayBot.Enabled:=not Opc;
 end;
 
 procedure TFPrinc.MostrarResumen(Opc: Boolean);
 begin
   VertScrollBox.Visible:=not Opc;
   PnlResumen.Visible:=Opc;
-  SBAcerca.Visible:=not Opc;
+  LayTop.Enabled:=not Opc;
+  LayBot.Enabled:=not Opc;
 end;
 
 /// Eventos de la app: ///
@@ -290,8 +282,8 @@ var
 begin
   Reg.TiempoActual:=Now;
   //se usa este primitivo método para filtrar posibles lecturas erróneas del GPS:
-  if RBAPie.IsChecked then VelMaxima:=35
-                      else VelMaxima:=220;
+  if RBAPie.IsChecked then VelMaxima:=35    //vel. máxima para un humano muy veloz
+                      else VelMaxima:=220;  //vel. máxima para un carro convencional
   //se obtienen las coordenadas (geográficas y UTM):
   CargarCoordenadas(OldLocation,Reg.PosAnterior);
   CargarCoordenadas(NewLocation,Reg.PosActual);
@@ -350,8 +342,8 @@ begin
                   Round(Reg.PosFinal.Y).ToString;
     LTotDistRec.Text:=FormatFloat('0.00',Reg.DistRecorrida)+' km';
     LTmpTransc.Text:=TimeToStr(FloatToDateTime(Reg.Tiempo));
-    LVelProm.Text:=FormatFloat('0.00',Reg.DistRecorrida/SegundosToHoras(Reg.Tiempo))+
-                   ' km/h';
+    LVelProm.Text:=FormatFloat('0.00',Reg.DistRecorrida/
+      HourSpan(Reg.TiempoInicio,Reg.TiempoFin))+' km/h';
   end;
 end;
 
