@@ -271,8 +271,6 @@ procedure TFPrinc.FormShow(Sender: TObject);
 begin
   PnlAcerca.Visible:=false;
   PnlResumen.Visible:=false;
-  {LayPrinc.Scale.X:=;
-  LayPrinc.Scale.Y:=;}
 end;
 
 procedure TFPrinc.LctSensorLocationChanged(Sender: TObject; const OldLocation,
@@ -378,36 +376,3 @@ begin
 end;
 
 end.
-
-{
-procedure TFPrinc.LctSensorLocationChanged(Sender: TObject; const OldLocation,
-  NewLocation: TLocationCoord2D);
-var
-  Distancia,IntTiempo: single;
-begin
-  Reg.TiempoActual:=Now;
-  //se obtienen las coordenadas (geográficas y UTM):
-  CargarCoordenadas(OldLocation,Reg.PosAnterior);
-  CargarCoordenadas(NewLocation,Reg.PosActual);
-  if Reg.EstaIniciando then
-  begin
-    Reg.PosInicial:=Reg.PosActual;
-    Reg.PosAnterior:=Reg.PosActual;
-    Reg.EstaIniciando:=false;
-  end;
-  Reg.Rumbo:=Sentido(Reg.PosAnterior.X,Reg.PosAnterior.Y,
-                     Reg.PosActual.X,Reg.PosActual.Y);
-  //se obtiene la distancia inmediata de los dos últimos puntos:
-  Distancia:=MetrosToKm(CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
-                                          Reg.PosActual.X,Reg.PosActual.Y));
-  Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
-  //se obtiene el intervalo de tiempo de recorrido entre los 2 puntos:
-  IntTiempo:=SecondSpan(Reg.TiempoAnterior,Reg.TiempoActual);
-  Reg.Tiempo:=Reg.Tiempo+IntTiempo;
-  //se calcula la velocidad en km/h:
-  Reg.Velocidad:=Distancia/SegundosToHoras(IntTiempo);
-  //se muestran los datos:
-  MostrarDatos;
-  Reg.TiempoAnterior:=Reg.TiempoActual;
-end;
-}
