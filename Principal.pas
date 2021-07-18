@@ -202,6 +202,7 @@ begin
     281..304: Result:='W - NW';   //oeste-noroeste
     305..324: Result:='NW';       //noroeste
     325..349: Result:='N - NW';   //norte-noroeste
+    else Result:='Desconocido';
   end;
 end;
 
@@ -265,9 +266,11 @@ begin
   LEste.Text:=Round(Reg.PosActual.X).ToString;
   LNorte.Text:=Round(Reg.PosActual.Y).ToString;
   LRumbo.Text:=Reg.Rumbo;
-  LAltitud.Text:=FormatFloat('#,##0.00',Reg.Altitud);
+  if IsNaN(Reg.Altitud) then LAltitud.Text:='0.00'
+                        else LAltitud.Text:=FormatFloat('#,##0.00',Reg.Altitud);
   LDistRec.Text:=FormatFloat('#,##0.00',Reg.DistRecorrida);
-  LVelocidad.Text:=FormatFloat('0.00',Reg.Velocidad);
+  if IsNaN(Reg.Velocidad) then LVelocidad.Text:='0.00'
+  else LVelocidad.Text:=FormatFloat('0.00',Reg.Velocidad);
 end;
 
 procedure TFPrinc.MostrarAcerca(Opc: Boolean);
@@ -316,29 +319,33 @@ begin
   //se usa este primitivo método para filtrar posibles lecturas erróneas del GPS:
   if RBAPie.IsChecked then VelMaxima:=35   //vel. máxima para un humano muy veloz
                       else VelMaxima:=220; //vel. máxima para un carro convencional
-  //se obtienen las coordenadas (geográficas y UTM):
-  CargarCoordenadas(OldLocation,Reg.PosAnterior);
-  CargarCoordenadas(NewLocation,Reg.PosActual);
-  if Reg.EstaIniciando then
-  begin
-    Reg.PosInicial:=Reg.PosActual;
-    Reg.PosAnterior:=Reg.PosActual;
-    Reg.EstaIniciando:=false;
-  end;
-  //la velocidad en km/h y la altitud en msnm:
-  Reg.Velocidad:=LctSensor.Sensor.Speed*3.6;
+  //se obtienen la velocidad, la altitud en msnm y el rumbo desde sensores:
+  Reg.Velocidad:=LctSensor.Sensor.Speed*3.6;  //se convierte en km/h
   Reg.Altitud:=LctSensor.Sensor.Altitude;
-  //se obtiene el rumbo:
-  //Reg.Rumbo:=Orientacion(LctSensor.Sensor.TrueHeading);
-  Reg.Rumbo:='XXX';
-  Crcl.RotationAngle:=LctSensor.Sensor.TrueHeading;
+  //se obtiene el rumbo desde el sensor:
+  if not IsNaN(LctSensor.Sensor.TrueHeading) then
+  begin
+    Reg.Rumbo:=Orientacion(LctSensor.Sensor.TrueHeading);
+    Crcl.RotationAngle:=LctSensor.Sensor.TrueHeading;
+  end;
+
   //se obtiene la distancia entre los dos últimos puntos y la distancia total:
-  Distancia:=MetrosToKm(CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
-                                          Reg.PosActual.X,Reg.PosActual.Y));
-  Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
-  //se muestran los datos:
-  if Reg.Velocidad<=VelMaxima then MostrarDatos
-  else Reg.DistRecorrida:=Abs(Reg.DistRecorrida-Distancia);
+  if (Reg.Velocidad>0.0) and (Reg.Velocidad<=VelMaxima) then
+  begin
+    //se obtienen las coordenadas (geográficas y UTM):
+    CargarCoordenadas(OldLocation,Reg.PosAnterior);
+    CargarCoordenadas(NewLocation,Reg.PosActual);
+    if Reg.EstaIniciando then
+    begin
+      Reg.PosInicial:=Reg.PosActual;
+      Reg.PosAnterior:=Reg.PosActual;
+      Reg.EstaIniciando:=false;
+    end;
+    Distancia:=CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
+                                 Reg.PosActual.X,Reg.PosActual.Y);
+    Reg.DistRecorrida:=Reg.DistRecorrida+MetrosToKm(Distancia);
+  end;
+  MostrarDatos;  //se muestran los datos
   Reg.TiempoAnterior:=Reg.TiempoActual;
 end;
 
