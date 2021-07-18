@@ -21,6 +21,7 @@ type
     Rumbo: string;
     DistRecorrida,
     Velocidad,
+    Altitud,
     Tiempo: single;
     TiempoInicio,
     TiempoFin,
@@ -108,6 +109,9 @@ type
     Label14: TLabel;
     Label15: TLabel;
     Label16: TLabel;
+    Layout29: TLayout;
+    Label17: TLabel;
+    LAltitud: TLabel;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -159,19 +163,46 @@ begin
   Result:=Sqrt(Sqr(Abs(X1-X2))+Sqr(Abs(Y1-Y2)));
 end;
 
-function Sentido(Este1,Norte1,Este2,Norte2: Double): string;
+{procedure TFrmBrujula.TimerTimer(Sender: TObject);
 var
-  Cad: string;
+  X,Y,D,Deg: double;
 begin
-  if (Norte1<Norte2) and (Este1=Este2) then Cad:='Norte';
-  if (Norte1>Norte2) and (Este1=Este2) then Cad:='Sur';
-  if (Norte1=Norte2) and (Este1<Este2) then Cad:='Este';
-  if (Norte1=Norte2) and (Este1>Este2) then Cad:='Oeste';
-  if (Norte1<Norte2) and (Este1<Este2) then Cad:='Noreste';
-  if (Norte1<Norte2) and (Este1>Este2) then Cad:='Noroeste';
-  if (Norte1>Norte2) and (Este1<Este2) then Cad:='Sureste';
-  if (Norte1>Norte2) and (Este1>Este2) then Cad:='Suroeste';
-  Result:=Cad;
+  X:=OrntSensor.Sensor.HeadingX;
+  Y:=OrntSensor.Sensor.HeadingY;
+  if Y=0 then D:=Abs(X/1)  //se evita una división por cero
+         else D:=Abs(X/Y);
+  Deg:=RadToDeg(ArcTan(D));
+  if (Y>=0) and (X<=0) then Deg:=Deg
+  else
+    if (Y<0) and (X<=0) then Deg:=180-Deg
+    else
+      if (Y<0) then Deg:=180+Deg
+      else
+        if (Y>=0) and (X>0) then Deg:=360-Deg;
+  CircleInt.RotationAngle:=360-Deg;
+  LPtoCard.Text:=Round(Deg).ToString+'º - '+Orientacion(Deg);
+end;}
+
+function Orientacion(Grados: double): string;
+begin
+  case Round(Grados) of
+    0..10,350..360: Result:='N';  //norte
+    11..34: Result:='N - NE';     //norte-noreste
+    35..54: Result:='NE';         //noreste
+    55..79: Result:='E - NE';     //este-noreste
+    80..100: Result:='E';         //este
+    101..124: Result:='E - SE';   //este-sureste
+    125..144: Result:='SE';       //sureste
+    145..169: Result:='S - SE';   //sur-sureste
+    170..190: Result:='S';        //sur
+    191..214: Result:='S - SW';   //sur-suroeste
+    215..234: Result:='SW';       //suroeste
+    235..259: Result:='W - SW';   //oeste-suroeste
+    260..280: Result:='W';        //oeste
+    281..304: Result:='W - NW';   //oeste-noroeste
+    305..324: Result:='NW';       //noroeste
+    325..349: Result:='N - NW';   //norte-noroeste
+  end;
 end;
 
 function MetrosToKm(DistMetros: single): single;
@@ -198,6 +229,7 @@ begin
   LEste.Text:='- - -';
   LNorte.Text:='- - -';
   LRumbo.Text:='- - -';
+  LAltitud.Text:='- - -';
   LDistRec.Text:='0.00';
   LVelocidad.Text:='0.00';
   LTmpTransc.Text:='00:00:00';
@@ -224,6 +256,7 @@ begin
   Reg.DistRecorrida:=0;
   Reg.Velocidad:=0;
   Reg.Tiempo:=0;
+  Reg.Altitud:=0;
   Reg.EstaIniciando:=true;
 end;
 
@@ -232,6 +265,7 @@ begin
   LEste.Text:=Round(Reg.PosActual.X).ToString;
   LNorte.Text:=Round(Reg.PosActual.Y).ToString;
   LRumbo.Text:=Reg.Rumbo;
+  LAltitud.Text:=FormatFloat('#,##0.00',Reg.Altitud);
   LDistRec.Text:=FormatFloat('#,##0.00',Reg.DistRecorrida);
   LVelocidad.Text:=FormatFloat('0.00',Reg.Velocidad);
 end;
@@ -276,12 +310,12 @@ end;
 procedure TFPrinc.LctSensorLocationChanged(Sender: TObject; const OldLocation,
   NewLocation: TLocationCoord2D);
 var
-  Distancia,IntTiempo,VelMaxima: single;
+  Distancia,VelMaxima: single;
 begin
   Reg.TiempoActual:=Now;
   //se usa este primitivo método para filtrar posibles lecturas erróneas del GPS:
-  if RBAPie.IsChecked then VelMaxima:=35    //vel. máxima para un humano muy veloz
-                      else VelMaxima:=220;  //vel. máxima para un carro convencional
+  if RBAPie.IsChecked then VelMaxima:=35   //vel. máxima para un humano muy veloz
+                      else VelMaxima:=220; //vel. máxima para un carro convencional
   //se obtienen las coordenadas (geográficas y UTM):
   CargarCoordenadas(OldLocation,Reg.PosAnterior);
   CargarCoordenadas(NewLocation,Reg.PosActual);
@@ -291,21 +325,17 @@ begin
     Reg.PosAnterior:=Reg.PosActual;
     Reg.EstaIniciando:=false;
   end;
-  //se obtiene el intervalo de tiempo de recorrido entre los 2 puntos:
-  IntTiempo:=SecondSpan(Reg.TiempoAnterior,Reg.TiempoActual);
-  Reg.Tiempo:=Reg.Tiempo+IntTiempo;
+  //la velocidad en km/h y la altitud en msnm:
+  Reg.Velocidad:=LctSensor.Sensor.Speed*3.6;
+  Reg.Altitud:=LctSensor.Sensor.Altitude;
   //se obtiene el rumbo:
-  Reg.Rumbo:=Sentido(Reg.PosAnterior.X,Reg.PosAnterior.Y,
-                     Reg.PosActual.X,Reg.PosActual.Y);
-  Crcl.RotationAngle:=90-Grados(Reg.PosAnterior.Y,Reg.PosActual.Y,
-                          CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
-                                            Reg.PosActual.X,Reg.PosActual.Y));
-  //se obtiene la distancia inmediata de los dos últimos puntos:
+  //Reg.Rumbo:=Orientacion(LctSensor.Sensor.TrueHeading);
+  Reg.Rumbo:='XXX';
+  Crcl.RotationAngle:=LctSensor.Sensor.TrueHeading;
+  //se obtiene la distancia entre los dos últimos puntos y la distancia total:
   Distancia:=MetrosToKm(CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
                                           Reg.PosActual.X,Reg.PosActual.Y));
   Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
-  //se calcula la velocidad en km/h:
-  Reg.Velocidad:=Distancia/SegundosToHoras(IntTiempo);
   //se muestran los datos:
   if Reg.Velocidad<=VelMaxima then MostrarDatos
   else Reg.DistRecorrida:=Abs(Reg.DistRecorrida-Distancia);
@@ -323,7 +353,7 @@ begin
     BInicio.TintColor:=TAlphaColorRec.Red;
     Reg.TiempoInicio:=Now;
     //aquí arranca el proceso:
-    Reg.TiempoAnterior:=Now;
+    Reg.TiempoAnterior:=Reg.TiempoInicio;
     Reg.DistRecorrida:=0;
   end
   else
@@ -335,13 +365,13 @@ begin
     //aquí se detiene el proceso:
     Reg.PosFinal:=Reg.PosActual;
     LPosIni.Text:=Round(Reg.PosInicial.X).ToString+' - '+
-                  Round(Reg.PosInicial.Y).ToString;
+                  Round(Reg.PosInicial.Y).ToString;           //coord inicial
     LPosFin.Text:=Round(Reg.PosFinal.X).ToString+' - '+
-                  Round(Reg.PosFinal.Y).ToString;
-    LTotDistRec.Text:=FormatFloat('0.00',Reg.DistRecorrida)+' km';
-    LTmpTransc.Text:=TimeToStr(FloatToDateTime(Reg.Tiempo));
+                  Round(Reg.PosFinal.Y).ToString;             //coord final
+    LTotDistRec.Text:=FormatFloat('0.00',Reg.DistRecorrida)+' km';  //dist recorrida
+    LTmpTransc.Text:=TimeToStr(FloatToDateTime(Reg.Tiempo));  //tiempo transcurrido
     LVelProm.Text:=FormatFloat('0.00',Reg.DistRecorrida/
-      HourSpan(Reg.TiempoInicio,Reg.TiempoFin))+' km/h';
+      HourSpan(Reg.TiempoInicio,Reg.TiempoFin))+' km/h';      //velocidad promedio
   end;
 end;
 
@@ -376,3 +406,64 @@ begin
 end;
 
 end.
+
+(*
+procedure TFPrinc.LctSensorLocationChanged(Sender: TObject; const OldLocation,
+  NewLocation: TLocationCoord2D);
+var
+  Distancia,IntTiempo,VelMaxima: single;
+begin
+  Reg.TiempoActual:=Now;
+  //se usa este primitivo método para filtrar posibles lecturas erróneas del GPS:
+  if RBAPie.IsChecked then VelMaxima:=35    //vel. máxima para un humano muy veloz
+                      else VelMaxima:=220;  //vel. máxima para un carro convencional
+  //se obtienen las coordenadas (geográficas y UTM):
+  CargarCoordenadas(OldLocation,Reg.PosAnterior);
+  CargarCoordenadas(NewLocation,Reg.PosActual);
+  if Reg.EstaIniciando then
+  begin
+    Reg.PosInicial:=Reg.PosActual;
+    Reg.PosAnterior:=Reg.PosActual;
+    Reg.EstaIniciando:=false;
+  end;
+  //se obtiene el intervalo de tiempo de recorrido entre los 2 puntos:
+  IntTiempo:=SecondSpan(Reg.TiempoAnterior,Reg.TiempoActual);
+  Reg.Tiempo:=Reg.Tiempo+IntTiempo;
+  //se obtiene el rumbo:
+  Reg.Rumbo:=Sentido(Reg.PosAnterior.X,Reg.PosAnterior.Y,
+                     Reg.PosActual.X,Reg.PosActual.Y);
+  Crcl.RotationAngle:=90-Grados(Reg.PosAnterior.Y,Reg.PosActual.Y,
+                          CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
+                                            Reg.PosActual.X,Reg.PosActual.Y));
+  //se obtiene la distancia inmediata de los dos últimos puntos:
+  Distancia:=MetrosToKm(CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
+                                          Reg.PosActual.X,Reg.PosActual.Y));
+  Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
+  //se calcula la velocidad en km/h:
+  //OJO AQUÍ: usar estos valores en lugar de los calculados "a pie":
+  {Reg.Velocidad:=LctSensor.Sensor.Speed*3.6;
+  LctSensor.Sensor.Altitude;
+  Reg.Rumbo:=LctSensor.Sensor.TrueHeading}
+
+  Reg.Velocidad:=Distancia/SegundosToHoras(IntTiempo);
+  //se muestran los datos:
+  if Reg.Velocidad<=VelMaxima then MostrarDatos
+  else Reg.DistRecorrida:=Abs(Reg.DistRecorrida-Distancia);
+  Reg.TiempoAnterior:=Reg.TiempoActual;
+end;
+
+{function Sentido(Este1,Norte1,Este2,Norte2: Double): string;
+var
+  Cad: string;
+begin
+  if (Norte1<Norte2) and (Este1=Este2) then Cad:='Norte';
+  if (Norte1>Norte2) and (Este1=Este2) then Cad:='Sur';
+  if (Norte1=Norte2) and (Este1<Este2) then Cad:='Este';
+  if (Norte1=Norte2) and (Este1>Este2) then Cad:='Oeste';
+  if (Norte1<Norte2) and (Este1<Este2) then Cad:='Noreste';
+  if (Norte1<Norte2) and (Este1>Este2) then Cad:='Noroeste';
+  if (Norte1>Norte2) and (Este1<Este2) then Cad:='Sureste';
+  if (Norte1>Norte2) and (Este1>Este2) then Cad:='Suroeste';
+  Result:=Cad;
+end;}
+*)
