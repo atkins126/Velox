@@ -112,6 +112,7 @@ type
     Layout29: TLayout;
     Label17: TLabel;
     LAltitud: TLabel;
+    LVel: TLabel;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -202,7 +203,6 @@ begin
     281..304: Result:='W - NW';   //oeste-noroeste
     305..324: Result:='NW';       //noroeste
     325..349: Result:='N - NW';   //norte-noroeste
-    else Result:='Desconocido';
   end;
 end;
 
@@ -266,11 +266,9 @@ begin
   LEste.Text:=Round(Reg.PosActual.X).ToString;
   LNorte.Text:=Round(Reg.PosActual.Y).ToString;
   LRumbo.Text:=Reg.Rumbo;
-  if IsNaN(Reg.Altitud) then LAltitud.Text:='0.00'
-                        else LAltitud.Text:=FormatFloat('#,##0.00',Reg.Altitud);
+  LAltitud.Text:=FormatFloat('#,##0.00',Reg.Altitud);
   LDistRec.Text:=FormatFloat('#,##0.00',Reg.DistRecorrida);
-  if IsNaN(Reg.Velocidad) then LVelocidad.Text:='0.00'
-  else LVelocidad.Text:=FormatFloat('0.00',Reg.Velocidad);
+  LVelocidad.Text:=FormatFloat('0.00',Reg.Velocidad);
 end;
 
 procedure TFPrinc.MostrarAcerca(Opc: Boolean);
@@ -311,41 +309,51 @@ begin
 end;
 
 procedure TFPrinc.LctSensorLocationChanged(Sender: TObject; const OldLocation,
-  NewLocation: TLocationCoord2D);
+  NewLocation: TLocationCoord2D);              
 var
-  Distancia,VelMaxima: single;
+  Distancia,IntTiempo,VelMaxima,Velocidad: single;
 begin
   Reg.TiempoActual:=Now;
   //se usa este primitivo método para filtrar posibles lecturas erróneas del GPS:
-  if RBAPie.IsChecked then VelMaxima:=35   //vel. máxima para un humano muy veloz
-                      else VelMaxima:=220; //vel. máxima para un carro convencional
+  if RBAPie.IsChecked then VelMaxima:=35    //vel. máxima para un humano muy veloz
+                      else VelMaxima:=220;  //vel. máxima para un carro convencional
   //se obtienen la velocidad, la altitud en msnm y el rumbo desde sensores:
-  Reg.Velocidad:=LctSensor.Sensor.Speed*3.6;  //se convierte en km/h
-  Reg.Altitud:=LctSensor.Sensor.Altitude;
-  //se obtiene el rumbo desde el sensor:
-  if not IsNaN(LctSensor.Sensor.TrueHeading) then
+  if IsNaN(LctSensor.Sensor.Speed) then Reg.Velocidad:=0
+  else Reg.Velocidad:=LctSensor.Sensor.Speed*3.6;  //se convierte en km/h
+  if IsNaN(LctSensor.Sensor.Altitude) then Reg.Altitud:=0
+  else Reg.Altitud:=LctSensor.Sensor.Altitude;
+  if IsNaN(LctSensor.Sensor.TrueHeading) then
+  begin
+    Reg.Rumbo:='Indeterminado';
+    Crcl.RotationAngle:=0;
+  end
+  else
   begin
     Reg.Rumbo:=Orientacion(LctSensor.Sensor.TrueHeading);
     Crcl.RotationAngle:=LctSensor.Sensor.TrueHeading;
   end;
-
-  //se obtiene la distancia entre los dos últimos puntos y la distancia total:
-  if (Reg.Velocidad>0.0) and (Reg.Velocidad<=VelMaxima) then
+  //se obtienen las coordenadas (geográficas y UTM):
+  CargarCoordenadas(OldLocation,Reg.PosAnterior);
+  CargarCoordenadas(NewLocation,Reg.PosActual);
+  if Reg.EstaIniciando then
   begin
-    //se obtienen las coordenadas (geográficas y UTM):
-    CargarCoordenadas(OldLocation,Reg.PosAnterior);
-    CargarCoordenadas(NewLocation,Reg.PosActual);
-    if Reg.EstaIniciando then
-    begin
-      Reg.PosInicial:=Reg.PosActual;
-      Reg.PosAnterior:=Reg.PosActual;
-      Reg.EstaIniciando:=false;
-    end;
-    Distancia:=CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
-                                 Reg.PosActual.X,Reg.PosActual.Y);
-    Reg.DistRecorrida:=Reg.DistRecorrida+MetrosToKm(Distancia);
+    Reg.PosInicial:=Reg.PosActual;
+    Reg.PosAnterior:=Reg.PosActual;
+    Reg.EstaIniciando:=false;
   end;
-  MostrarDatos;  //se muestran los datos
+  //se obtiene el intervalo de tiempo y la distancia entre los 2 puntos:
+  IntTiempo:=SecondSpan(Reg.TiempoAnterior,Reg.TiempoActual);
+  Distancia:=MetrosToKm(CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
+                                          Reg.PosActual.X,Reg.PosActual.Y));
+  //se calcula la velocidad en km/h:
+  Velocidad:=Distancia/SegundosToHoras(IntTiempo);
+  //se muestran los datos:
+  if (Velocidad>0.0) and (Velocidad<=VelMaxima) then
+  begin
+    Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
+    MostrarDatos;
+    LVel.Text:=FormatFloat('0.00',Velocidad);
+  end;
   Reg.TiempoAnterior:=Reg.TiempoActual;
 end;
 
@@ -447,11 +455,6 @@ begin
                                           Reg.PosActual.X,Reg.PosActual.Y));
   Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
   //se calcula la velocidad en km/h:
-  //OJO AQUÍ: usar estos valores en lugar de los calculados "a pie":
-  {Reg.Velocidad:=LctSensor.Sensor.Speed*3.6;
-  LctSensor.Sensor.Altitude;
-  Reg.Rumbo:=LctSensor.Sensor.TrueHeading}
-
   Reg.Velocidad:=Distancia/SegundosToHoras(IntTiempo);
   //se muestran los datos:
   if Reg.Velocidad<=VelMaxima then MostrarDatos
