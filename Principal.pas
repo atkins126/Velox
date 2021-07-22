@@ -92,7 +92,6 @@ type
     Label12: TLabel;
     RBAPie: TRadioButton;
     RBVehiculo: TRadioButton;
-    StyleBook: TStyleBook;
     Layout18: TLayout;
     Layout16: TLayout;
     Layout17: TLayout;
@@ -117,6 +116,7 @@ type
     Label18: TLabel;
     Layout31: TLayout;
     LVelMaxima: TLabel;
+    StyleBook: TStyleBook;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
