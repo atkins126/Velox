@@ -21,6 +21,7 @@ type
     Rumbo: string;
     DistRecorrida,
     Velocidad,
+    VelMaxima,
     Altitud,
     Tiempo: single;
     TiempoInicio,
@@ -112,7 +113,10 @@ type
     Layout29: TLayout;
     Label17: TLabel;
     LAltitud: TLabel;
-    LVel: TLabel;
+    Layout30: TLayout;
+    Label18: TLabel;
+    Layout31: TLayout;
+    LVelMaxima: TLabel;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -225,6 +229,7 @@ end;
 procedure TFPrinc.ValInicio;
 begin
   BInicio.Text:='Inicio';
+  BResumen.Visible:=false;
   LPosIni.Text:='- - -';
   LPosFin.Text:='- - -';
   LEste.Text:='- - -';
@@ -236,6 +241,7 @@ begin
   LTmpTransc.Text:='00:00:00';
   LTotDistRec.Text:='- - -';
   LVelProm.Text:='- - -';
+  LVelMaxima.Text:='- - -';
   //se limpia el registro:
   Reg.PosInicial.X:=0;
   Reg.PosInicial.Y:=0;
@@ -256,6 +262,7 @@ begin
   Reg.Rumbo:='';
   Reg.DistRecorrida:=0;
   Reg.Velocidad:=0;
+  Reg.VelMaxima:=0;
   Reg.Tiempo:=0;
   Reg.Altitud:=0;
   Reg.EstaIniciando:=true;
@@ -269,13 +276,14 @@ begin
   LAltitud.Text:=FormatFloat('#,##0.00',Reg.Altitud);
   LDistRec.Text:=FormatFloat('#,##0.00',Reg.DistRecorrida);
   LVelocidad.Text:=FormatFloat('0.00',Reg.Velocidad);
+  LVelMaxima.Text:=FormatFloat('0.00',Reg.VelMaxima);
 end;
 
 procedure TFPrinc.MostrarAcerca(Opc: Boolean);
 begin
   VertScrollBox.Visible:=not Opc;
   PnlAcerca.Visible:=Opc;
-  BResumen.Visible:=not Opc;
+  //BResumen.Visible:=not Opc;
   LayTop.Enabled:=not Opc;
   LayBot.Enabled:=not Opc;
 end;
@@ -319,7 +327,11 @@ begin
                       else VelMaxima:=220;  //vel. máxima para un carro convencional
   //se obtienen la velocidad, la altitud en msnm y el rumbo desde sensores:
   if IsNaN(LctSensor.Sensor.Speed) then Reg.Velocidad:=0
-  else Reg.Velocidad:=LctSensor.Sensor.Speed*3.6;  //se convierte en km/h
+  else
+  begin
+    Reg.Velocidad:=LctSensor.Sensor.Speed*3.6;  //se convierte en km/h
+    if Reg.VelMaxima<Reg.Velocidad then Reg.VelMaxima:=Reg.Velocidad;
+  end;
   if IsNaN(LctSensor.Sensor.Altitude) then Reg.Altitud:=0
   else Reg.Altitud:=LctSensor.Sensor.Altitude;
   if IsNaN(LctSensor.Sensor.TrueHeading) then
@@ -352,7 +364,6 @@ begin
   begin
     Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
     MostrarDatos;
-    LVel.Text:=FormatFloat('0.00',Velocidad);
   end;
   Reg.TiempoAnterior:=Reg.TiempoActual;
 end;
