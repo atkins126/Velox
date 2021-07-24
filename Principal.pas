@@ -129,6 +129,8 @@ type
     procedure BResumenClick(Sender: TObject);
     procedure SBAceptarResClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure LctSensorHeadingChanged(Sender: TObject;
+      const AHeading: THeading);
   private
     { Private declarations }
     procedure ValInicio;
@@ -283,7 +285,6 @@ procedure TFPrinc.MostrarAcerca(Opc: Boolean);
 begin
   VertScrollBox.Visible:=not Opc;
   PnlAcerca.Visible:=Opc;
-  //BResumen.Visible:=not Opc;
   LayTop.Enabled:=not Opc;
   LayBot.Enabled:=not Opc;
 end;
@@ -316,8 +317,23 @@ begin
   PnlResumen.Visible:=false;
 end;
 
+procedure TFPrinc.LctSensorHeadingChanged(Sender: TObject;
+  const AHeading: THeading);
+begin
+  if IsNaN(AHeading.Azimuth) then
+  begin
+    Reg.Rumbo:='Indeterminado';
+    Crcl.RotationAngle:=0;
+  end
+  else
+  begin
+    Reg.Rumbo:=Orientacion(AHeading.Azimuth);
+    Crcl.RotationAngle:=AHeading.Azimuth;
+  end;
+end;
+
 procedure TFPrinc.LctSensorLocationChanged(Sender: TObject; const OldLocation,
-  NewLocation: TLocationCoord2D);              
+  NewLocation: TLocationCoord2D);
 var
   Distancia,IntTiempo,VelMaxima,Velocidad: single;
 begin
@@ -334,7 +350,7 @@ begin
   end;
   if IsNaN(LctSensor.Sensor.Altitude) then Reg.Altitud:=0
   else Reg.Altitud:=LctSensor.Sensor.Altitude;
-  if IsNaN(LctSensor.Sensor.TrueHeading) then
+  {if IsNaN(LctSensor.Sensor.TrueHeading) then
   begin
     Reg.Rumbo:='Indeterminado';
     Crcl.RotationAngle:=0;
@@ -343,7 +359,7 @@ begin
   begin
     Reg.Rumbo:=Orientacion(LctSensor.Sensor.TrueHeading);
     Crcl.RotationAngle:=LctSensor.Sensor.TrueHeading;
-  end;
+  end; }
   //se obtienen las coordenadas (geográficas y UTM):
   CargarCoordenadas(OldLocation,Reg.PosAnterior);
   CargarCoordenadas(NewLocation,Reg.PosActual);
