@@ -170,26 +170,6 @@ begin
   Result:=Sqrt(Sqr(Abs(X1-X2))+Sqr(Abs(Y1-Y2)));
 end;
 
-{procedure TFrmBrujula.TimerTimer(Sender: TObject);
-var
-  X,Y,D,Deg: double;
-begin
-  X:=OrntSensor.Sensor.HeadingX;
-  Y:=OrntSensor.Sensor.HeadingY;
-  if Y=0 then D:=Abs(X/1)  //se evita una división por cero
-         else D:=Abs(X/Y);
-  Deg:=RadToDeg(ArcTan(D));
-  if (Y>=0) and (X<=0) then Deg:=Deg
-  else
-    if (Y<0) and (X<=0) then Deg:=180-Deg
-    else
-      if (Y<0) then Deg:=180+Deg
-      else
-        if (Y>=0) and (X>0) then Deg:=360-Deg;
-  CircleInt.RotationAngle:=360-Deg;
-  LPtoCard.Text:=Round(Deg).ToString+'º - '+Orientacion(Deg);
-end;}
-
 function Orientacion(Grados: double): string;
 begin
   case Round(Grados) of
@@ -220,12 +200,6 @@ end;
 function SegundosToHoras(TmpSegs: single): single;
 begin
   Result:=TmpSegs/3600;
-end;
-
-function Grados(Norte1,Norte2,DistH: double): double;
-begin
-  if DistH>0 then Result:=RadToDeg(ArcCos(Abs(Norte1-Norte2)/DistH))
-             else Result:=0;
 end;
 
 procedure TFPrinc.ValInicio;
@@ -453,13 +427,19 @@ end.
 procedure TFPrinc.LctSensorLocationChanged(Sender: TObject; const OldLocation,
   NewLocation: TLocationCoord2D);
 var
-  Distancia,IntTiempo,VelMaxima: single;
+  Distancia,IntTiempo,VelMaxima,Velocidad: single;
 begin
   Reg.TiempoActual:=Now;
-  //se usa este primitivo método para filtrar posibles lecturas erróneas del GPS:
-  if RBAPie.IsChecked then VelMaxima:=35    //vel. máxima para un humano muy veloz
-                      else VelMaxima:=220;  //vel. máxima para un carro convencional
-  //se obtienen las coordenadas (geográficas y UTM):
+  if RBAPie.IsChecked then VelMaxima:=35
+                      else VelMaxima:=220;
+  if IsNaN(LctSensor.Sensor.Speed) then Reg.Velocidad:=0
+  else
+  begin
+    Reg.Velocidad:=LctSensor.Sensor.Speed*3.6;
+    if Reg.VelMaxima<Reg.Velocidad then Reg.VelMaxima:=Reg.Velocidad;
+  end;
+  if IsNaN(LctSensor.Sensor.Altitude) then Reg.Altitud:=0
+  else Reg.Altitud:=LctSensor.Sensor.Altitude;
   CargarCoordenadas(OldLocation,Reg.PosAnterior);
   CargarCoordenadas(NewLocation,Reg.PosActual);
   if Reg.EstaIniciando then
@@ -468,24 +448,15 @@ begin
     Reg.PosAnterior:=Reg.PosActual;
     Reg.EstaIniciando:=false;
   end;
-  //se obtiene el intervalo de tiempo de recorrido entre los 2 puntos:
   IntTiempo:=SecondSpan(Reg.TiempoAnterior,Reg.TiempoActual);
-  Reg.Tiempo:=Reg.Tiempo+IntTiempo;
-  //se obtiene el rumbo:
-  Reg.Rumbo:=Sentido(Reg.PosAnterior.X,Reg.PosAnterior.Y,
-                     Reg.PosActual.X,Reg.PosActual.Y);
-  Crcl.RotationAngle:=90-Grados(Reg.PosAnterior.Y,Reg.PosActual.Y,
-                          CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
-                                            Reg.PosActual.X,Reg.PosActual.Y));
-  //se obtiene la distancia inmediata de los dos últimos puntos:
   Distancia:=MetrosToKm(CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
                                           Reg.PosActual.X,Reg.PosActual.Y));
-  Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
-  //se calcula la velocidad en km/h:
-  Reg.Velocidad:=Distancia/SegundosToHoras(IntTiempo);
-  //se muestran los datos:
-  if Reg.Velocidad<=VelMaxima then MostrarDatos
-  else Reg.DistRecorrida:=Abs(Reg.DistRecorrida-Distancia);
+  Velocidad:=Distancia/SegundosToHoras(IntTiempo);
+  if (Velocidad>0.0) and (Velocidad<=VelMaxima) then
+  begin
+    Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
+    MostrarDatos;
+  end;
   Reg.TiempoAnterior:=Reg.TiempoActual;
 end;
 
@@ -503,4 +474,30 @@ begin
   if (Norte1>Norte2) and (Este1>Este2) then Cad:='Suroeste';
   Result:=Cad;
 end;}
+
+{procedure TFrmBrujula.TimerTimer(Sender: TObject);
+var
+  X,Y,D,Deg: double;
+begin
+  X:=OrntSensor.Sensor.HeadingX;
+  Y:=OrntSensor.Sensor.HeadingY;
+  if Y=0 then D:=Abs(X/1)  //se evita una división por cero
+         else D:=Abs(X/Y);
+  Deg:=RadToDeg(ArcTan(D));
+  if (Y>=0) and (X<=0) then Deg:=Deg
+  else
+    if (Y<0) and (X<=0) then Deg:=180-Deg
+    else
+      if (Y<0) then Deg:=180+Deg
+      else
+        if (Y>=0) and (X>0) then Deg:=360-Deg;
+  CircleInt.RotationAngle:=360-Deg;
+  LPtoCard.Text:=Round(Deg).ToString+'º - '+Orientacion(Deg);
+end;}
+
+{function Grados(Norte1,Norte2,DistH: double): double;
+begin
+  if DistH>0 then Result:=RadToDeg(ArcCos(Abs(Norte1-Norte2)/DistH))
+             else Result:=0;
+end; }
 *)
