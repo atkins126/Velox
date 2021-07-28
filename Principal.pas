@@ -117,6 +117,10 @@ type
     Layout31: TLayout;
     LVelMaxima: TLabel;
     StyleBook: TStyleBook;
+    RoundRect1: TRoundRect;
+    RoundRect2: TRoundRect;
+    RoundRect3: TRoundRect;
+    RoundRect4: TRoundRect;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
