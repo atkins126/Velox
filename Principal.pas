@@ -121,6 +121,7 @@ type
     RoundRect2: TRoundRect;
     RoundRect3: TRoundRect;
     RoundRect4: TRoundRect;
+    RoundRect5: TRoundRect;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
