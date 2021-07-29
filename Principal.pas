@@ -94,8 +94,6 @@ type
     RBVehiculo: TRadioButton;
     Layout18: TLayout;
     Layout16: TLayout;
-    Layout17: TLayout;
-    Layout23: TLayout;
     Crcl: TCircle;
     Layout24: TLayout;
     LTotDistRec: TLabel;
@@ -117,11 +115,11 @@ type
     Layout31: TLayout;
     LVelMaxima: TLabel;
     StyleBook: TStyleBook;
-    RoundRect1: TRoundRect;
-    RoundRect2: TRoundRect;
-    RoundRect3: TRoundRect;
     RoundRect4: TRoundRect;
-    RoundRect5: TRoundRect;
+    Rectangle1: TRectangle;
+    Rectangle2: TRectangle;
+    Rectangle3: TRectangle;
+    Rectangle4: TRectangle;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -154,6 +152,7 @@ var
 implementation
 
 {$R *.fmx}
+{$R *.BAE2E2665F7E41AE9F0947E9D8BC3706.fmx ANDROID}
 
 /// Utilidades de la app: ///
 
@@ -329,16 +328,6 @@ begin
   end;
   if IsNaN(LctSensor.Sensor.Altitude) then Reg.Altitud:=0
   else Reg.Altitud:=LctSensor.Sensor.Altitude;
-  {if IsNaN(LctSensor.Sensor.TrueHeading) then
-  begin
-    Reg.Rumbo:='Indeterminado';
-    Crcl.RotationAngle:=0;
-  end
-  else
-  begin
-    Reg.Rumbo:=Orientacion(LctSensor.Sensor.TrueHeading);
-    Crcl.RotationAngle:=LctSensor.Sensor.TrueHeading;
-  end; }
   //se obtienen las coordenadas (geográficas y UTM):
   CargarCoordenadas(OldLocation,Reg.PosAnterior);
   CargarCoordenadas(NewLocation,Reg.PosActual);
