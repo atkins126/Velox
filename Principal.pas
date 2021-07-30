@@ -140,6 +140,7 @@ type
     procedure MostrarDatos;
     procedure MostrarAcerca(Opc: boolean);
     procedure MostrarResumen(Opc: boolean);
+    procedure RotarFlecha(Azimut: Double);
   public
     { Public declarations }
   end;
@@ -275,6 +276,40 @@ begin
   LayBot.Enabled:=not Opc;
 end;
 
+procedure TFPrinc.RotarFlecha(Azimut: Double);
+var
+  I,AntGrados,NvoGrados,Diferencia: Word;
+
+procedure MoverFlecha(I: word);
+begin
+  Application.ProcessMessages;
+  Sleep(0);
+  Crcl.RotationAngle:=I;
+end;
+
+begin
+  if Round(Crcl.RotationAngle)=0 then AntGrados:=360
+  else AntGrados:=Round(Crcl.RotationAngle);
+  if Azimut=0 then NvoGrados:=360
+              else NvoGrados:=Round(Azimut);
+  Diferencia:=Abs(NvoGrados-AntGrados);
+  if Diferencia<=180 then
+  begin
+    if NvoGrados>AntGrados then
+      for I:=AntGrados to NvoGrados do MoverFlecha(I)
+    else
+      for I:=AntGrados downto NvoGrados do MoverFlecha(I);
+  end
+  else
+  begin
+    Crcl.RotationAngle:=AntGrados+NvoGrados;
+    if AntGrados>NvoGrados then
+      for I:=AntGrados to 360+NvoGrados do MoverFlecha(I)
+    else
+      for I:=AntGrados downto NvoGrados do MoverFlecha(I)
+  end;
+end;
+
 /// Eventos de la app: ///
 
 procedure TFPrinc.FormCreate(Sender: TObject);
@@ -306,6 +341,8 @@ begin
   else
   begin
     Reg.Rumbo:=Orientacion(AHeading.Azimuth);
+    //se crea un efecto de suavizado de movimiento de la flecha:
+    RotarFlecha(AHeading.Azimuth);
     Crcl.RotationAngle:=AHeading.Azimuth;
   end;
 end;
@@ -388,6 +425,7 @@ end;
 procedure TFPrinc.BLimpiarClick(Sender: TObject);
 begin
   ValInicio;
+  RotarFlecha(0);
 end;
 
 procedure TFPrinc.SBAcercaClick(Sender: TObject);
