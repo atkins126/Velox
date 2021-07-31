@@ -340,7 +340,8 @@ begin
   end
   else
   begin
-    Reg.Rumbo:=Orientacion(AHeading.Azimuth);
+    Reg.Rumbo:=FormatFloat('#0.#',AHeading.Azimuth)+'º '+
+               Orientacion(AHeading.Azimuth);
     //se crea un efecto de suavizado de movimiento de la flecha:
     RotarFlecha(AHeading.Azimuth);
     Crcl.RotationAngle:=AHeading.Azimuth;
