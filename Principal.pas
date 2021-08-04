@@ -140,7 +140,7 @@ type
     procedure MostrarDatos;
     procedure MostrarAcerca(Opc: boolean);
     procedure MostrarResumen(Opc: boolean);
-    procedure RotarFlecha(Azimut: Double);
+    //procedure RotarFlecha(Azimut: Double);
   public
     { Public declarations }
   end;
@@ -276,7 +276,7 @@ begin
   LayBot.Enabled:=not Opc;
 end;
 
-procedure TFPrinc.RotarFlecha(Azimut: Double);
+procedure RotarFlecha(Circulo: TCircle; Azimut: Double);
 var
   I,AntGrados,NvoGrados,Diferencia: Word;
 
@@ -284,12 +284,12 @@ procedure MoverFlecha(I: word);
 begin
   Application.ProcessMessages;
   Sleep(0);
-  Crcl.RotationAngle:=I;
+  Circulo.RotationAngle:=I;
 end;
 
 begin
-  if Round(Crcl.RotationAngle)=0 then AntGrados:=360
-  else AntGrados:=Round(Crcl.RotationAngle);
+  if Round(Circulo.RotationAngle)=0 then AntGrados:=360
+  else AntGrados:=Round(Circulo.RotationAngle);
   if Azimut=0 then NvoGrados:=360
               else NvoGrados:=Round(Azimut);
   Diferencia:=Abs(NvoGrados-AntGrados);
@@ -302,7 +302,7 @@ begin
   end
   else
   begin
-    Crcl.RotationAngle:=AntGrados+NvoGrados;
+    Circulo.RotationAngle:=AntGrados+NvoGrados;
     if AntGrados>NvoGrados then
       for I:=AntGrados to 360+NvoGrados do MoverFlecha(I)
     else
@@ -343,7 +343,7 @@ begin
     Reg.Rumbo:=FormatFloat('#0.#',AHeading.Azimuth)+'º '+
                Orientacion(AHeading.Azimuth);
     //se crea un efecto de suavizado de movimiento de la flecha:
-    RotarFlecha(AHeading.Azimuth);
+    RotarFlecha(Crcl,AHeading.Azimuth);
     Crcl.RotationAngle:=AHeading.Azimuth;
   end;
 end;
@@ -426,7 +426,7 @@ end;
 procedure TFPrinc.BLimpiarClick(Sender: TObject);
 begin
   ValInicio;
-  RotarFlecha(0);
+  RotarFlecha(Crcl,0);
 end;
 
 procedure TFPrinc.SBAcercaClick(Sender: TObject);
@@ -455,82 +455,3 @@ begin
 end;
 
 end.
-
-(*
-procedure TFPrinc.LctSensorLocationChanged(Sender: TObject; const OldLocation,
-  NewLocation: TLocationCoord2D);
-var
-  Distancia,IntTiempo,VelMaxima,Velocidad: single;
-begin
-  Reg.TiempoActual:=Now;
-  if RBAPie.IsChecked then VelMaxima:=35
-                      else VelMaxima:=220;
-  if IsNaN(LctSensor.Sensor.Speed) then Reg.Velocidad:=0
-  else
-  begin
-    Reg.Velocidad:=LctSensor.Sensor.Speed*3.6;
-    if Reg.VelMaxima<Reg.Velocidad then Reg.VelMaxima:=Reg.Velocidad;
-  end;
-  if IsNaN(LctSensor.Sensor.Altitude) then Reg.Altitud:=0
-  else Reg.Altitud:=LctSensor.Sensor.Altitude;
-  CargarCoordenadas(OldLocation,Reg.PosAnterior);
-  CargarCoordenadas(NewLocation,Reg.PosActual);
-  if Reg.EstaIniciando then
-  begin
-    Reg.PosInicial:=Reg.PosActual;
-    Reg.PosAnterior:=Reg.PosActual;
-    Reg.EstaIniciando:=false;
-  end;
-  IntTiempo:=SecondSpan(Reg.TiempoAnterior,Reg.TiempoActual);
-  Distancia:=MetrosToKm(CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
-                                          Reg.PosActual.X,Reg.PosActual.Y));
-  Velocidad:=Distancia/SegundosToHoras(IntTiempo);
-  if (Velocidad>0.0) and (Velocidad<=VelMaxima) then
-  begin
-    Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
-    MostrarDatos;
-  end;
-  Reg.TiempoAnterior:=Reg.TiempoActual;
-end;
-
-{function Sentido(Este1,Norte1,Este2,Norte2: Double): string;
-var
-  Cad: string;
-begin
-  if (Norte1<Norte2) and (Este1=Este2) then Cad:='Norte';
-  if (Norte1>Norte2) and (Este1=Este2) then Cad:='Sur';
-  if (Norte1=Norte2) and (Este1<Este2) then Cad:='Este';
-  if (Norte1=Norte2) and (Este1>Este2) then Cad:='Oeste';
-  if (Norte1<Norte2) and (Este1<Este2) then Cad:='Noreste';
-  if (Norte1<Norte2) and (Este1>Este2) then Cad:='Noroeste';
-  if (Norte1>Norte2) and (Este1<Este2) then Cad:='Sureste';
-  if (Norte1>Norte2) and (Este1>Este2) then Cad:='Suroeste';
-  Result:=Cad;
-end;}
-
-{procedure TFrmBrujula.TimerTimer(Sender: TObject);
-var
-  X,Y,D,Deg: double;
-begin
-  X:=OrntSensor.Sensor.HeadingX;
-  Y:=OrntSensor.Sensor.HeadingY;
-  if Y=0 then D:=Abs(X/1)  //se evita una división por cero
-         else D:=Abs(X/Y);
-  Deg:=RadToDeg(ArcTan(D));
-  if (Y>=0) and (X<=0) then Deg:=Deg
-  else
-    if (Y<0) and (X<=0) then Deg:=180-Deg
-    else
-      if (Y<0) then Deg:=180+Deg
-      else
-        if (Y>=0) and (X>0) then Deg:=360-Deg;
-  CircleInt.RotationAngle:=360-Deg;
-  LPtoCard.Text:=Round(Deg).ToString+'º - '+Orientacion(Deg);
-end;}
-
-{function Grados(Norte1,Norte2,DistH: double): double;
-begin
-  if DistH>0 then Result:=RadToDeg(ArcCos(Abs(Norte1-Norte2)/DistH))
-             else Result:=0;
-end; }
-*)
