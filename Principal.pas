@@ -121,6 +121,7 @@ type
     Rectangle3: TRectangle;
     Rectangle4: TRectangle;
     Rectangle5: TRectangle;
+    Layout17: TLayout;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
