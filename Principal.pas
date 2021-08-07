@@ -70,7 +70,7 @@ type
     Label11: TLabel;
     Layout15: TLayout;
     LVelocidad: TLabel;
-    LaySep01: TLayout;
+    LaySelec: TLayout;
     PnlResumen: TPanel;
     Layout1: TLayout;
     Layout3: TLayout;
@@ -120,6 +120,7 @@ type
     Rectangle2: TRectangle;
     Rectangle3: TRectangle;
     Rectangle4: TRectangle;
+    Rectangle5: TRectangle;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -134,6 +135,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure LctSensorHeadingChanged(Sender: TObject;
       const AHeading: THeading);
+    procedure RBAPieTap(Sender: TObject; const Point: TPointF);
   private
     { Private declarations }
     procedure ValInicio;
@@ -276,6 +278,20 @@ begin
   LayBot.Enabled:=not Opc;
 end;
 
+procedure TFPrinc.RBAPieTap(Sender: TObject; const Point: TPointF);
+begin
+  if RBAPie.IsPressed then
+  begin
+    RBAPie.FontColor:=4294967040;     //amarillo
+    RBVehiculo.FontColor:=4294967295
+  end
+  else
+  begin
+    RBAPie.FontColor:=4294967295;     //blanco
+    RBVehiculo.FontColor:=4294967040;
+  end;
+end;
+
 procedure RotarFlecha(Circulo: TCircle; Azimut: Double);
 var
   I,AntGrados,NvoGrados,Diferencia: Word;
@@ -328,6 +344,7 @@ procedure TFPrinc.FormShow(Sender: TObject);
 begin
   PnlAcerca.Visible:=false;
   PnlResumen.Visible:=false;
+  RBAPie.FontColor:=4294967040;
 end;
 
 procedure TFPrinc.LctSensorHeadingChanged(Sender: TObject;
