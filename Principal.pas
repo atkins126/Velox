@@ -48,8 +48,6 @@ type
     Label6: TLabel;
     SBAceptar: TSpeedButton;
     VertScrollBox: TVertScrollBox;
-    LaySep02: TLayout;
-    LaySep03: TLayout;
     LayPosAct: TLayout;
     Layout7: TLayout;
     Label8: TLabel;
@@ -92,9 +90,7 @@ type
     Label12: TLabel;
     RBAPie: TRadioButton;
     RBVehiculo: TRadioButton;
-    Layout18: TLayout;
     Layout16: TLayout;
-    Crcl: TCircle;
     Layout24: TLayout;
     LTotDistRec: TLabel;
     Layout25: TLayout;
@@ -103,7 +99,6 @@ type
     Label10: TLabel;
     Layout27: TLayout;
     LVelProm: TLabel;
-    Layout28: TLayout;
     Label14: TLabel;
     Label15: TLabel;
     Label16: TLabel;
@@ -121,8 +116,10 @@ type
     Rectangle3: TRectangle;
     Rectangle4: TRectangle;
     Rectangle5: TRectangle;
-    Layout17: TLayout;
+    Layout23: TLayout;
+    Rectangle6: TRectangle;
     Image2: TImage;
+    Crcl: TCircle;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);

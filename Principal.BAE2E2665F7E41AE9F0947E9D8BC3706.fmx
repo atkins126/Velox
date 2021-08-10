@@ -4,9 +4,9 @@ inherited FAlcatel_1x: TFAlcatel_1x
   inherited LayPrinc: TLayout
     Size.Height = 1142.500000000000000000
     inherited VertScrollBox: TVertScrollBox
-      Size.Height = 819.500000000000000000
+      Size.Height = 879.500000000000000000
       Viewport.Width = 600.000000000000000000
-      Viewport.Height = 814.500000000000000000
+      Viewport.Height = 874.500000000000000000
       inherited LayPosAct: TLayout
         inherited Rectangle2: TRectangle
           inherited Layout8: TLayout
@@ -207,7 +207,7 @@ inherited FAlcatel_1x: TFAlcatel_1x
         TextSettings.Font.StyleExt = {00070000000000000004000000}
       end
       inherited SBAceptar: TSpeedButton
-        Size.Width = 428.571441650390600000
+        Size.Width = 428.571441650390700000
         TextSettings.Font.StyleExt = {00070000000000000004000000}
       end
     end
@@ -239,7 +239,7 @@ inherited FAlcatel_1x: TFAlcatel_1x
           end
         end
         inherited SBAceptarRes: TSpeedButton
-          Size.Width = 428.571441650390600000
+          Size.Width = 428.571441650390700000
           TextSettings.Font.StyleExt = {00070000000000000004000000}
         end
         inherited Layout27: TLayout
@@ -259,10 +259,14 @@ inherited FAlcatel_1x: TFAlcatel_1x
     end
     inherited LaySelec: TLayout
       inherited Rectangle5: TRectangle
+        Margins.Top = 10.000000000000000000
+        Size.Height = 50.000000000000000000
         inherited RBAPie: TRadioButton
+          Size.Height = 50.000000000000000000
           TextSettings.Font.StyleExt = {00070000000000000004000000}
         end
         inherited RBVehiculo: TRadioButton
+          Size.Height = 50.000000000000000000
           TextSettings.Font.StyleExt = {00070000000000000004000000}
         end
       end
