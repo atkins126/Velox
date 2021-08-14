@@ -68,7 +68,6 @@ type
     Label11: TLabel;
     Layout15: TLayout;
     LVelocidad: TLabel;
-    LaySelec: TLayout;
     PnlResumen: TPanel;
     Layout1: TLayout;
     Layout3: TLayout;
@@ -82,14 +81,11 @@ type
     Layout19: TLayout;
     Label7: TLabel;
     Layout20: TLayout;
-    BResumen: TButton;
     SBAceptarRes: TSpeedButton;
     Layout21: TLayout;
     LTmpTransc: TLabel;
     Layout22: TLayout;
     Label12: TLabel;
-    RBAPie: TRadioButton;
-    RBVehiculo: TRadioButton;
     Layout16: TLayout;
     Layout24: TLayout;
     LTotDistRec: TLabel;
@@ -115,11 +111,12 @@ type
     Rectangle2: TRectangle;
     Rectangle3: TRectangle;
     Rectangle4: TRectangle;
-    Rectangle5: TRectangle;
     Layout23: TLayout;
     Rectangle6: TRectangle;
     ImgPtosCards: TImage;
     Crcl: TCircle;
+    RBAPie: TRadioButton;
+    RBVehiculo: TRadioButton;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -129,7 +126,6 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure SBAcercaClick(Sender: TObject);
     procedure SBAceptarClick(Sender: TObject);
-    procedure BResumenClick(Sender: TObject);
     procedure SBAceptarResClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure LctSensorHeadingChanged(Sender: TObject;
@@ -210,7 +206,6 @@ end;
 procedure TFPrinc.ValInicio;
 begin
   BInicio.Text:='Inicio';
-  BResumen.Visible:=false;
   LPosIni.Text:='- - -';
   LPosFin.Text:='- - -';
   LEste.Text:='- - -';
@@ -360,7 +355,7 @@ begin
     //se crea un efecto de suavizado de movimiento de la flecha:
     //RotarFlecha(Crcl,AHeading.Azimuth);
     RotarFlecha(ImgPtosCards,AHeading.Azimuth);
-    Crcl.RotationAngle:=AHeading.Azimuth;
+    //Crcl.RotationAngle:=AHeading.Azimuth;
   end;
 end;
 
@@ -409,8 +404,9 @@ end;
 procedure TFPrinc.BInicioClick(Sender: TObject);
 begin
   LctSensor.Active:=BInicio.Text='Inicio';
-  BResumen.Visible:=not LctSensor.Active;
-  BLimpiar.Visible:=BResumen.Visible;
+  //BResumen.Visible:=not LctSensor.Active;
+  //BLimpiar.Visible:=BResumen.Visible;
+  BLimpiar.Visible:=not LctSensor.Active;
   if BInicio.Text='Inicio' then
   begin
     BInicio.Text:='Fin';
@@ -422,20 +418,24 @@ begin
   end
   else
   begin
-    BInicio.Text:='Inicio';
-    BInicio.TintColor:=TAlphaColorRec.Springgreen;
-    Reg.TiempoFin:=Now;
-    Reg.Tiempo:=Reg.TiempoFin-Reg.TiempoInicio;
-    //aquí se detiene el proceso:
-    Reg.PosFinal:=Reg.PosActual;
-    LPosIni.Text:=Round(Reg.PosInicial.X).ToString+' - '+
-                  Round(Reg.PosInicial.Y).ToString;           //coord inicial
-    LPosFin.Text:=Round(Reg.PosFinal.X).ToString+' - '+
-                  Round(Reg.PosFinal.Y).ToString;             //coord final
-    LTotDistRec.Text:=FormatFloat('0.00',Reg.DistRecorrida)+' km';  //dist recorrida
-    LTmpTransc.Text:=TimeToStr(FloatToDateTime(Reg.Tiempo));  //tiempo transcurrido
-    LVelProm.Text:=FormatFloat('0.00',Reg.DistRecorrida/
-      HourSpan(Reg.TiempoInicio,Reg.TiempoFin))+' km/h';      //velocidad promedio
+    if BInicio.Text='Resumen' then MostrarResumen(true)
+    else
+    begin
+      BInicio.Text:='Resumen';
+      BInicio.TintColor:=TAlphaColorRec.Springgreen;
+      Reg.TiempoFin:=Now;
+      Reg.Tiempo:=Reg.TiempoFin-Reg.TiempoInicio;
+      //aquí se detiene el proceso:
+      Reg.PosFinal:=Reg.PosActual;
+      LPosIni.Text:=Round(Reg.PosInicial.X).ToString+' - '+
+                    Round(Reg.PosInicial.Y).ToString;           //coord inicial
+      LPosFin.Text:=Round(Reg.PosFinal.X).ToString+' - '+
+                    Round(Reg.PosFinal.Y).ToString;             //coord final
+      LTotDistRec.Text:=FormatFloat('0.00',Reg.DistRecorrida)+' km';  //dist recorrida
+      LTmpTransc.Text:=TimeToStr(FloatToDateTime(Reg.Tiempo));  //tiempo transcurrido
+      LVelProm.Text:=FormatFloat('0.00',Reg.DistRecorrida/
+        HourSpan(Reg.TiempoInicio,Reg.TiempoFin))+' km/h';      //velocidad promedio
+    end;
   end;
 end;
 
@@ -443,7 +443,8 @@ procedure TFPrinc.BLimpiarClick(Sender: TObject);
 begin
   ValInicio;
   //RotarFlecha(Crcl,0);
-  RotarFlecha(ImgPtosCards,0);
+  ImgPtosCards.RotationAngle:=0;
+  //RotarFlecha(ImgPtosCards,0);
 end;
 
 procedure TFPrinc.SBAcercaClick(Sender: TObject);
@@ -454,11 +455,6 @@ end;
 procedure TFPrinc.SBAceptarClick(Sender: TObject);
 begin
   MostrarAcerca(false);
-end;
-
-procedure TFPrinc.BResumenClick(Sender: TObject);
-begin
-  MostrarResumen(true);
 end;
 
 procedure TFPrinc.SBAceptarResClick(Sender: TObject);
