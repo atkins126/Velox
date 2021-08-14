@@ -54,8 +54,6 @@ type
     Layout8: TLayout;
     Layout9: TLayout;
     LNorte: TLabel;
-    Layout10: TLayout;
-    LRumbo: TLabel;
     Layout11: TLayout;
     LEste: TLabel;
     LayDistRec: TLayout;
@@ -97,7 +95,6 @@ type
     LVelProm: TLabel;
     Label14: TLabel;
     Label15: TLabel;
-    Label16: TLabel;
     Layout29: TLayout;
     Label17: TLabel;
     LAltitud: TLabel;
@@ -117,6 +114,10 @@ type
     Crcl: TCircle;
     RBAPie: TRadioButton;
     RBVehiculo: TRadioButton;
+    Layout10: TLayout;
+    LRumbo: TLabel;
+    Label16: TLabel;
+    LayBrujula: TLayout;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -285,7 +286,7 @@ begin
   end;
 end;
 
-procedure RotarFlecha(Circulo: TImage; Azimut: Double);
+procedure RotarFlecha(Imagen: TImage; Azimut: Double);
 var
   I,AntGrados,NvoGrados,Diferencia: Word;
 
@@ -293,12 +294,12 @@ procedure MoverFlecha(I: word);
 begin
   Application.ProcessMessages;
   Sleep(0);
-  Circulo.RotationAngle:=I*-1;
+  Imagen.RotationAngle:=I*(-1);
 end;
 
 begin
-  if Round(Circulo.RotationAngle)=0 then AntGrados:=360
-  else AntGrados:=Round(Circulo.RotationAngle);
+  if Round(Imagen.RotationAngle)=0 then AntGrados:=360
+  else AntGrados:=Round(Imagen.RotationAngle);
   if Azimut=0 then NvoGrados:=360
               else NvoGrados:=Round(Azimut);
   Diferencia:=Abs(NvoGrados-AntGrados);
@@ -311,7 +312,7 @@ begin
   end
   else
   begin
-    Circulo.RotationAngle:=AntGrados+NvoGrados;
+    Imagen.RotationAngle:=AntGrados+NvoGrados;
     if AntGrados>NvoGrados then
       for I:=AntGrados to 360+NvoGrados do MoverFlecha(I)
     else

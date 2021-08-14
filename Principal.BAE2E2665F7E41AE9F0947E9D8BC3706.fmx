@@ -33,11 +33,6 @@ inherited FAlcatel_1x: TFAlcatel_1x
                 TextSettings.Font.StyleExt = {00070000000000000004000000}
               end
             end
-            inherited Layout10: TLayout
-              inherited LRumbo: TLabel
-                TextSettings.Font.StyleExt = {00070000000000000004000000}
-              end
-            end
             inherited Layout11: TLayout
               inherited LEste: TLabel
                 TextSettings.Font.StyleExt = {00070000000000000004000000}
@@ -64,6 +59,15 @@ inherited FAlcatel_1x: TFAlcatel_1x
         inherited Rectangle4: TRectangle
           inherited Layout15: TLayout
             inherited LVelocidad: TLabel
+              TextSettings.Font.StyleExt = {00070000000000000004000000}
+            end
+          end
+        end
+      end
+      inherited Layout23: TLayout
+        inherited Rectangle6: TRectangle
+          inherited Layout10: TLayout
+            inherited LRumbo: TLabel
               TextSettings.Font.StyleExt = {00070000000000000004000000}
             end
           end
