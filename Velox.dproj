@@ -111,9 +111,6 @@
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <Icns_MainIcns>$(BDS)\bin\delphi_PROJECTICNS.icns</Icns_MainIcns>
         <SanitizedProjectName>Velox</SanitizedProjectName>
-        <OrientationPortrait>true</OrientationPortrait>
-        <OrientationLandscapeLeft>true</OrientationLandscapeLeft>
-        <OrientationLandscapeRight>true</OrientationLandscapeRight>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Android)'!=''">
         <DCC_UsePackage>DBXSqliteDriver;tethering;FireDACDBXDriver;bindengine;DataSnapClient;bindcompdbx;IndyIPServer;IndySystem;fmxFireDAC;FMXTee;DbxCommonDriver;xmlrtl;DataSnapNativeClient;rtl;DbxClientDriver;IndyIPClient;DataSnapProviderClient;DBXInterBaseDriver;DataSnapFireDAC;bindcompfmx;FmxTeeUI;fmx;RadiantShapesFmx;dbexpress;IndyCore;dsnap;DataSnapCommon;IndyIPCommon;ibmonitor;ibxpress;ibxbindings;FireDACDSDriver;CustomIPTransport;bindcomp;dbxcds;dsnapxml;dbrtl;IndyProtocols;AbbreviaFMXDDesign;$(DCC_UsePackage)</DCC_UsePackage>
@@ -323,6 +320,8 @@
         <Android_LauncherIcon48>Imagen\Speedometer_48px.png</Android_LauncherIcon48>
         <Android_LauncherIcon72>Imagen\Speedometer_72px.png</Android_LauncherIcon72>
         <Android_LauncherIcon144>Imagen\Speedometer_144px.png</Android_LauncherIcon144>
+        <AUP_ACCESS_LOCATION_EXTRA_COMMANDS>true</AUP_ACCESS_LOCATION_EXTRA_COMMANDS>
+        <AUP_ACCESS_SURFACE_FLINGER>true</AUP_ACCESS_SURFACE_FLINGER>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>

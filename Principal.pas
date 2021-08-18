@@ -405,8 +405,6 @@ end;
 procedure TFPrinc.BInicioClick(Sender: TObject);
 begin
   LctSensor.Active:=BInicio.Text='Inicio';
-  //BResumen.Visible:=not LctSensor.Active;
-  //BLimpiar.Visible:=BResumen.Visible;
   BLimpiar.Visible:=not LctSensor.Active;
   if BInicio.Text='Inicio' then
   begin
