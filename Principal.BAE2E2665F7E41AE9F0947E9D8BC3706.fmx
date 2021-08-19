@@ -24,7 +24,7 @@ inherited FAlcatel_1x: TFAlcatel_1x
     inherited VertScrollBox: TVertScrollBox
       Size.Height = 949.500000000000000000
       Viewport.Width = 600.000000000000000000
-      Viewport.Height = 944.500000000000000000
+      Viewport.Height = 949.500000000000000000
       inherited LayPosAct: TLayout
         inherited Rectangle2: TRectangle
           inherited Layout8: TLayout
@@ -79,7 +79,6 @@ inherited FAlcatel_1x: TFAlcatel_1x
         TextSettings.Font.StyleExt = {00070000000000000004000000}
       end
       inherited SBAceptar: TSpeedButton
-        Size.Width = 428.571441650390600000
         TextSettings.Font.StyleExt = {00070000000000000004000000}
       end
     end
@@ -111,7 +110,6 @@ inherited FAlcatel_1x: TFAlcatel_1x
           end
         end
         inherited SBAceptarRes: TSpeedButton
-          Size.Width = 428.571441650390600000
           TextSettings.Font.StyleExt = {00070000000000000004000000}
         end
         inherited Layout27: TLayout
@@ -128,6 +126,15 @@ inherited FAlcatel_1x: TFAlcatel_1x
     end
     inherited LayBot: TLayout
       Position.Y = 1069.500000000000000000
+      inherited RoundRect4: TRoundRect
+        inherited SBAcerca: TSpeedButton
+          Size.Height = 121.666664123535200000
+        end
+        inherited SBSalir: TSpeedButton
+          Size.Width = 119.000061035156300000
+          Size.Height = 121.666664123535200000
+        end
+      end
     end
   end
 end

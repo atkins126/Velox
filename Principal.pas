@@ -29,6 +29,7 @@ type
     TiempoAnterior,
     TiempoActual: TTime;
     EstaIniciando: boolean;
+    AzimutActual: Double;
   end;
   TFPrinc = class(TForm)
     LayPrinc: TLayout;
@@ -242,6 +243,7 @@ begin
   Reg.VelMaxima:=0;
   Reg.Tiempo:=0;
   Reg.Altitud:=0;
+  Reg.AzimutActual:=0;
   Reg.EstaIniciando:=true;
 end;
 
@@ -286,7 +288,7 @@ begin
   end;
 end;
 
-procedure RotarFlecha(Imagen: TImage; Azimut: Double);
+procedure RotarFlecha(Imagen: TImage; Azimut: Double; var Azmt: Double);
 var
   I,AntGrados,NvoGrados,Diferencia: Word;
 
@@ -298,8 +300,8 @@ begin
 end;
 
 begin
-  if Round(Imagen.RotationAngle)=0 then AntGrados:=360
-  else AntGrados:=Round(Imagen.RotationAngle);
+  if Round(Azmt)=0 then AntGrados:=360
+  else AntGrados:=Round(Azmt);
   if Azimut=0 then NvoGrados:=360
               else NvoGrados:=Round(Azimut);
   Diferencia:=Abs(NvoGrados-AntGrados);
@@ -354,8 +356,7 @@ begin
     Reg.Rumbo:=FormatFloat('#0.#',AHeading.Azimuth)+'º '+
                Orientacion(AHeading.Azimuth);
     //se crea un efecto de suavizado de movimiento de la flecha:
-    //RotarFlecha(Crcl,AHeading.Azimuth);
-    RotarFlecha(ImgPtosCards,AHeading.Azimuth);
+    RotarFlecha(ImgPtosCards,AHeading.Azimuth,Reg.AzimutActual);
     //Crcl.RotationAngle:=AHeading.Azimuth;
   end;
 end;
@@ -441,9 +442,7 @@ end;
 procedure TFPrinc.BLimpiarClick(Sender: TObject);
 begin
   ValInicio;
-  //RotarFlecha(Crcl,0);
   ImgPtosCards.RotationAngle:=0;
-  //RotarFlecha(ImgPtosCards,0);
 end;
 
 procedure TFPrinc.SBAcercaClick(Sender: TObject);
