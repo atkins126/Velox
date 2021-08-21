@@ -208,6 +208,7 @@ end;
 procedure TFPrinc.ValInicio;
 begin
   BInicio.Text:='Inicio';
+  BInicio.TintColor:=TAlphaColorRec.Springgreen;
   LPosIni.Text:='- - -';
   LPosFin.Text:='- - -';
   LEste.Text:='- - -';
@@ -314,7 +315,7 @@ begin
   end
   else
   begin
-    Imagen.RotationAngle:=AntGrados+NvoGrados;
+    Azmt:=AntGrados+NvoGrados;
     if AntGrados>NvoGrados then
       for I:=AntGrados to 360+NvoGrados do MoverFlecha(I)
     else
@@ -422,7 +423,7 @@ begin
     else
     begin
       BInicio.Text:='Resumen';
-      BInicio.TintColor:=TAlphaColorRec.Springgreen;
+      BInicio.TintColor:=TAlphaColorRec.Gold;
       Reg.TiempoFin:=Now;
       Reg.Tiempo:=Reg.TiempoFin-Reg.TiempoInicio;
       //aquí se detiene el proceso:
