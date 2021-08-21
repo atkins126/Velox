@@ -358,7 +358,6 @@ begin
                Orientacion(AHeading.Azimuth);
     //se crea un efecto de suavizado de movimiento de la flecha:
     RotarFlecha(ImgPtosCards,AHeading.Azimuth,Reg.AzimutActual);
-    //Crcl.RotationAngle:=AHeading.Azimuth;
   end;
 end;
 
@@ -467,39 +466,3 @@ begin
 end;
 
 end.
-
-(*
-procedure RotarFlecha(Circulo: TCircle; Azimut: Double);
-var
-  I,AntGrados,NvoGrados,Diferencia: Word;
-
-procedure MoverFlecha(I: word);
-begin
-  Application.ProcessMessages;
-  Sleep(0);
-  Circulo.RotationAngle:=I;
-end;
-
-begin
-  if Round(Circulo.RotationAngle)=0 then AntGrados:=360
-  else AntGrados:=Round(Circulo.RotationAngle);
-  if Azimut=0 then NvoGrados:=360
-              else NvoGrados:=Round(Azimut);
-  Diferencia:=Abs(NvoGrados-AntGrados);
-  if Diferencia<=180 then
-  begin
-    if NvoGrados>AntGrados then
-      for I:=AntGrados to NvoGrados do MoverFlecha(I)
-    else
-      for I:=AntGrados downto NvoGrados do MoverFlecha(I);
-  end
-  else
-  begin
-    Circulo.RotationAngle:=AntGrados+NvoGrados;
-    if AntGrados>NvoGrados then
-      for I:=AntGrados to 360+NvoGrados do MoverFlecha(I)
-    else
-      for I:=AntGrados downto NvoGrados do MoverFlecha(I)
-  end;
-end;
-*)
