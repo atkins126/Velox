@@ -443,7 +443,7 @@ end;
 procedure TFPrinc.BLimpiarClick(Sender: TObject);
 begin
   ValInicio;
-  ImgPtosCards.RotationAngle:=0;
+  Crcl.RotationAngle:=0;
 end;
 
 procedure TFPrinc.SBAcercaClick(Sender: TObject);
