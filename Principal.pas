@@ -289,7 +289,7 @@ begin
   end;
 end;
 
-procedure RotarFlecha(Imagen: TImage; Azimut: Double; var Azmt: Double);
+procedure RotarFlecha(Imagen: TCircle; Azimut: Double; var Azmt: Double);
 var
   I,AntGrados,NvoGrados,Diferencia: Word;
 
@@ -297,7 +297,8 @@ procedure MoverFlecha(I: word);
 begin
   Application.ProcessMessages;
   Sleep(0);
-  Imagen.RotationAngle:=I*(-1);
+  //Imagen.RotationAngle:=I*(-1);
+  Imagen.RotationAngle:=I;
 end;
 
 begin
@@ -357,7 +358,7 @@ begin
     Reg.Rumbo:=FormatFloat('#0.#',AHeading.Azimuth)+'º '+
                Orientacion(AHeading.Azimuth);
     //se crea un efecto de suavizado de movimiento de la flecha:
-    RotarFlecha(ImgPtosCards,AHeading.Azimuth,Reg.AzimutActual);
+    RotarFlecha(Crcl,AHeading.Azimuth,Reg.AzimutActual);
   end;
 end;
 
