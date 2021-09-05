@@ -294,10 +294,12 @@ var
   I,AntGrados,NvoGrados,Diferencia: Word;
 
 procedure MoverFlecha(I: word);
+var
+  X: byte;
 begin
   Application.ProcessMessages;
   //Sleep(0);
-  //Imagen.RotationAngle:=I*(-1);
+  for X := 1 to 10 do;  //sólo hacer tiempo y nada más
   Imagen.RotationAngle:=I;
 end;
 
