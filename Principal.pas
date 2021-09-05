@@ -296,7 +296,7 @@ var
 procedure MoverFlecha(I: word);
 begin
   Application.ProcessMessages;
-  Sleep(0);
+  //Sleep(0);
   //Imagen.RotationAngle:=I*(-1);
   Imagen.RotationAngle:=I;
 end;
@@ -396,11 +396,12 @@ begin
   //se calcula la velocidad en km/h:
   Velocidad:=Distancia/SegundosToHoras(IntTiempo);
   //se muestran los datos:
-  if (Velocidad>0.0) and (Velocidad<=VelMaxima) then
-  begin
-    Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
-    MostrarDatos;
-  end;
+  if Reg.Velocidad>0.0 then  //esto es una prueba para ver si se detiene
+    if (Velocidad>0.0) and (Velocidad<=VelMaxima) then
+    begin
+      Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
+      MostrarDatos;
+    end;
   Reg.TiempoAnterior:=Reg.TiempoActual;
 end;
 

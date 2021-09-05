@@ -15,8 +15,8 @@ object FPrinc: TFPrinc
   DesignerMasterStyle = 3
   object LayPrinc: TLayout
     Align = Client
-    Scale.X = 0.800000011920929000
-    Scale.Y = 0.800000011920929000
+    Scale.X = 0.800000011920928900
+    Scale.Y = 0.800000011920928900
     Size.Width = 600.000000000000000000
     Size.Height = 1200.000000000000000000
     Size.PlatformDefault = False
@@ -911,8 +911,8 @@ object FPrinc: TFPrinc
         Margins.Bottom = 6.000000000000000000
         Position.X = 116.000000000000000000
         Position.Y = 269.600006103515600000
-        Scale.X = 0.699999988079071000
-        Scale.Y = 0.699999988079071000
+        Scale.X = 0.699999988079071100
+        Scale.Y = 0.699999988079071100
         Size.Width = 96.000000000000000000
         Size.Height = 96.000000000000000000
         Size.PlatformDefault = False
@@ -1135,8 +1135,8 @@ object FPrinc: TFPrinc
           Margins.Bottom = 6.000000000000000000
           Position.X = 116.000000000000000000
           Position.Y = 388.600006103515600000
-          Scale.X = 0.699999988079071000
-          Scale.Y = 0.699999988079071000
+          Scale.X = 0.699999988079071100
+          Scale.Y = 0.699999988079071100
           Size.Width = 96.000000000000000000
           Size.Height = 96.000000000000000000
           Size.PlatformDefault = False
@@ -38345,8 +38345,8 @@ object FPrinc: TFPrinc
           74746F6D05000000000000408E084000000A54696E742E5368696E650E000000
           00}
       end>
-    Left = 312
-    Top = 41
+    Left = 152
+    Top = 17
   end
   object LctSensor: TLocationSensor
     OnLocationChanged = LctSensorLocationChanged
