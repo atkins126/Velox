@@ -360,7 +360,8 @@ begin
     Reg.Rumbo:=FormatFloat('#0.#',AHeading.Azimuth)+'º '+
                Orientacion(AHeading.Azimuth);
     //se crea un efecto de suavizado de movimiento de la flecha:
-    RotarFlecha(Crcl,AHeading.Azimuth,Reg.AzimutActual);
+    //RotarFlecha(Crcl,AHeading.Azimuth,Reg.AzimutActual);
+    Crcl.RotationAngle:=AHeading.Azimuth;   //momentáneamente sin suavizado
   end;
 end;
 
