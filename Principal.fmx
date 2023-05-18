@@ -112,7 +112,7 @@ object FPrinc: TFPrinc
       TabOrder = 0
       TabStop = False
       Viewport.Width = 600.000000000000000000
-      Viewport.Height = 1002.000000000000000000
+      Viewport.Height = 1007.000000000000000000
       object LayPosAct: TLayout
         Align = Top
         Margins.Top = 20.000000000000000000
@@ -38349,6 +38349,8 @@ object FPrinc: TFPrinc
     Top = 17
   end
   object LctSensor: TLocationSensor
+    ActivityType = Other
+    UsageAuthorization = WhenInUse
     OnLocationChanged = LctSensorLocationChanged
     OnHeadingChanged = LctSensorHeadingChanged
     Left = 152

@@ -151,7 +151,7 @@ var
 implementation
 
 {$R *.fmx}
-{$R *.BAE2E2665F7E41AE9F0947E9D8BC3706.fmx ANDROID}
+(*{$R *.BAE2E2665F7E41AE9F0947E9D8BC3706.fmx ANDROID} *)
 
 /// Utilidades de la app: ///
 

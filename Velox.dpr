@@ -1,7 +1,7 @@
 ﻿program Velox;
 
 uses
-  System.StartUpCopy,
+  System.StartUpCopy, System.SysUtils,
   Androidapi.JNI.App,
   Androidapi.JNI.GraphicsContentViewText,
   Androidapi.Helpers,
@@ -12,7 +12,8 @@ uses
 
 begin
   Application.Initialize;
-  SharedActivity.getWindow.addFlags(TJWindowManager_LayoutParams.JavaClass.FLAG_KEEP_SCREEN_ON);
+  TAndroidHelper.Activity.getWindow.addFlags(
+    TJWindowManager_LayoutParams.JavaClass.FLAG_KEEP_SCREEN_ON);
   Application.CreateForm(TFPrinc, FPrinc);
   Application.Run;
 end.
