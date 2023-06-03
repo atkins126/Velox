@@ -119,6 +119,10 @@ type
     LRumbo: TLabel;
     Label16: TLabel;
     LayBrujula: TLayout;
+    Label19: TLabel;
+    LVelCalc: TLabel;
+    Layout17: TLayout;
+    LayOtraVelocidad: TLayout;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -298,7 +302,6 @@ var
   X: byte;
 begin
   Application.ProcessMessages;
-  //Sleep(0);
   for X := 1 to 10 do;  //sólo hacer tiempo y nada más
   Imagen.RotationAngle:=I;
 end;
@@ -378,7 +381,7 @@ begin
   if IsNaN(LctSensor.Sensor.Speed) then Reg.Velocidad:=0
   else
   begin
-    Reg.Velocidad:=LctSensor.Sensor.Speed*3.6;  //se convierte en km/h
+    Reg.Velocidad:=LctSensor.Sensor.Speed*3.5999999999971;//se convierte en km/h
     if Reg.VelMaxima<Reg.Velocidad then Reg.VelMaxima:=Reg.Velocidad;
   end;
   if IsNaN(LctSensor.Sensor.Altitude) then Reg.Altitud:=0
@@ -398,9 +401,11 @@ begin
                                           Reg.PosActual.X,Reg.PosActual.Y));
   //se calcula la velocidad en km/h:
   Velocidad:=Distancia/SegundosToHoras(IntTiempo);
+  LVelCalc.Text:=FormatFloat('0.00',Velocidad);  //esto también es de prueba
   //se muestran los datos:
   if Reg.Velocidad>0.0 then  //esto es una prueba para ver si se detiene
-    if (Velocidad>0.0) and (Velocidad<=VelMaxima) then
+    //if (Velocidad>0.0) and (Velocidad<=VelMaxima) then
+    if (Reg.Velocidad>0.0) and (Reg.Velocidad<=VelMaxima) then
     begin
       Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
       MostrarDatos;

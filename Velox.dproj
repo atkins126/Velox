@@ -7,7 +7,7 @@
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Android</Platform>
-        <TargetedPlatforms>562195</TargetedPlatforms>
+        <TargetedPlatforms>558099</TargetedPlatforms>
         <AppType>Application</AppType>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
@@ -30,11 +30,6 @@
     </PropertyGroup>
     <PropertyGroup Condition="('$(Platform)'=='iOSSimARM64' and '$(Base)'=='true') or '$(Base_iOSSimARM64)'!=''">
         <Base_iOSSimARM64>true</Base_iOSSimARM64>
-        <CfgParent>Base</CfgParent>
-        <Base>true</Base>
-    </PropertyGroup>
-    <PropertyGroup Condition="('$(Platform)'=='OSX64' and '$(Base)'=='true') or '$(Base_OSX64)'!=''">
-        <Base_OSX64>true</Base_OSX64>
         <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
@@ -214,11 +209,6 @@
         <iPad_LaunchDark2x>$(BDS)\bin\Artwork\iOS\iPad\FM_LaunchImageDark_2x.png</iPad_LaunchDark2x>
         <iPad_Notification40>$(BDS)\bin\Artwork\iOS\iPad\FM_NotificationIcon_40x40.png</iPad_Notification40>
     </PropertyGroup>
-    <PropertyGroup Condition="'$(Base_OSX64)'!=''">
-        <DCC_UsePackage>DBXSqliteDriver;tethering;FireDACMSSQLDriver;FireDACDBXDriver;bindengine;FireDACMySQLDriver;DataSnapClient;bindcompdbx;IndyIPServer;IndySystem;fmxFireDAC;emshosting;FireDACTDataDriver;FMXTee;DbxCommonDriver;xmlrtl;DataSnapNativeClient;fmxobj;rtl;DbxClientDriver;DBXSybaseASADriver;IndyIPClient;FireDACODBCDriver;DataSnapIndy10ServerTransport;DataSnapProviderClient;FireDACMongoDBDriver;DataSnapServerMidas;DBXInterBaseDriver;DataSnapFireDAC;bindcompfmx;DBXOracleDriver;inetdb;FmxTeeUI;emsedge;fmx;fmxdae;RadiantShapesFmx;dbexpress;IndyCore;dsnap;DataSnapCommon;FireDACOracleDriver;DBXMySQLDriver;DBXFirebirdDriver;FireDACCommonODBC;IndyIPCommon;FIBPlus_D25;FireDACPgDriver;ibmonitor;FireDACASADriver;ibxpress;DataSnapServer;ibxbindings;FireDACDSDriver;CustomIPTransport;bindcomp;DBXInformixDriver;dbxcds;dsnapxml;dbrtl;inetdbxpress;IndyProtocols;fmxase;$(DCC_UsePackage);$(DCC_UsePackage)</DCC_UsePackage>
-        <BT_BuildType>Debug</BT_BuildType>
-        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-    </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <DCC_UsePackage>DBXSqliteDriver;DBXDb2Driver;vclactnband;vclFireDAC;tethering;FireDACADSDriver;JvPluginSystem;NexusDB412sq250;OrpheusDR;SysToolsDR;FireDACMSSQLDriver;vcltouch;JvBands;vcldb;Intraweb;svn;JvJans;JvDotNetCtrls;vclib;NxStandard6Run;FireDACDBXDriver;tmsexdXE10;NxGrid6Dsgn;vclx;sdlmathpack_107XT;EsVclCore;sdlgeopack_107XT;VCLRESTComponents;vclie;NexusDB412se250;bindengine;JvHMI;FireDACMySQLDriver;DataSnapClient;bindcompdbx;sdlguipack_rt_107XT;DBXSybaseASEDriver;IndyIPServer;IndySystem;tmsxlsdXE10;dsnapcon;sdlguipack_107XT;AbbreviaD;FireDACMSAccDriver;fmxFireDAC;FireDACInfxDriver;vclimg;dclAbsDBd24;Jcl;RosiDBComp_DX102;NxCollection6Dsgn;emshosting;DBXOdbcDriver;FireDACTDataDriver;FMXTee;DbxCommonDriver;AsyncProDR;JvManagedThreads;xmlrtl;DataSnapNativeClient;fmxobj;JvTimeFramework;rtl;DbxClientDriver;DBXSybaseASADriver;JvSystem;JvStdCtrls;appanalytics;IndyIPClient;bindcompvcl;TeeUI;JvDocking;JvPascalInterpreter;VclSmp;NexusDB412sr250;FireDACODBCDriver;JclVcl;DataSnapIndy10ServerTransport;DataSnapProviderClient;FireDACMongoDBDriver;GLibWMI;PowerPDFDR;JvControls;NxDBGrid6Run;sdlchartpack_107XT;JvPrintPreview;DataSnapServerMidas;DBXInterBaseDriver;SysToolsDBDR;NexusDB412ll250;DataSnapFireDAC;svnui;JvGlobus;NexusDB412sd250;DBXMSSQLDriver;JvMM;NexusDB412db250;DatasnapConnectorsFreePascal;PngComponentsD;bindcompfmx;JvNet;DBXOracleDriver;inetdb;JvAppFrm;EssentialsDR;VirtualTreesDR;RaizeComponentsVcl;FmxTeeUI;emsedge;RaizeComponentsVclDb;fmx;fmxdae;EasyListviewD;RadiantShapesFmx;sdlgeopack_rt_107XT;NexusDB412pv250;NxGrid6Run;sdlchartpack_rt_107XT;JvWizards;vclAbsDBd24;dbexpress;IndyCore;OnGuardDR;OrpheusDBDR;JvPageComps;dsnap;DataSnapCommon;JvDB;DataSnapConnectors;sdlmathpack_rt_107XT;JclDeveloperTools;QRWRunDXE10_2_w64;FireDACOracleDriver;DBXMySQLDriver;JvCmp;EsVclComponents;sdlchempack_rt_107XT;DBXFirebirdDriver;NxInspector6Run;NxLayout6Run;FireDACCommonODBC;LockBoxDR;IndyIPCommon;JvCustom;NexusDB412lg250;NxStandard6Dsgn;vcl;JvXPCtrls;FireDACDb2Driver;FIBPlus_D25;TeeDB;JvCore;NxInspector6Dsgn;JvCrypt;FireDACPgDriver;ibmonitor;FireDACASADriver;JvDlgs;JvRuntimeDesign;NxDBGrid6Dsgn;ibxpress;Tee;DataSnapServer;ibxbindings;vclwinx;FireDACDSDriver;varios;CustomIPTransport;vcldsnap;NxCollection6Run;DOSCommandDR;SynEditDR;bindcomp;DBXInformixDriver;tmswizdXE10;dbxcds;adortl;RadiantShapesFmx_Design;MPCommonLibD;dsnapxml;dbrtl;inetdbxpress;IndyProtocols;sdlbasepack_rt_107XT;AbbreviaFMXDDesign;sdlchempack_107XT;OnGuardFMXDR;RosiDBSorters_DX102;JclContainers;tmsdXE10;fmxase;$(DCC_UsePackage)</DCC_UsePackage>
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
@@ -368,12 +358,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="$(BDS)\Redist\iossimulator\libPCRE.dylib" Class="DependencyModule"/>
                 <DeployFile LocalName="$(BDS)\Redist\iossimulator\libpcre.dylib" Class="DependencyModule">
                     <Platform Name="iOSSimulator">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\iossimulator\libPCRE.dylib" Class="DependencyModule"/>
                 <DeployFile LocalName="$(BDS)\Redist\osx32\libcgsqlite3.dylib" Class="DependencyModule"/>
                 <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
                     <Platform Name="OSX32">
@@ -1218,7 +1208,6 @@
                 <Platform value="Android64">True</Platform>
                 <Platform value="iOSDevice64">True</Platform>
                 <Platform value="iOSSimARM64">True</Platform>
-                <Platform value="OSX64">True</Platform>
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">True</Platform>
             </Platforms>
