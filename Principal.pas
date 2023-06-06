@@ -3,6 +3,7 @@
 interface
 
 uses
+  Androidapi.JNI.Location,
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.StdCtrls,
   FMX.Controls.Presentation, FMX.Layouts, FMX.Objects, System.Sensors, UTM_WGS84,
@@ -119,6 +120,10 @@ type
     LRumbo: TLabel;
     Label16: TLabel;
     LayBrujula: TLayout;
+    Label19: TLabel;
+    LVelCalc: TLabel;
+    Layout17: TLayout;
+    LayOtraVelocidad: TLayout;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -150,10 +155,31 @@ var
 
 implementation
 
+uses
+  System.Permissions, FMX.DialogService;
+
 {$R *.fmx}
 (*{$R *.BAE2E2665F7E41AE9F0947E9D8BC3706.fmx ANDROID} *)
 
 /// Utilidades de la app: ///
+
+procedure ActivarGPS(LcSensor: TLocationSensor; Activo: boolean);
+const
+  PermissionAccessFineLocation='android.permission.ACCESS_FINE_LOCATION';
+begin
+  PermissionsService.RequestPermissions([PermissionAccessFineLocation],
+    procedure(const APermissions: TClassicStringDynArray;
+              const AGrantResults: TClassicPermissionStatusDynArray)
+    begin
+      if (Length(AGrantResults)=1) and (AGrantResults[0]=TPermissionStatus.Granted) then
+        LcSensor.Active:=Activo
+      else
+      begin
+        Activo:=false;
+        TDialogService.ShowMessage('Acceso a Localización no concedido');
+      end;
+    end);
+end;
 
 procedure CargarCoordenadas(CoordGPS: TLocationCoord2D; var CoordPos: TPosicion);
 var
@@ -280,12 +306,14 @@ begin
   if RBAPie.IsPressed then
   begin
     RBAPie.FontColor:=4294967040;     //amarillo
-    RBVehiculo.FontColor:=4294967295
+    RBVehiculo.FontColor:=4294967295;
+    LctSensor.ActivityType:=TLocationActivityType.Fitness;
   end
   else
   begin
     RBAPie.FontColor:=4294967295;     //blanco
     RBVehiculo.FontColor:=4294967040;
+    LctSensor.ActivityType:=TLocationActivityType.Automotive;
   end;
 end;
 
@@ -298,7 +326,6 @@ var
   X: byte;
 begin
   Application.ProcessMessages;
-  //Sleep(0);
   for X := 1 to 10 do;  //sólo hacer tiempo y nada más
   Imagen.RotationAngle:=I;
 end;
@@ -332,6 +359,7 @@ procedure TFPrinc.FormCreate(Sender: TObject);
 begin
   Separador:=FormatSettings.DecimalSeparator;
   FormatSettings.DecimalSeparator:='.';
+  LctSensor.ActivityType:=TLocationActivityType.Fitness;
   ValInicio;
 end;
 
@@ -378,7 +406,7 @@ begin
   if IsNaN(LctSensor.Sensor.Speed) then Reg.Velocidad:=0
   else
   begin
-    Reg.Velocidad:=LctSensor.Sensor.Speed*3.6;  //se convierte en km/h
+    Reg.Velocidad:=LctSensor.Sensor.Speed*3.5999999999971;//se convierte en km/h
     if Reg.VelMaxima<Reg.Velocidad then Reg.VelMaxima:=Reg.Velocidad;
   end;
   if IsNaN(LctSensor.Sensor.Altitude) then Reg.Altitud:=0
@@ -398,9 +426,12 @@ begin
                                           Reg.PosActual.X,Reg.PosActual.Y));
   //se calcula la velocidad en km/h:
   Velocidad:=Distancia/SegundosToHoras(IntTiempo);
+  LVelCalc.Text:=FormatFloat('0.00',Velocidad);  //esto también es de prueba
   //se muestran los datos:
   if Reg.Velocidad>0.0 then  //esto es una prueba para ver si se detiene
-    if (Velocidad>0.0) and (Velocidad<=VelMaxima) then
+    //if (Velocidad>0.0) and (Velocidad<=VelMaxima) then
+    //si funciona, quitar línea anterior:
+    if (Reg.Velocidad>0.0) and (Reg.Velocidad<=VelMaxima) then
     begin
       Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
       MostrarDatos;
@@ -410,7 +441,8 @@ end;
 
 procedure TFPrinc.BInicioClick(Sender: TObject);
 begin
-  LctSensor.Active:=BInicio.Text='Inicio';
+  ActivarGPS(LctSensor,BInicio.Text='Inicio');
+  //LctSensor.Active:=BInicio.Text='Inicio';
   BLimpiar.Visible:=not LctSensor.Active;
   if BInicio.Text='Inicio' then
   begin
