@@ -709,6 +709,8 @@ object FPrinc: TFPrinc
         TabOrder = 5
         object Label19: TLabel
           Align = Left
+          Margins.Left = 10.000000000000000000
+          Position.X = 10.000000000000000000
           Size.Width = 273.000000000000000000
           Size.Height = 60.000000000000000000
           Size.PlatformDefault = False
@@ -717,7 +719,7 @@ object FPrinc: TFPrinc
         end
         object LVelCalc: TLabel
           Align = Client
-          Size.Width = 327.000000000000000000
+          Size.Width = 317.000000000000000000
           Size.Height = 60.000000000000000000
           Size.PlatformDefault = False
           Text = '0.0'
@@ -38381,7 +38383,7 @@ object FPrinc: TFPrinc
     Top = 17
   end
   object LctSensor: TLocationSensor
-    ActivityType = Other
+    ActivityType = Fitness
     UsageAuthorization = WhenInUse
     OnLocationChanged = LctSensorLocationChanged
     OnHeadingChanged = LctSensorHeadingChanged

@@ -3,6 +3,7 @@
 interface
 
 uses
+  Androidapi.JNI.Location,
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.StdCtrls,
   FMX.Controls.Presentation, FMX.Layouts, FMX.Objects, System.Sensors, UTM_WGS84,
@@ -154,10 +155,31 @@ var
 
 implementation
 
+uses
+  System.Permissions, FMX.DialogService;
+
 {$R *.fmx}
 (*{$R *.BAE2E2665F7E41AE9F0947E9D8BC3706.fmx ANDROID} *)
 
 /// Utilidades de la app: ///
+
+procedure ActivarGPS(LcSensor: TLocationSensor; Activo: boolean);
+const
+  PermissionAccessFineLocation='android.permission.ACCESS_FINE_LOCATION';
+begin
+  PermissionsService.RequestPermissions([PermissionAccessFineLocation],
+    procedure(const APermissions: TClassicStringDynArray;
+              const AGrantResults: TClassicPermissionStatusDynArray)
+    begin
+      if (Length(AGrantResults)=1) and (AGrantResults[0]=TPermissionStatus.Granted) then
+        LcSensor.Active:=Activo
+      else
+      begin
+        Activo:=false;
+        TDialogService.ShowMessage('Acceso a Localización no concedido');
+      end;
+    end);
+end;
 
 procedure CargarCoordenadas(CoordGPS: TLocationCoord2D; var CoordPos: TPosicion);
 var
@@ -284,12 +306,14 @@ begin
   if RBAPie.IsPressed then
   begin
     RBAPie.FontColor:=4294967040;     //amarillo
-    RBVehiculo.FontColor:=4294967295
+    RBVehiculo.FontColor:=4294967295;
+    LctSensor.ActivityType:=TLocationActivityType.Fitness;
   end
   else
   begin
     RBAPie.FontColor:=4294967295;     //blanco
     RBVehiculo.FontColor:=4294967040;
+    LctSensor.ActivityType:=TLocationActivityType.Automotive;
   end;
 end;
 
@@ -335,6 +359,7 @@ procedure TFPrinc.FormCreate(Sender: TObject);
 begin
   Separador:=FormatSettings.DecimalSeparator;
   FormatSettings.DecimalSeparator:='.';
+  LctSensor.ActivityType:=TLocationActivityType.Fitness;
   ValInicio;
 end;
 
@@ -405,6 +430,7 @@ begin
   //se muestran los datos:
   if Reg.Velocidad>0.0 then  //esto es una prueba para ver si se detiene
     //if (Velocidad>0.0) and (Velocidad<=VelMaxima) then
+    //si funciona, quitar línea anterior:
     if (Reg.Velocidad>0.0) and (Reg.Velocidad<=VelMaxima) then
     begin
       Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
@@ -415,7 +441,8 @@ end;
 
 procedure TFPrinc.BInicioClick(Sender: TObject);
 begin
-  LctSensor.Active:=BInicio.Text='Inicio';
+  ActivarGPS(LctSensor,BInicio.Text='Inicio');
+  //LctSensor.Active:=BInicio.Text='Inicio';
   BLimpiar.Visible:=not LctSensor.Active;
   if BInicio.Text='Inicio' then
   begin
