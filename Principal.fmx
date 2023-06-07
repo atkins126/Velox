@@ -722,7 +722,7 @@ object FPrinc: TFPrinc
           Size.Width = 317.000000000000000000
           Size.Height = 60.000000000000000000
           Size.PlatformDefault = False
-          Text = '0.0'
+          Text = '0.00'
           TabOrder = 1
         end
       end
@@ -38384,7 +38384,7 @@ object FPrinc: TFPrinc
   end
   object LctSensor: TLocationSensor
     ActivityType = Fitness
-    UsageAuthorization = WhenInUse
+    UsageAuthorization = Always
     OnLocationChanged = LctSensorLocationChanged
     OnHeadingChanged = LctSensorHeadingChanged
     Left = 152
