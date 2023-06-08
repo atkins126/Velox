@@ -428,10 +428,11 @@ begin
   Velocidad:=Distancia/SegundosToHoras(IntTiempo);
   LVelCalc.Text:=FormatFloat('0.00',Velocidad);  //esto también es de prueba
   //se muestran los datos:
-  if Reg.Velocidad>0.0 then  //esto es una prueba para ver si se detiene
-    //if (Velocidad>0.0) and (Velocidad<=VelMaxima) then
+  //if Reg.Velocidad>0.0 then  //esto es una prueba para ver si se detiene
+  if Velocidad>0.0 then  //esto es una prueba para ver si se detiene
+    if (Velocidad>0.0) and (Velocidad<=VelMaxima) then
     //si funciona, quitar línea anterior:
-    if (Reg.Velocidad>0.0) and (Reg.Velocidad<=VelMaxima) then
+    //if (Reg.Velocidad>0.0) and (Reg.Velocidad<=VelMaxima) then
     begin
       Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
       MostrarDatos;
@@ -442,7 +443,6 @@ end;
 procedure TFPrinc.BInicioClick(Sender: TObject);
 begin
   ActivarGPS(LctSensor,BInicio.Text='Inicio');
-  //LctSensor.Active:=BInicio.Text='Inicio';
   BLimpiar.Visible:=not LctSensor.Active;
   if BInicio.Text='Inicio' then
   begin
