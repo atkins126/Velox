@@ -394,7 +394,7 @@ end;
 procedure TFPrinc.LctSensorLocationChanged(Sender: TObject; const OldLocation,
   NewLocation: TLocationCoord2D);
 var
-  Distancia,IntTiempo,VelMaxima,Velocidad: single;
+  Distancia,IntTiempo,VelMaxima: single;
 begin
   Reg.TiempoActual:=Now;
   //se usa este primitivo método para filtrar posibles lecturas erróneas del GPS:
@@ -423,11 +423,8 @@ begin
   Distancia:=MetrosToKm(CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
                                           Reg.PosActual.X,Reg.PosActual.Y));
   //se muestran los datos:
-  if Reg.Velocidad>0.0 then  //esto es una prueba para ver si se detiene
-  begin
-    Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
-    MostrarDatos;
-  end;
+  if Reg.Velocidad>0.0 then Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
+  MostrarDatos;
   Reg.TiempoAnterior:=Reg.TiempoActual;
 end;
 
