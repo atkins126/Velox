@@ -120,10 +120,7 @@ type
     LRumbo: TLabel;
     Label16: TLabel;
     LayBrujula: TLayout;
-    Label19: TLabel;
-    LVelCalc: TLabel;
     Layout17: TLayout;
-    LayOtraVelocidad: TLayout;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -426,11 +423,10 @@ begin
                                           Reg.PosActual.X,Reg.PosActual.Y));
   //se calcula la velocidad en km/h:
   Velocidad:=Distancia/SegundosToHoras(IntTiempo);
-  LVelCalc.Text:=FormatFloat('0.00',Velocidad);  //esto también es de prueba
   //se muestran los datos:
-  //if Reg.Velocidad>0.0 then  //esto es una prueba para ver si se detiene
-  if Velocidad>0.0 then  //esto es una prueba para ver si se detiene
-    if (Velocidad>0.0) and (Velocidad<=VelMaxima) then
+  if Reg.Velocidad>0.0 then  //esto es una prueba para ver si se detiene
+  //if Velocidad>0.0 then  //esto es una prueba para ver si se detiene
+    //if (Velocidad>0.0) and (Velocidad<=VelMaxima) then
     //si funciona, quitar línea anterior:
     //if (Reg.Velocidad>0.0) and (Reg.Velocidad<=VelMaxima) then
     begin
