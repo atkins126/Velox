@@ -386,7 +386,8 @@ begin
                Orientacion(AHeading.Azimuth);
     //se crea un efecto de suavizado de movimiento de la flecha:
     //RotarFlecha(Crcl,AHeading.Azimuth,Reg.AzimutActual);
-    Crcl.RotationAngle:=AHeading.Azimuth;   //momentáneamente sin suavizado
+    //Crcl.RotationAngle:=AHeading.Azimuth;   //momentáneamente sin suavizado
+    ImgPtosCards.RotationAngle:=AHeading.Azimuth*-1;
   end;
 end;
 
@@ -422,17 +423,17 @@ begin
   Distancia:=MetrosToKm(CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
                                           Reg.PosActual.X,Reg.PosActual.Y));
   //se calcula la velocidad en km/h:
-  Velocidad:=Distancia/SegundosToHoras(IntTiempo);
+  //Velocidad:=Distancia/SegundosToHoras(IntTiempo);
   //se muestran los datos:
   if Reg.Velocidad>0.0 then  //esto es una prueba para ver si se detiene
   //if Velocidad>0.0 then  //esto es una prueba para ver si se detiene
     //if (Velocidad>0.0) and (Velocidad<=VelMaxima) then
     //si funciona, quitar línea anterior:
     //if (Reg.Velocidad>0.0) and (Reg.Velocidad<=VelMaxima) then
-    begin
-      Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
-      MostrarDatos;
-    end;
+  begin
+    Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
+    MostrarDatos;
+  end;
   Reg.TiempoAnterior:=Reg.TiempoActual;
 end;
 
