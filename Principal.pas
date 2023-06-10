@@ -3,11 +3,10 @@
 interface
 
 uses
-  Androidapi.JNI.Location,
+  Androidapi.JNI.Location, System.Sensors.Components, System.DateUtils, System.Math,
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.StdCtrls,
-  FMX.Controls.Presentation, FMX.Layouts, FMX.Objects, System.Sensors, UTM_WGS84,
-  System.Sensors.Components, System.DateUtils, System.Math;
+  FMX.Controls.Presentation, FMX.Layouts, FMX.Objects, System.Sensors, UTM_WGS84;
 
 type
   TPosicion = record
@@ -394,12 +393,9 @@ end;
 procedure TFPrinc.LctSensorLocationChanged(Sender: TObject; const OldLocation,
   NewLocation: TLocationCoord2D);
 var
-  Distancia,IntTiempo,VelMaxima: single;
+  Distancia,IntTiempo: single;
 begin
   Reg.TiempoActual:=Now;
-  //se usa este primitivo método para filtrar posibles lecturas erróneas del GPS:
-  if RBAPie.IsChecked then VelMaxima:=35    //vel. máxima para un humano muy veloz
-                      else VelMaxima:=220;  //vel. máxima para un carro convencional
   //se obtienen la velocidad, la altitud en msnm y el rumbo desde sensores:
   if IsNaN(LctSensor.Sensor.Speed) then Reg.Velocidad:=0
   else
@@ -422,9 +418,8 @@ begin
   IntTiempo:=SecondSpan(Reg.TiempoAnterior,Reg.TiempoActual);
   Distancia:=MetrosToKm(CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
                                           Reg.PosActual.X,Reg.PosActual.Y));
-  //se muestran los datos:
   if Reg.Velocidad>0.0 then Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
-  MostrarDatos;
+  MostrarDatos;   //se muestran los datos
   Reg.TiempoAnterior:=Reg.TiempoActual;
 end;
 
@@ -467,7 +462,7 @@ end;
 procedure TFPrinc.BLimpiarClick(Sender: TObject);
 begin
   ValInicio;
-  Crcl.RotationAngle:=0;
+  ImgPtosCards.RotationAngle:=0;
 end;
 
 procedure TFPrinc.SBAcercaClick(Sender: TObject);
