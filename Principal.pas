@@ -385,7 +385,6 @@ begin
                Orientacion(AHeading.Azimuth);
     //se crea un efecto de suavizado de movimiento de la flecha:
     //RotarFlecha(Crcl,AHeading.Azimuth,Reg.AzimutActual);
-    //Crcl.RotationAngle:=AHeading.Azimuth;   //momentáneamente sin suavizado
     ImgPtosCards.RotationAngle:=AHeading.Azimuth*-1;
   end;
 end;
