@@ -312,6 +312,7 @@
         <DCCReference Include="Principal.pas">
             <Form>FPrinc</Form>
         </DCCReference>
+        <DCCReference Include="UtilesVelox.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

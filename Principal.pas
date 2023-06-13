@@ -3,35 +3,13 @@
 interface
 
 uses
-  Androidapi.JNI.Location,
+  {Androidapi.JNI.Location,} System.Sensors.Components, System.DateUtils, System.Math,
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.StdCtrls,
-  FMX.Controls.Presentation, FMX.Layouts, FMX.Objects, System.Sensors, UTM_WGS84,
-  System.Sensors.Components, System.DateUtils, System.Math;
+  FMX.Controls.Presentation, FMX.Layouts, FMX.Objects, System.Sensors{, UTM_WGS84},
+  UtilesVelox;
 
 type
-  TPosicion = record
-    X,Y: Single;
-    CG: TLocationCoord2D;
-  end;
-  TRegistro = record
-    PosInicial,
-    PosFinal,
-    PosAnterior,
-    PosActual: TPosicion;
-    Rumbo: string;
-    DistRecorrida,
-    Velocidad,
-    VelMaxima,
-    Altitud,
-    Tiempo: single;
-    TiempoInicio,
-    TiempoFin,
-    TiempoAnterior,
-    TiempoActual: TTime;
-    EstaIniciando: boolean;
-    AzimutActual: Double;
-  end;
   TFPrinc = class(TForm)
     LayPrinc: TLayout;
     LayBot: TLayout;
@@ -120,10 +98,7 @@ type
     LRumbo: TLabel;
     Label16: TLabel;
     LayBrujula: TLayout;
-    Label19: TLabel;
-    LVelCalc: TLabel;
     Layout17: TLayout;
-    LayOtraVelocidad: TLayout;
     procedure SBSalirClick(Sender: TObject);
     procedure BLimpiarClick(Sender: TObject);
     procedure BInicioClick(Sender: TObject);
@@ -150,7 +125,6 @@ type
 
 var
   FPrinc: TFPrinc;
-  Reg: TRegistro;
   Separador: char;
 
 implementation
@@ -160,76 +134,6 @@ uses
 
 {$R *.fmx}
 (*{$R *.BAE2E2665F7E41AE9F0947E9D8BC3706.fmx ANDROID} *)
-
-/// Utilidades de la app: ///
-
-procedure ActivarGPS(LcSensor: TLocationSensor; Activo: boolean);
-const
-  PermissionAccessFineLocation='android.permission.ACCESS_FINE_LOCATION';
-begin
-  PermissionsService.RequestPermissions([PermissionAccessFineLocation],
-    procedure(const APermissions: TClassicStringDynArray;
-              const AGrantResults: TClassicPermissionStatusDynArray)
-    begin
-      if (Length(AGrantResults)=1) and (AGrantResults[0]=TPermissionStatus.Granted) then
-        LcSensor.Active:=Activo
-      else
-      begin
-        Activo:=false;
-        TDialogService.ShowMessage('Acceso a Localización no concedido');
-      end;
-    end);
-end;
-
-procedure CargarCoordenadas(CoordGPS: TLocationCoord2D; var CoordPos: TPosicion);
-var
-  LatLon: TRecLatLon;
-  UTM: TRecUTM;
-begin
-  LatLon.Lat:=CoordGPS.Latitude;
-  LatLon.Lon:=CoordGPS.Longitude;
-  LatLon_To_UTM(LatLon,UTM);
-  CoordPos.CG:=CoordGPS;
-  CoordPos.X:=UTM.X;
-  CoordPos.Y:=UTM.Y;
-end;
-
-function CalcularDistancia(X1,Y1,X2,Y2: double): double;
-begin
-  Result:=Sqrt(Sqr(Abs(X1-X2))+Sqr(Abs(Y1-Y2)));
-end;
-
-function Orientacion(Grados: double): string;
-begin
-  case Round(Grados) of
-    0..10,350..360: Result:='N';  //norte
-    11..34: Result:='N - NE';     //norte-noreste
-    35..54: Result:='NE';         //noreste
-    55..79: Result:='E - NE';     //este-noreste
-    80..100: Result:='E';         //este
-    101..124: Result:='E - SE';   //este-sureste
-    125..144: Result:='SE';       //sureste
-    145..169: Result:='S - SE';   //sur-sureste
-    170..190: Result:='S';        //sur
-    191..214: Result:='S - SW';   //sur-suroeste
-    215..234: Result:='SW';       //suroeste
-    235..259: Result:='W - SW';   //oeste-suroeste
-    260..280: Result:='W';        //oeste
-    281..304: Result:='W - NW';   //oeste-noroeste
-    305..324: Result:='NW';       //noroeste
-    325..349: Result:='N - NW';   //norte-noroeste
-  end;
-end;
-
-function MetrosToKm(DistMetros: single): single;
-begin
-  Result:=DistMetros/1000;
-end;
-
-function SegundosToHoras(TmpSegs: single): single;
-begin
-  Result:=TmpSegs/3600;
-end;
 
 procedure TFPrinc.ValInicio;
 begin
@@ -317,42 +221,6 @@ begin
   end;
 end;
 
-procedure RotarFlecha(Imagen: TCircle; Azimut: Double; var Azmt: Double);
-var
-  I,AntGrados,NvoGrados,Diferencia: Word;
-
-procedure MoverFlecha(I: word);
-var
-  X: byte;
-begin
-  Application.ProcessMessages;
-  for X := 1 to 10 do;  //sólo hacer tiempo y nada más
-  Imagen.RotationAngle:=I;
-end;
-
-begin
-  if Round(Azmt)=0 then AntGrados:=360
-  else AntGrados:=Round(Azmt);
-  if Azimut=0 then NvoGrados:=360
-              else NvoGrados:=Round(Azimut);
-  Diferencia:=Abs(NvoGrados-AntGrados);
-  if Diferencia<=180 then
-  begin
-    if NvoGrados>AntGrados then
-      for I:=AntGrados to NvoGrados do MoverFlecha(I)
-    else
-      for I:=AntGrados downto NvoGrados do MoverFlecha(I);
-  end
-  else
-  begin
-    Azmt:=AntGrados+NvoGrados;
-    if AntGrados>NvoGrados then
-      for I:=AntGrados to 360+NvoGrados do MoverFlecha(I)
-    else
-      for I:=AntGrados downto NvoGrados do MoverFlecha(I)
-  end;
-end;
-
 /// Eventos de la app: ///
 
 procedure TFPrinc.FormCreate(Sender: TObject);
@@ -389,24 +257,21 @@ begin
                Orientacion(AHeading.Azimuth);
     //se crea un efecto de suavizado de movimiento de la flecha:
     //RotarFlecha(Crcl,AHeading.Azimuth,Reg.AzimutActual);
-    Crcl.RotationAngle:=AHeading.Azimuth;   //momentáneamente sin suavizado
+    ImgPtosCards.RotationAngle:=AHeading.Azimuth*-1;
   end;
 end;
 
 procedure TFPrinc.LctSensorLocationChanged(Sender: TObject; const OldLocation,
   NewLocation: TLocationCoord2D);
 var
-  Distancia,IntTiempo,VelMaxima,Velocidad: single;
+  Distancia,IntTiempo: single;
 begin
   Reg.TiempoActual:=Now;
-  //se usa este primitivo método para filtrar posibles lecturas erróneas del GPS:
-  if RBAPie.IsChecked then VelMaxima:=35    //vel. máxima para un humano muy veloz
-                      else VelMaxima:=220;  //vel. máxima para un carro convencional
   //se obtienen la velocidad, la altitud en msnm y el rumbo desde sensores:
   if IsNaN(LctSensor.Sensor.Speed) then Reg.Velocidad:=0
   else
   begin
-    Reg.Velocidad:=LctSensor.Sensor.Speed*3.5999999999971;//se convierte en km/h
+    Reg.Velocidad:=LctSensor.Sensor.Speed*FactorKmh;
     if Reg.VelMaxima<Reg.Velocidad then Reg.VelMaxima:=Reg.Velocidad;
   end;
   if IsNaN(LctSensor.Sensor.Altitude) then Reg.Altitud:=0
@@ -424,19 +289,8 @@ begin
   IntTiempo:=SecondSpan(Reg.TiempoAnterior,Reg.TiempoActual);
   Distancia:=MetrosToKm(CalcularDistancia(Reg.PosAnterior.X,Reg.PosAnterior.Y,
                                           Reg.PosActual.X,Reg.PosActual.Y));
-  //se calcula la velocidad en km/h:
-  Velocidad:=Distancia/SegundosToHoras(IntTiempo);
-  LVelCalc.Text:=FormatFloat('0.00',Velocidad);  //esto también es de prueba
-  //se muestran los datos:
-  //if Reg.Velocidad>0.0 then  //esto es una prueba para ver si se detiene
-  if Velocidad>0.0 then  //esto es una prueba para ver si se detiene
-    if (Velocidad>0.0) and (Velocidad<=VelMaxima) then
-    //si funciona, quitar línea anterior:
-    //if (Reg.Velocidad>0.0) and (Reg.Velocidad<=VelMaxima) then
-    begin
-      Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
-      MostrarDatos;
-    end;
+  if Reg.Velocidad>0.0 then Reg.DistRecorrida:=Reg.DistRecorrida+Distancia;
+  MostrarDatos;   //se muestran los datos
   Reg.TiempoAnterior:=Reg.TiempoActual;
 end;
 
@@ -479,7 +333,7 @@ end;
 procedure TFPrinc.BLimpiarClick(Sender: TObject);
 begin
   ValInicio;
-  Crcl.RotationAngle:=0;
+  ImgPtosCards.RotationAngle:=0;
 end;
 
 procedure TFPrinc.SBAcercaClick(Sender: TObject);
