@@ -3,8 +3,8 @@
 interface
 
 uses
-  Androidapi.JNI.Location, System.Sensors, System.Sensors.Components,
-  System.Types, FMX.Objects, FMX.Forms, UTM_WGS84;
+  Androidapi.JNI.Location, System.Sensors, System.Sensors.Components, FMX.Forms,
+  System.Types, FMX.Objects, UTM_WGS84;
 
 type
   TPosicion = record
@@ -33,6 +33,8 @@ type
 
 const
   FactorKmh=3.5999999999971;
+  Amarillo=4294967040;
+  Blanco=4294967295;
 
 var
   Reg: TRegistro;

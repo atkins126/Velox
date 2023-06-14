@@ -209,14 +209,14 @@ procedure TFPrinc.RBAPieTap(Sender: TObject; const Point: TPointF);
 begin
   if RBAPie.IsPressed then
   begin
-    RBAPie.FontColor:=4294967040;     //amarillo
-    RBVehiculo.FontColor:=4294967295;
+    RBAPie.FontColor:=Amarillo;
+    RBVehiculo.FontColor:=Blanco;
     LctSensor.ActivityType:=TLocationActivityType.Fitness;
   end
   else
   begin
-    RBAPie.FontColor:=4294967295;     //blanco
-    RBVehiculo.FontColor:=4294967040;
+    RBAPie.FontColor:=Blanco;
+    RBVehiculo.FontColor:=Amarillo;
     LctSensor.ActivityType:=TLocationActivityType.Automotive;
   end;
 end;
@@ -240,7 +240,7 @@ procedure TFPrinc.FormShow(Sender: TObject);
 begin
   PnlAcerca.Visible:=false;
   PnlResumen.Visible:=false;
-  RBAPie.FontColor:=4294967040;
+  RBAPie.FontColor:=Amarillo;
 end;
 
 procedure TFPrinc.LctSensorHeadingChanged(Sender: TObject;
